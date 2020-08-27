@@ -14,6 +14,7 @@ import { isAddress } from './helpers'
 import { OVERVIEW_TOKEN_BLACKLIST, OVERVIEW_PAIR_BLACKLIST } from './constants'
 import AllTokensPage from './pages/AllTokensPage'
 import AllPairsPage from './pages/AllPairsPage'
+import AccountLookup from './pages/AccountLookup'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -93,6 +94,10 @@ function App() {
               <Route path="/all-pairs">
                 <NavHeaderUpdated />
                 <AllPairsPage />
+              </Route>
+              <Route path="/accounts">
+                <NavHeaderUpdated />
+                <AccountLookup />
               </Route>
               <Redirect to="/home" />
             </Switch>
