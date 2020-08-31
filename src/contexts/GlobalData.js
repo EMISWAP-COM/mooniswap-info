@@ -16,6 +16,7 @@ const UPDATE_ETH_PRICE = 'UPDATE_ETH_PRICE'
 const ETH_PRICE_KEY = 'ETH_PRICE_KEY'
 const UPDATE_ALL_PAIRS_IN_MOONISWAP = 'UPDAUPDATE_ALL_PAIRS_IN_MOONISWAPTE_TOP_PAIRS'
 const UPDATE_ALL_TOKENS_IN_MOONISWAP = 'UPDATE_ALL_TOKENS_IN_MOONISWAP'
+const UPDATE_TOP_LPS = 'UPDATE_TOP_LPS'
 
 dayjs.extend(utc)
 dayjs.extend(weekOfYear)
@@ -77,6 +78,15 @@ function reducer(state, { type, payload }) {
         allTokens
       }
     }
+
+    case UPDATE_TOP_LPS: {
+      const { topLps } = payload
+      return {
+        ...state,
+        topLps
+      }
+    }
+
     default: {
       throw Error(`Unexpected action type in DataContext reducer: '${type}'.`)
     }
@@ -143,17 +153,28 @@ export default function Provider({ children }) {
       }
     })
   }, [])
+
+  const updateTopLps = useCallback(topLps => {
+    dispatch({
+      type: UPDATE_TOP_LPS,
+      payload: {
+        topLps
+      }
+    })
+  }, [])
+
   return (
     <GlobalDataContext.Provider
       value={useMemo(
         () => [
           state,
-          { update, updateTransactions, updateChart, updateEthPrice, updateAllPairsInMooniswap, updateAllTokensInMooniswap }
+          { update, updateTransactions, updateTopLps, updateChart, updateEthPrice, updateAllPairsInMooniswap, updateAllTokensInMooniswap }
         ],
         [
           state,
           update,
           updateTransactions,
+          updateTopLps,
           updateChart,
           updateEthPrice,
           updateAllPairsInMooniswap,
@@ -619,6 +640,7 @@ export function useAllTokensInMooniswap() {
  * @TODO Not a perfect lookup needs improvement
  */
 export function useTopLps() {
+  debugger;
   const [state, { updateTopLps }] = useGlobalDataContext()
   let topLps = state?.topLps
 
