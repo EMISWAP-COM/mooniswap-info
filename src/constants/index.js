@@ -20,6 +20,8 @@ export const OVERVIEW_TOKEN_BLACKLIST = [
   // '0x1b76d0364e803fb94c1d5ca9faf55f05ee494731'
 ]
 
+export const FEE_WARNING_TOKENS = ['0xd46ba6d942050d489dbd938a2c909a5d5039a161']
+
 export const OVERVIEW_PAIR_BLACKLIST = []
 
 export const SURPRESS_WARNINGS = [
