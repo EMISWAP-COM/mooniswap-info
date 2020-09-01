@@ -30,7 +30,6 @@ function useGlobalDataContext() {
 function reducer(state, { type, payload }) {
   switch (type) {
     case UPDATE: {
-      debugger;
       const { data } = payload
       return {
         ...state,
@@ -640,7 +639,6 @@ export function useAllTokensInMooniswap() {
  * @TODO Not a perfect lookup needs improvement
  */
 export function useTopLps() {
-  debugger;
   const [state, { updateTopLps }] = useGlobalDataContext()
   let topLps = state?.topLps
 

@@ -6,7 +6,9 @@ import {
   USER_POSITIONS,
   USER_HISTORY,
   USER_HISTORY__PER_PAIR,
-  PAIR_DAY_DATA_BULK
+  PAIR_DAY_DATA_BULK,
+  FIRST_SNAPSHOT,
+  POSITIONS_BY_BLOCK
 } from '../apollo/queries'
 import { useTimeframe } from './Application'
 import { timeframeOptions } from '../constants'
@@ -14,6 +16,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { useEthPrice } from './GlobalData'
 import { ETH, getShareValueOverTime } from '../helpers'
+import { getTimeframe, getBlocksFromTimestamps } from '../utils'
 
 dayjs.extend(utc)
 
@@ -756,4 +759,96 @@ export function useUserPositions(account) {
   }, [account, positions, updatePositions, updateUserHodlReturns, ethPrice])
 
   return positions
+}
+
+
+/**
+ * For each day starting with min(first position timestamp, beginning of time window),
+ * get total liquidity supplied by user in USD. Format in array with date timestamps
+ * and usd liquidity value.
+ */
+export function useUserLiquidityChart(account) {
+  // formatetd array to return for chart data
+  const [formattedHistory, setFormattedHistory] = useState()
+
+  const [startDateTimestamp, setStartDateTimestamp] = useState()
+  const [activeWindow] = useTimeframe()
+
+  // monitor the old date fetched
+  useEffect(() => {
+    let startTime = getTimeframe(activeWindow)
+    if ((activeWindow && startTime < startDateTimestamp) || !startDateTimestamp) {
+      setStartDateTimestamp(startTime)
+    }
+  }, [activeWindow, startDateTimestamp])
+
+  // fetch data if we havent yet
+  useEffect(() => {
+    async function fetchHistory() {
+      // set default beginning to beginning of time window
+      const utcCurrentTime = dayjs()
+      let startTime = startDateTimestamp
+
+      // if first position starts after beginning of timestamps, update startime
+      let {
+        data: { liquidityPositionSnapshots: results }
+      } = await client.query({
+        query: FIRST_SNAPSHOT,
+        variables: {
+          user: account
+        }
+      })
+
+      // catch case with no history
+      if (results?.length === 0) {
+        setFormattedHistory([])
+        return
+      }
+
+      // if first snapshot starts before window, update start of window
+      startTime = results[0].timestamp > startTime ? results[0].timestamp : startTime
+
+      // create the array of timestamps for every day in the chart
+      const timestamps = []
+      while (startTime < utcCurrentTime.unix()) {
+        timestamps.push(startTime)
+        startTime += 84600
+      }
+
+      // for each day, fetch the block number associated with day timestamp (in bulk)
+      const blocks = await getBlocksFromTimestamps(timestamps)
+
+      // for each block, get the lp positions and pair data for each
+      let { data: dayDatas } = await client.query({
+        query: POSITIONS_BY_BLOCK(account, blocks)
+      })
+
+      // for each day, map over all positions and sum USD, push value to history
+      let newData = []
+      for (var row in dayDatas) {
+        let currentDay = {}
+        let timestamp = row.split('t')[1]
+        let valueUSD = 0
+        if (timestamp) {
+          for (let i = 0; i < dayDatas[row].length; i++) {
+            let pairInfo = dayDatas[row][i]
+            const pairLiquidityValue =
+              (parseFloat(pairInfo.liquidityTokenBalance) / pairInfo.pair.totalSupply) * pairInfo.pair.reserveUSD
+            valueUSD += pairLiquidityValue
+            currentDay[pairInfo.pair.id] = pairLiquidityValue
+          }
+          currentDay.date = timestamp
+          currentDay.valueUSD = valueUSD
+        }
+        newData.push(currentDay)
+      }
+
+      setFormattedHistory(newData)
+    }
+    if (!formattedHistory && startDateTimestamp) {
+      fetchHistory()
+    }
+  }, [account, formattedHistory, startDateTimestamp])
+
+  return formattedHistory
 }

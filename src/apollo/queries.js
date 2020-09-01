@@ -808,3 +808,29 @@ export const USER_MINTS_BUNRS_PER_PAIR = gql`
     }
   }
 `
+
+export const POSITIONS_BY_BLOCK = (account, blocks) => {
+  let queryString = 'query blocks {'
+  queryString += blocks.map(
+    block => `
+      t${block.timestamp}:liquidityPositions(where: {user: "${account}"}, block: { number: ${block.number} }) { 
+        liquidityTokenBalance
+        pair {
+          id
+          totalSupply
+          reserveUSD
+        }
+      }
+    `
+  )
+  queryString += '}'
+  return gql(queryString)
+}
+
+export const FIRST_SNAPSHOT = gql`
+  query snapshots($user: Bytes!) {
+    liquidityPositionSnapshots(first: 1, where: { user: $user }, orderBy: timestamp, orderDirection: asc) {
+      timestamp
+    }
+  }
+`

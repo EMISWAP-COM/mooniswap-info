@@ -20,7 +20,6 @@ const AccountWrapper = styled.div`
 `
 
 function AccountLookup() {
-  debugger;
   // scroll to top
   useEffect(() => {
     window.scrollTo(0, 0)
