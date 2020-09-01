@@ -31,7 +31,7 @@ const AppWrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  display: grid;
+  // display: grid;
   grid-template-columns: ${({ open }) => (open ? '220px 1fr 200px' : '220px 1fr 64px')};
 
   @media screen and (max-width: 1400px) {
