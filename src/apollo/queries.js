@@ -192,7 +192,7 @@ export const USER_POSITIONS = gql`
 
 export const USER_TRANSACTIONS = gql`
   query transactions($user: Bytes!) {
-    mints(orderBy: timestamp, orderDirection: desc) {
+    mints(orderBy: timestamp, orderDirection: desc, where: { sender: $user }) {
       id
       transaction {
         id
@@ -235,7 +235,7 @@ export const USER_TRANSACTIONS = gql`
       amount1
       amountUSD
     }
-    swaps(orderBy: timestamp, orderDirection: desc) {
+    swaps(orderBy: timestamp, orderDirection: desc, where: { sender: $user }) {
       id
       transaction {
         id

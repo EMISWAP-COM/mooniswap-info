@@ -80,7 +80,7 @@ function AccountLookup({ history, small }) {
   function handleAccountSearch() {
     if (isAddress(accountValue)) {
       history.push('/account/' + accountValue)
-      if (!savedAccounts.includes(accountValue)) {
+      if (!savedAccounts?.includes(accountValue)) {
         addAccount(accountValue)
       }
     }
