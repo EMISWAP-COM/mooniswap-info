@@ -23,6 +23,7 @@ const ChartWrapper = styled.div`
 
 const UserChart = ({ account }) => {
   const chartData = useUserLiquidityChart(account)
+  const color = "#3A619D";
 
   const [timeWindow, setTimeWindow] = useState(timeframeOptions.ALL_TIME)
   let utcStartTime = getTimeframe(timeWindow)
@@ -39,7 +40,7 @@ const UserChart = ({ account }) => {
       {below600 ? (
         <RowBetween mb={40}>
           <div />
-          <DropdownSelect options={timeframeOptions} active={timeWindow} setActive={setTimeWindow} color={'#ff007a'} />
+          <DropdownSelect options={timeframeOptions} active={timeWindow} setActive={setTimeWindow} color={color} />
         </RowBetween>
       ) : (
         <RowBetween mb={40}>
@@ -73,8 +74,8 @@ const UserChart = ({ account }) => {
           <AreaChart margin={{ top: 0, right: 10, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={'#ff007a'} stopOpacity={0.35} />
-                <stop offset="95%" stopColor={'#ff007a'} stopOpacity={0} />
+                <stop offset="5%" stopColor={color} stopOpacity={0.35} />
+                <stop offset="95%" stopColor={color} stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis
@@ -108,7 +109,7 @@ const UserChart = ({ account }) => {
               contentStyle={{
                 padding: '10px 14px',
                 borderRadius: 10,
-                borderColor: '#ff007a',
+                borderColor: color,
                 color: 'black'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
@@ -122,7 +123,7 @@ const UserChart = ({ account }) => {
               type="monotone"
               name={'Liquidity'}
               yAxisId={0}
-              stroke={darken(0.12, '#ff007a')}
+              stroke={darken(0.12, color)}
               fill="url(#colorUv)"
             />
           </AreaChart>
