@@ -17,6 +17,7 @@ import utc from 'dayjs/plugin/utc'
 import { useEthPrice } from './GlobalData'
 import { ETH, getShareValueOverTime } from '../helpers'
 import { getTimeframe, getBlocksFromTimestamps } from '../utils'
+import { getLPReturnsOnPair, getHistoricalPairReturns } from '../utils/returns'
 
 dayjs.extend(utc)
 
@@ -27,6 +28,8 @@ const UPDATE_USER_PAIR_HODLS_RETURNS = 'UPDATE_USER_PAIR_HODLS_RETURNS'
 
 const TRANSACTIONS_KEY = 'TRANSACTIONS_KEY'
 const POSITIONS_KEY = 'POSITIONS_KEY'
+const USER_SNAPSHOTS = 'USER_SNAPSHOTS'
+const USER_PAIR_RETURNS_KEY = 'USER_PAIR_RETURNS_KEY'
 const USER_POSITION_HISTORY_KEY = 'USER_POSITION_HISTORY_KEY'
 const USER_PAIR_HODLS_RETURNS_KEY = 'USER_PAIR_HODLS_RETURNS_KEY'
 
@@ -111,6 +114,16 @@ export default function Provider({ children }) {
     })
   }, [])
 
+  const updateUserSnapshots = useCallback((account, historyData) => {
+    dispatch({
+      type: UPDATE_USER_POSITION_HISTORY,
+      payload: {
+        account,
+        historyData
+      }
+    })
+  }, [])
+
   const updateUserPositionHistory = useCallback((account, historyData) => {
     dispatch({
       type: UPDATE_USER_POSITION_HISTORY,
@@ -134,8 +147,8 @@ export default function Provider({ children }) {
   return (
     <UserContext.Provider
       value={useMemo(
-        () => [state, { updateTransactions, updatePositions, updateUserPositionHistory, updateUserHodlReturns }],
-        [state, updateTransactions, updatePositions, updateUserPositionHistory, updateUserHodlReturns]
+        () => [state, { updateTransactions, updatePositions, updateUserPositionHistory, updateUserHodlReturns, updateUserSnapshots }],
+        [state, updateTransactions, updatePositions, updateUserPositionHistory, updateUserHodlReturns, updateUserSnapshots]
       )}
     >
       {children}
@@ -717,6 +730,53 @@ export async function getReturns(user, pair, ethPrice) {
   }
 }
 
+/**
+ * Store all the snapshots of liquidity activity for this account.
+ * Each snapshot is a moment when an LP position was created or updated.
+ * @param {*} account
+ */
+export function useUserSnapshots(account) {
+  const [state, { updateUserSnapshots }] = useUserContext()
+  const snapshots = state?.[account]?.[USER_SNAPSHOTS]
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        let skip = 0
+        let allResults = []
+        let found = false
+        while (!found) {
+          let result = await client.query({
+            query: USER_HISTORY,
+            variables: {
+              skip: skip,
+              user: account
+            },
+            fetchPolicy: 'cache-first'
+          })
+          allResults = allResults.concat(result.data.liquidityPositionSnapshots)
+          if (result.data.liquidityPositionSnapshots.length < 1000) {
+            found = true
+          } else {
+            skip += 1000
+          }
+        }
+        if (allResults) {
+          updateUserSnapshots(account, allResults)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    if (!snapshots && account) {
+      fetchData()
+    }
+  }, [account, snapshots, updateUserSnapshots])
+
+  return snapshots
+}
+
+
 export function useUserPositions(account) {
   const [state, { updatePositions, updateUserHodlReturns }] = useUserContext()
   const positions = state?.[account]?.[POSITIONS_KEY]
@@ -748,6 +808,7 @@ export function useUserPositions(account) {
             })
           )
           updatePositions(account, formattedPositions)
+          return formattedPositions
         }
       } catch (e) {
         console.log(e)
@@ -760,6 +821,51 @@ export function useUserPositions(account) {
 
   return positions
 }
+
+// export function useUserPositions(account) {
+//   const [state, { updatePositions }] = useUserContext()
+//   const positions = state?.[account]?.[POSITIONS_KEY]
+//
+//   const snapshots = useUserSnapshots(account)
+//
+//   const [ethPrice] = useEthPrice()
+//
+//   useEffect(() => {
+//     async function fetchData(account) {
+//       try {
+//         let result = await client.query({
+//           query: USER_POSITIONS,
+//           variables: {
+//             user: account
+//           },
+//           fetchPolicy: 'no-cache'
+//         })
+//         if (result?.data?.liquidityPositions) {
+//           let formattedPositions = await Promise.all(
+//             result?.data?.liquidityPositions.map(async positionData => {
+//               const returnData = await getLPReturnsOnPair(account, positionData.pair, ethPrice, snapshots)
+//               return {
+//                 ...positionData,
+//                 mooniswapReturn: returnData.mooniswap.return,
+//                 mooniswapPercentChange: returnData.mooniswap.percent,
+//                 ...returnData
+//               }
+//             })
+//           )
+//           updatePositions(account, formattedPositions)
+//         }
+//       } catch (e) {
+//         console.log(e)
+//       }
+//     }
+//     if (!positions && account && ethPrice && snapshots) {
+//       fetchData(account)
+//     }
+//   }, [account, positions, updatePositions, ethPrice, snapshots])
+//
+//   return positions
+// }
+
 
 
 /**

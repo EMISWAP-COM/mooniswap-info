@@ -115,26 +115,26 @@ const PairReturnsChart = ({
       {chartFilter === CHART_VIEW.LIQUIDITY && chartData && (
         <ResponsiveContainer aspect={below1080 ? 60 / 32 : below600 ? 60 / 42 : 60 / 26}>
           <ComposedChart
-            onMouseMove={e => {
-              if (e?.activePayload?.[0]?.value) {
-                setAnimatedPositionVal(e.activePayload[0].value)
-                setAnimatedAssetReturn(e.activePayload[1].value)
-                setAnimatedMooniswapReturn(e.activePayload[2].value)
-                setAnimatedNetReturn(e.activePayload[3].value)
-                setAnimatedAssetChange(e.activePayload[4].value)
-                setAnimatedMooniswapChange(e.activePayload[5].value)
-                setAnimatedNetChange(e.activePayload[6].value)
-              }
-            }}
-            onMouseLeave={() => {
-              setAnimatedPositionVal(positionValue)
-              setAnimatedNetReturn(baseNetReturn)
-              setAnimatedAssetReturn(baseAssetReturn)
-              setAnimatedMooniswapReturn(baseMooniswapReturn)
-              setAnimatedAssetChange(baseAssetChange)
-              setAnimatedNetChange(baseNetChange)
-              setAnimatedMooniswapChange(baseMooniswapChange)
-            }}
+            // onMouseMove={e => {
+            //   if (e?.activePayload?.[0]?.value) {
+            //     setAnimatedPositionVal(e.activePayload[0].value)
+            //     setAnimatedAssetReturn(e.activePayload[1].value)
+            //     setAnimatedMooniswapReturn(e.activePayload[2].value)
+            //     setAnimatedNetReturn(e.activePayload[3].value)
+            //     setAnimatedAssetChange(e.activePayload[4].value)
+            //     setAnimatedMooniswapChange(e.activePayload[5].value)
+            //     setAnimatedNetChange(e.activePayload[6].value)
+            //   }
+            // }}
+            // onMouseLeave={() => {
+            //   setAnimatedPositionVal(positionValue)
+            //   setAnimatedNetReturn(baseNetReturn)
+            //   setAnimatedAssetReturn(baseAssetReturn)
+            //   setAnimatedMooniswapReturn(baseMooniswapReturn)
+            //   setAnimatedAssetChange(baseAssetChange)
+            //   setAnimatedNetChange(baseNetChange)
+            //   setAnimatedMooniswapChange(baseMooniswapChange)
+            // }}
             margin={{ top: 0, right: 10, bottom: 6, left: 0 }}
             barCategoryGap={1}
             data={data}
