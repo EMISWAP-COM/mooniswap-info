@@ -119,7 +119,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
           </DataText>
         )} */}
 
-        <DataText>
+        <DataText  justifyContent="flex-start" style={{paddingLeft:"15vh"}}>
           <CustomLink area="pair" to={'/pair/' + lp.pairAddress}>
             <RowFixed>
               {!below600 && <DoubleTokenLogo a0={lp.token0} a1={lp.token1} size={16} margin={true} />}
@@ -163,7 +163,7 @@ function LPList({ lps, disbaleLinks, maxItems = 10 }) {
             <TYPE.main area="type">Type</TYPE.main>
           </Flex>
         )} */}
-        <Flex alignItems="center" justifyContent="flexEnd">
+        <Flex alignItems="left" justifyContent="flex-start" style={{paddingLeft:"15vh"}} >
           <TYPE.main area="pair">Pair</TYPE.main>
         </Flex>
         <Flex alignItems="center" justifyContent="flexEnd">
