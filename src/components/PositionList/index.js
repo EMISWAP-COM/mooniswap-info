@@ -5,7 +5,7 @@ import LocalLoader from '../LocalLoader'
 import utc from 'dayjs/plugin/utc'
 import { Box, Flex, Text } from 'rebass'
 import styled from 'styled-components'
-import Link from '../Link'
+import Link, { CustomLink } from '../Link'
 import { Divider } from '../../components'
 import DoubleTokenLogo from '../DoubleLogo'
 import { withRouter } from 'react-router-dom'
@@ -13,6 +13,10 @@ import { formattedNum, rawPercent, formattedPercent } from '../../helpers'
 import { AutoColumn } from '../Column'
 import { useEthPrice } from '../../contexts/GlobalData'
 import { RowFixed } from '../Row'
+import { getPoolLink } from '../../utils'
+import { TYPE } from '../../Theme'
+import FormattedName from '../FormattedName'
+import { ButtonLight } from '../ButtonStyled'
 
 dayjs.extend(utc)
 
@@ -142,8 +146,29 @@ function PositionList({ positions }) {
                 {position.pair.token0.symbol + '-' + position.pair.token1.symbol}
               </Text>
               <AutoColumn gap="8px" justify="flex-start">
-                <Link>Add</Link>
-                <Link>Remove</Link>
+                {/*<CustomLink to={'/pair/' + position.pair.id}>*/}
+                {/*  <TYPE.main style={{ whiteSpace: 'nowrap' }} to={'/pair/'}>*/}
+                {/*    <FormattedName*/}
+                {/*      text={position.pair.token0.symbol + '-' + position.pair.token1.symbol}*/}
+                {/*      maxCharacters={below740 ? 10 : 18}*/}
+                {/*    />*/}
+                {/*  </TYPE.main>*/}
+                {/*</CustomLink>*/}
+
+                <RowFixed gap="8px" justify="flex-start">
+                  <Link
+                    external
+                    href={getPoolLink(position.pair.token0.id, position.pair.token1.id)}
+                    style={{ marginRight: '.5rem' }}
+                  >
+                    <ButtonLight style={{ padding: '4px 6px', borderRadius: '4px' }}>Add</ButtonLight>
+                  </Link>
+                  {poolOwnership > 0 && (
+                    <Link external href={getPoolLink(position.pair.token0.id, position.pair.token1.id, true)}>
+                      <ButtonLight style={{ padding: '4px 6px', borderRadius: '4px' }}>Remove</ButtonLight>
+                    </Link>
+                  )}
+                </RowFixed>
               </AutoColumn>
             </AutoColumn>
           </DataText>
