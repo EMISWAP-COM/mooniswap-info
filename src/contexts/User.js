@@ -32,6 +32,7 @@ const USER_SNAPSHOTS = 'USER_SNAPSHOTS'
 const USER_PAIR_RETURNS_KEY = 'USER_PAIR_RETURNS_KEY'
 const USER_POSITION_HISTORY_KEY = 'USER_POSITION_HISTORY_KEY'
 const USER_PAIR_HODLS_RETURNS_KEY = 'USER_PAIR_HODLS_RETURNS_KEY'
+const UPDATE_USER_PAIR_RETURNS = 'UPDATE_USER_PAIR_RETURNS'
 
 const UserContext = createContext()
 
@@ -63,22 +64,20 @@ function reducer(state, { type, payload }) {
       const { account, historyData } = payload
       return {
         ...state,
-        [account]: { ...state?.[account], [USER_POSITION_HISTORY_KEY]: historyData }
+        [account]: { ...state?.[account], [USER_SNAPSHOTS]: historyData }
       }
     }
 
-    case UPDATE_USER_PAIR_HODLS_RETURNS: {
-      const { account, hodlData } = payload
-      let added = {}
-      hodlData &&
-        hodlData.map(pairData => {
-          return (added[pairData.pairAddress] = pairData)
-        })
+    case UPDATE_USER_PAIR_RETURNS: {
+      const { account, pairAddress, data } = payload
       return {
         ...state,
         [account]: {
           ...state?.[account],
-          [USER_PAIR_HODLS_RETURNS_KEY]: { ...state?.[account]?.USER_PAIR_HODLS_RETURNS_KEY, ...added }
+          [USER_PAIR_RETURNS_KEY]: {
+            ...state?.[account]?.[USER_PAIR_RETURNS_KEY],
+            [pairAddress]: data
+          }
         }
       }
     }
@@ -90,6 +89,7 @@ function reducer(state, { type, payload }) {
 }
 
 const INITIAL_STATE = {}
+
 
 export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
@@ -567,9 +567,8 @@ export const priceOverrides = [
 
 /**
  *
- *
+ * deprecated
  */
-
 export async function getReturns(user, pair, ethPrice) {
   const {
     data: { liquidityPositionSnapshots: history }
@@ -777,57 +776,9 @@ export function useUserSnapshots(account) {
 }
 
 
-export function useUserPositions(account) {
-  const [state, { updatePositions, updateUserHodlReturns }] = useUserContext()
-  const positions = state?.[account]?.[POSITIONS_KEY]
-  const [ethPrice] = useEthPrice()
-
-  useEffect(() => {
-    async function fetchData(account) {
-      try {
-        let result = await client.query({
-          query: USER_POSITIONS,
-          variables: {
-            user: account
-          },
-          fetchPolicy: 'no-cache'
-        })
-        if (result?.data?.liquidityPositions) {
-          let formattedPositions = await Promise.all(
-            result?.data?.liquidityPositions.map(async positionData => {
-              const returnData = await getReturns(account, positionData.pair, ethPrice)
-              return {
-                ...positionData,
-                assetReturn: returnData.asset.return,
-                assetPercentChange: returnData.asset.percent,
-                netReturn: returnData.net.return,
-                netPercentChange: returnData.net.percent,
-                mooniswapReturn: returnData.mooniswap.return,
-                mooniswapPercentChange: returnData.mooniswap.percent
-              }
-            })
-          )
-          updatePositions(account, formattedPositions)
-          return formattedPositions
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    if (!positions && account && ethPrice) {
-      fetchData(account)
-    }
-  }, [account, positions, updatePositions, updateUserHodlReturns, ethPrice])
-
-  return positions
-}
-
 // export function useUserPositions(account) {
-//   const [state, { updatePositions }] = useUserContext()
+//   const [state, { updatePositions, updateUserHodlReturns }] = useUserContext()
 //   const positions = state?.[account]?.[POSITIONS_KEY]
-//
-//   const snapshots = useUserSnapshots(account)
-//
 //   const [ethPrice] = useEthPrice()
 //
 //   useEffect(() => {
@@ -843,28 +794,74 @@ export function useUserPositions(account) {
 //         if (result?.data?.liquidityPositions) {
 //           let formattedPositions = await Promise.all(
 //             result?.data?.liquidityPositions.map(async positionData => {
-//               const returnData = await getLPReturnsOnPair(account, positionData.pair, ethPrice, snapshots)
+//               const returnData = await getReturns(account, positionData.pair, ethPrice)
 //               return {
 //                 ...positionData,
+//                 assetReturn: returnData.asset.return,
+//                 assetPercentChange: returnData.asset.percent,
+//                 netReturn: returnData.net.return,
+//                 netPercentChange: returnData.net.percent,
 //                 mooniswapReturn: returnData.mooniswap.return,
-//                 mooniswapPercentChange: returnData.mooniswap.percent,
-//                 ...returnData
+//                 mooniswapPercentChange: returnData.mooniswap.percent
 //               }
 //             })
 //           )
 //           updatePositions(account, formattedPositions)
+//           return formattedPositions
 //         }
 //       } catch (e) {
 //         console.log(e)
 //       }
 //     }
-//     if (!positions && account && ethPrice && snapshots) {
+//     if (!positions && account && ethPrice) {
 //       fetchData(account)
 //     }
-//   }, [account, positions, updatePositions, ethPrice, snapshots])
+//   }, [account, positions, updatePositions, updateUserHodlReturns, ethPrice])
 //
 //   return positions
 // }
+
+export function useUserPositions(account) {
+  const [state, { updatePositions }] = useUserContext()
+  const positions = state?.[account]?.[POSITIONS_KEY]
+
+  const snapshots = useUserSnapshots(account)
+  const [ethPrice] = useEthPrice()
+
+  useEffect(() => {
+    async function fetchData(account) {
+      debugger;
+      try {
+        let result = await client.query({
+          query: USER_POSITIONS,
+          variables: {
+            user: account
+          },
+          fetchPolicy: 'no-cache'
+        })
+        if (result?.data?.liquidityPositions) {
+          let formattedPositions = await Promise.all(
+            result?.data?.liquidityPositions.map(async positionData => {
+              const returnData = await getLPReturnsOnPair(account, positionData.pair, ethPrice, snapshots)
+              return {
+                ...positionData,
+                ...returnData
+              }
+            })
+          )
+          updatePositions(account, formattedPositions)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    if (!positions && account && ethPrice && snapshots) {
+      fetchData(account)
+    }
+  }, [account, positions, updatePositions, ethPrice, snapshots])
+
+  return positions
+}
 
 
 

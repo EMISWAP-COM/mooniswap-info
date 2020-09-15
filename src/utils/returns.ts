@@ -28,7 +28,7 @@ interface Position {
   token1PriceUSD: number
 }
 
-const PRICE_DISCOVERY_START_TIMESTAMP = 1589747086
+const PRICE_DISCOVERY_START_TIMESTAMP = 1597093302
 
 function formatPricesForEarlyTimestamps(position): Position {
   if (position.timestamp < PRICE_DISCOVERY_START_TIMESTAMP) {
@@ -105,6 +105,7 @@ async function getPrincipalForUserPerPair(user: string, pairAddress: string) {
  * @param positionT1 // '' at the end of the window
  */
 export function getMetricsForPositionWindow(positionT0: Position, positionT1: Position): ReturnMetrics {
+  debugger;
   positionT0 = formatPricesForEarlyTimestamps(positionT0)
   positionT1 = formatPricesForEarlyTimestamps(positionT1)
 
@@ -147,13 +148,15 @@ export function getMetricsForPositionWindow(positionT0: Position, positionT1: Po
   const netValueT0 = t0Ownership * positionT0.reserveUSD
   const netValueT1 = t1Ownership * positionT1.reserveUSD
 
-  return {
+
+  const returnData =  {
     hodleReturn: assetValueT1 - assetValueT0,
     netReturn: netValueT1 - netValueT0,
     uniswapReturn: uniswap_return,
     impLoss: imp_loss_usd,
     fees: difference_fees_usd
   }
+  return returnData;
 }
 
 /**
@@ -270,7 +273,7 @@ export async function getLPReturnsOnPair(user: string, pair, ethPrice: number, s
   // get data about the current position
   const currentPosition: Position = {
     pair,
-    liquidityTokenBalance: snapshots[snapshots.length - 1].liquidityTokenBalance,
+    liquidityTokenBalance: snapshots[snapshots.length - 1]?.liquidityTokenBalance,
     liquidityTokenTotalSupply: pair.totalSupply,
     reserve0: pair.reserve0,
     reserve1: pair.reserve1,
