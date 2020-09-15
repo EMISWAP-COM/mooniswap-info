@@ -197,12 +197,12 @@ function PairPage({ pairAddress, history }) {
       <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
       <Warning
         type={'pair'}
-        show={!dismissed && verifiedTokens && !(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id))}
+        show={!dismissed && verifiedTokens && (!(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id)) && token1 && token0)}
         setShow={markAsDismissed}
         address={pairAddress}
       />
       <WarningGrouping
-        disabled={!dismissed && verifiedTokens && !(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id))}
+        disabled={!dismissed && (!verifiedTokens || !(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id)))}
       >
         <RowBetween mt={20} style={{ flexWrap: 'wrap' }}>
           <RowFixed style={{ flexWrap: 'wrap' }}>
@@ -305,21 +305,25 @@ function PairPage({ pairAddress, history }) {
                   <RowBetween>
                     <TYPE.main>
                       Fees (24hrs)
-                      <Question style={{ marginLeft: 2 }} text="LP slippage profit"/>
+                      <Question style={{ marginLeft: 2 }} text="0.15 percent swap earning + LP slippage profit"/>
                     </TYPE.main>
                     <div />
                   </RowBetween>
                   <RowBetween align="flex-end">
                     <TYPE.main fontSize={'2rem'} lineHeight={1} fontWeight={600}>
                       {oneDayVolumeUSD
-                        ? formattedNum(oneDayExtraFee, true)
+                        ? !oneDayExtraFee || oneDayExtraFee <= 0
+                          ? formattedNum(oneDayVolumeUSD * 0.0015, true)
+                          : formattedNum(oneDayVolumeUSD * 0.0015, true) + ' + ' + formattedNum(oneDayExtraFee, true)
                         : oneDayVolumeUSD === 0
                         ? '$0'
                         : '-'}
                     </TYPE.main>
                     <TYPE.main>
                       {
-                        feePercentChange
+                        !oneDayExtraFee || oneDayExtraFee <= 0
+                          ? volumeChange
+                          : feePercentChange
                       }
                     </TYPE.main>
                   </RowBetween>
