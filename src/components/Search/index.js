@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   padding: ${({ small }) => (!small ? '12px' : '8px 16px')};
   border-radius: 12px;
-  background: ${({ theme }) => theme.advancedBG};
+  background: ${({ theme }) => theme.bg1};
   border-bottom-right-radius: ${({ open }) => (open ? '0px' : '12px')};
   border-bottom-left-radius: ${({ open }) => (open ? '0px' : '12px')};
   ${({ small }) =>
@@ -105,8 +105,8 @@ const Gray = styled.span`
   color: #888d9b;
 `
 
-const Orange = styled.span`
-  color: ${({ theme }) => theme.primary1};
+const Green = styled.span`
+  color: #11b382;
   :hover {
     cursor: pointer;
   }
@@ -384,13 +384,13 @@ export const Search = ({ small = false }) => {
           <Heading
             hide={!(Object.keys(filteredPairList).length > 3 && Object.keys(filteredPairList).length >= pairsShown)}
           >
-            <Orange
+            <Green
               onClick={() => {
                 setPairsShown(pairsShown + 5)
               }}
             >
               See more...
-            </Orange>
+            </Green>
           </Heading>
         </div>
         <Heading>
@@ -413,13 +413,13 @@ export const Search = ({ small = false }) => {
           <Heading
             hide={!(Object.keys(filteredTokenList).length > 3 && Object.keys(filteredTokenList).length >= tokensShown)}
           >
-            <Orange
+            <Green
               onClick={() => {
                 setTokensShown(tokensShown + 5)
               }}
             >
               See more...
-            </Orange>
+            </Green>
           </Heading>
         </div>
       </Menu>

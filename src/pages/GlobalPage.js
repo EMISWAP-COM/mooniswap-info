@@ -28,7 +28,6 @@ const PageWrapper = styled.div`
   justify-content: center;
   padding-bottom: 100px;
   width: calc(100% - 20px);
-  overflow: scroll;
   & > * {
     width: 100%;
     max-width: 1240px;
@@ -278,39 +277,39 @@ function GlobalPage({ history }) {
         </GridRow>
       )}
 
-      <ListOptions gap="10px" style={{ marginTop: '2rem', marginBottom: '.5rem' }}>
-        <Hover>
-          <TYPE.main
-            onClick={() => {
-              setListView(LIST_VIEW.PAIRS)
-            }}
-            fontSize={'1.125rem'}
-            color={listView === LIST_VIEW.TOKENS ? '#aeaeae' : 'black'}
-          >
-            Pairs
-          </TYPE.main>
-        </Hover>
-        <Hover>
-          <TYPE.main
-            onClick={() => {
-              setListView(LIST_VIEW.TOKENS)
-            }}
-            fontSize={'1.125rem'}
-            color={listView === LIST_VIEW.PAIRS ? '#aeaeae' : 'black'}
-          >
-            Tokens
-          </TYPE.main>
-        </Hover>
-      </ListOptions>
+      <Panel style={{ marginTop: '2rem' }}>
+        <ListOptions gap="10px" style={{ marginTop: '6px', marginBottom: '1rem' }}>
+          <Hover>
+            <TYPE.main
+              onClick={() => {
+                setListView(LIST_VIEW.PAIRS)
+              }}
+              fontSize={'1.125rem'}
+              color={listView === LIST_VIEW.TOKENS ? '#aeaeae' : 'black'}
+            >
+              Pairs
+            </TYPE.main>
+          </Hover>
+          <Hover>
+            <TYPE.main
+              onClick={() => {
+                setListView(LIST_VIEW.TOKENS)
+              }}
+              fontSize={'1.125rem'}
+              color={listView === LIST_VIEW.PAIRS ? '#aeaeae' : 'black'}
+            >
+              Tokens
+            </TYPE.main>
+          </Hover>
+        </ListOptions>
 
-      <Panel style={{ marginTop: '6px' }}>
         {listView === LIST_VIEW.PAIRS ? <PairList pairs={allPairs} /> : <TopTokenList tokens={allTokens} />}
       </Panel>
 
-      <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '2rem' }}>
-        Transactions
-      </TYPE.main>
-      <Panel style={{ margin: '1rem 0' }}>
+      <Panel style={{ margin: '2rem 0' }}>
+        <TYPE.main fontSize={'1.125rem'} style={{ marginBottom: '1rem' }}>
+          Transactions
+        </TYPE.main>
         <TxnList transactions={transactions} />
       </Panel>
     </PageWrapper>

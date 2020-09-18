@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './apollo/client'
 import { Route, Switch, BrowserRouter, withRouter, Redirect } from 'react-router-dom'
+import UnicornSvg from './assets/bg.svg'
 
 import GlobalPage from './pages/GlobalPage'
 import TokenPage from './pages/TokenPage'
@@ -20,11 +21,11 @@ const AppWrapper = styled.div`
   width: 100%;
   max-width: 100vw;
   min-height: 100vh;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  background: top / contain no-repeat url('${UnicornSvg}');
 `
 
 function App() {

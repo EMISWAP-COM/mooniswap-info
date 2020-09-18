@@ -16,7 +16,6 @@ const PageWrapper = styled.div`
   justify-content: center;
   padding-bottom: 100px;
   width: calc(100% - 20px);
-  overflow: scroll;
   & > * {
     width: 100%;
     max-width: 1240px;

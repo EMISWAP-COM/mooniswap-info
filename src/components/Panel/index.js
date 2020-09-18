@@ -19,7 +19,7 @@ const panelPseudo = css`
 
 const Panel = styled(RebassBox)`
   position: relative;
-  background-color: ${({ theme }) => theme.advancedBG};
+  background-color: ${({ theme }) => theme.bg1};
   padding: 1.25rem;
   width: 100%;
   display: flex;
@@ -33,7 +33,7 @@ const Panel = styled(RebassBox)`
       border: ${({ hover, theme }) => hover && '1px solid' + theme.bg5};
     }
 
-  ${props => props.background && `background-color: ${props.theme.advancedBG};`}
+  ${props => props.background && `background-color: ${props.theme.bg1};`}
 
   ${props => (props.area ? `grid-area: ${props.area};` : null)}
 

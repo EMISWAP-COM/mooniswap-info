@@ -25,7 +25,6 @@ const Header = styled.div`
     padding: 20px 20px;
   }
 
-  background-color: rgba(255, 255, 255, 0.3);
   margin-bottom: 20px;
 `
 

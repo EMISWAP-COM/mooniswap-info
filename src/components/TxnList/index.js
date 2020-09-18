@@ -58,7 +58,7 @@ const DashGrid = styled.div`
   @media screen and (min-width: 500px) {
     > * {
       &:first-child {
-        width: 180px;
+        width: 260px;
       }
     }
   }
@@ -70,7 +70,7 @@ const DashGrid = styled.div`
 
     > * {
       &:first-child {
-        width: 180px;
+        width: 260px;
       }
     }
   }
@@ -87,6 +87,7 @@ const ClickableText = styled(Text)`
     cursor: pointer;
     opacity: 0.6;
   }
+  color: #89919a;
   user-select: none;
   text-align: end;
 
