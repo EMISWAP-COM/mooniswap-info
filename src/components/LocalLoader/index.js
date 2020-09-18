@@ -36,28 +36,30 @@ const Spinner = styled.div`
   position: relative;
   background: url(${logo}) no-repeat center center;
   background-size: contain;
-  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-  animation: sk-bounce 2.0s infinite ease-in-out;
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
-  
+  -webkit-animation: sk-bounce 2s infinite ease-in-out;
+  animation: sk-bounce 2s infinite ease-in-out;
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+
   @-webkit-keyframes sk-bounce {
-    0%, 100% {
-      -webkit-transform: scale(0.9)
+    0%,
+    100% {
+      -webkit-transform: scale(0.9);
     }
     50% {
-      -webkit-transform: scale(1.0)
+      -webkit-transform: scale(1);
     }
   }
-  
+
   @keyframes sk-bounce {
-    0%, 100% {
+    0%,
+    100% {
       transform: scale(0.9);
       -webkit-transform: scale(0.9);
     }
     50% {
-      transform: scale(1.0);
-      -webkit-transform: scale(1.0);
+      transform: scale(1);
+      -webkit-transform: scale(1);
     }
   }
 `

@@ -14,7 +14,7 @@ const Header = styled.div`
   justify-content: center;
   width: calc(100% - 20px);
   padding: 20px 0;
-  
+
   & > * {
     width: 100%;
     max-width: 1240px;

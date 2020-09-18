@@ -100,12 +100,14 @@ const PairReturnsChart = ({
             <OptionButton
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
+              isButtonGroup
             >
               1 Week
             </OptionButton>
             <OptionButton
               active={timeWindow === timeframeOptions.ALL_TIME}
               onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
+              isButtonGroup
             >
               All Time
             </OptionButton>

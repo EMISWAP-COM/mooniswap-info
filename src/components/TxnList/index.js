@@ -25,7 +25,7 @@ const PageButtons = styled.div`
 `
 
 const Arrow = styled.div`
-  color: #2f80ed;
+  color: ${({ theme }) => theme.shadow1};
   opacity: ${props => (props.faded ? 0.3 : 1)};
   padding: 0 20px;
   user-select: none;
@@ -111,13 +111,15 @@ const DataText = styled(Flex)`
 const SortText = styled.button`
   cursor: pointer;
   font-weight: ${({ active, theme }) => (active ? 500 : 400)};
-  margin-right: 0.75rem !important;
+  margin-right: 0.5rem !important;
   border: none;
-  background-color: transparent;
+  background-color: ${({ active }) => (active ? '#54B489' : 'rgba(166, 173, 192, 0.15)')};
+  border-radius: 6px;
   font-size: 1rem;
   padding: 0px;
-  color: ${({ active, theme }) => (active ? theme.text1 : theme.text3)};
+  color: ${({ active, theme }) => (active ? 'white' : theme.text3)};
   outline: none;
+  padding: 6px 12px;
 
   @media screen and (max-width: 600px) {
     font-size: 14px;
@@ -183,10 +185,10 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             return true
           }
           if (mint.pair.token0.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-            mint.pair.token0.symbol = 'yCRV';
+            mint.pair.token0.symbol = 'yCRV'
           }
           if (mint.pair.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-            mint.pair.token1.symbol = 'yCRV';
+            mint.pair.token1.symbol = 'yCRV'
           }
           let newTxn = {}
           newTxn.hash = mint.transaction.id
@@ -205,10 +207,10 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         transactions.burns.forEach(burn => {
           let newTxn = {}
           if (burn.pair.token0.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-            burn.pair.token0.symbol = 'yCRV';
+            burn.pair.token0.symbol = 'yCRV'
           }
           if (burn.pair.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-            burn.pair.token1.symbol = 'yCRV';
+            burn.pair.token1.symbol = 'yCRV'
           }
           newTxn.hash = burn.transaction.id
           newTxn.timestamp = burn.transaction.timestamp
@@ -229,10 +231,10 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           const destAmount = swap.destAmount
 
           if (swap.pair.token0.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-            swap.pair.token0.symbol = 'yCRV';
+            swap.pair.token0.symbol = 'yCRV'
           }
           if (swap.pair.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-            swap.pair.token1.symbol = 'yCRV';
+            swap.pair.token1.symbol = 'yCRV'
           }
 
           let newTxn = {}
@@ -294,7 +296,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const below780 = useMedia('(max-width: 780px)')
 
   const ListItem = ({ item }) => {
-
     return (
       <DashGrid style={{ height: '60px' }}>
         <DataText area="txn" fontWeight="500">

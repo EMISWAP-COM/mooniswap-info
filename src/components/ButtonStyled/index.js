@@ -57,20 +57,19 @@ const ContentWrapper = styled.div`
 `
 
 export const ButtonLight = styled(Base)`
-  background-color: ${({ color, theme }) => (color ? transparentize(0.9, color) : transparentize(0.9, theme.primary1))};
-  color: ${({ color, theme }) => (color ? darken(0.1, color) : theme.primary1)};
+  background-color: ${({ color }) => (color ? transparentize(0.9, color) : transparentize(0.85, '#9ECFC3'))};
+  color: ${({ color }) => (color ? darken(0.1, color) : '#648280')};
 
   min-width: fit-content;
   border-radius: 12px;
   white-space: nowrap;
 
   a {
-    color: ${({ color, theme }) => (color ? darken(0.1, color) : theme.primary1)};
+    color: ${({ color }) => (color ? darken(0.1, color) : '#648280')};
   }
 
   :hover {
-    background-color: ${({ color, theme }) =>
-      color ? transparentize(0.8, color) : transparentize(0.8, theme.primary1)};
+    background-color: ${({ color }) => (color ? transparentize(0.8, color) : transparentize(0.8, '#9ECFC3'))};
   }
 `
 
@@ -87,7 +86,7 @@ export function ButtonDropdown({ disabled = false, children, ...rest }) {
 
 export const ButtonDark = styled(Base)`
   background-color: ${({ color, theme }) => (color ? color : theme.primary1)};
-  color: white;
+  color: #141717;
   width: fit-content;
   border-radius: 12px;
   white-space: nowrap;
@@ -127,14 +126,23 @@ export function ButtonCustom({ children, bgColor, color, ...rest }) {
 }
 
 export const OptionButton = styled.div`
-  font-weight: ${({ active }) => (active ? 600 : 400)};
   width: fit-content;
   white-space: nowrap;
-  padding: 0 6px;
+  padding: 6px 12px;
   border-radius: 6px;
+  background-color: ${({ active, isButtonGroup }) =>
+    !isButtonGroup ? 'transparent !important' : active ? '#54B489' : 'rgba(166, 173, 192, 0.15)'};
+  color: ${({ active }) => (active ? 'white' : '#24272C')};
+  transition: all 0.3s ease;
+  margin-right: 0.5rem !important;
+
+  &:last-child {
+    margin-right: 0 !important;
+  }
 
   :hover {
     cursor: ${({ disabled }) => !disabled && 'pointer'};
-    background-color: ${({ disabled }) => !disabled && 'rgba(0, 0, 0, 0.06)'};
+    color: ${({ isButtonGroup }) => isButtonGroup && 'white'};
+    background-color: ${({ disabled }) => !disabled && '#54B489'};
   }
 `

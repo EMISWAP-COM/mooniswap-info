@@ -300,7 +300,7 @@ function AccountPage({ account }) {
               <AutoColumn gap="10px">
                 <RowBetween>
                   <TYPE.main fontSize={'16px'} fontWeight={400} color="#888D9B">
-                    Mooniswap Return
+                    Emiswap Return
                   </TYPE.main>
                   <div />
                 </RowBetween>
@@ -309,7 +309,11 @@ function AccountPage({ account }) {
                     <AnimatedNumber value={animatedMooniswapReturn} formatValue={formatValue} duration={200} />
                   </TYPE.main>
                   <TYPE.main fontSize="18px" ml="8px">
-                    <AnimatedNumber value={animatedMooniswapChange} formatValue={formatAnimatedPercent} duration={200} />
+                    <AnimatedNumber
+                      value={animatedMooniswapChange}
+                      formatValue={formatAnimatedPercent}
+                      duration={200}
+                    />
                   </TYPE.main>
                 </RowFixed>
               </AutoColumn>

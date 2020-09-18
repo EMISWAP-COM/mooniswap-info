@@ -27,7 +27,7 @@ const PageButtons = styled.div`
 `
 
 const Arrow = styled.div`
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.shadow1};
   opacity: ${props => (props.faded ? 0.3 : 1)};
   padding: 0 20px;
   user-select: none;
@@ -41,15 +41,15 @@ const List = styled(Box)`
 `
 
 const FarmingLabel = styled.div`
-    border: 1px solid #6b7c99;
     margin-left: 20px;
     padding: 1px 5px;
     font-size: 0.65em !important;
-    border-radius: 5px;
+    border-radius: 4px;
     width: 40px;
     margin-top: 5px;
     text-transform: uppercase;
-    color: #6b7c99;
+    color: #11B382;
+    background-color: rgba(84, 180, 137, 0.1);
 }
 `
 
@@ -134,9 +134,7 @@ const FIELD_TO_VALUE = {
   [SORT_FIELD.FEES]: 'oneDayExtraFee'
 }
 
-
 function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
-
   const below600 = useMedia('(max-width: 600px)')
   const below740 = useMedia('(max-width: 740px)')
   const below1080 = useMedia('(max-width: 1080px)')
@@ -195,7 +193,7 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
         pairData.token1.symbol = 'yCRV'
       }
 
-      const pairUrl = `${pairData.token0.id}/${pairData.token1.id}`;
+      const pairUrl = `${pairData.token0.id}/${pairData.token1.id}`
 
       return (
         <DashGrid
@@ -213,12 +211,14 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
               margin={!below740}
             />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <CustomLink style={{ marginLeft: '20px', whiteSpace: 'nowrap' }} to={'/pair/' + pairAddress} color={color}>
+              <CustomLink
+                style={{ marginLeft: '20px', whiteSpace: 'nowrap' }}
+                to={'/pair/' + pairAddress}
+                color={color}
+              >
                 {pairData.token0.symbol + '-' + pairData.token1.symbol}
               </CustomLink>
-              {
-                IncentivisedPairUrls[pairUrl] ? <FarmingLabel>Farming</FarmingLabel> : ''
-              }
+              {IncentivisedPairUrls[pairUrl] ? <FarmingLabel>Farming</FarmingLabel> : ''}
             </div>
           </DataText>
           <DataText area="liq">{liquidity}</DataText>
@@ -240,7 +240,7 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
                   </ButtonLight>
                 </Link>
                 <Link color={'white'} external href={getSwapLink(pairData.token0?.id, pairData.token1?.id)}>
-                  <ButtonDark color={color}>Trade</ButtonDark>
+                  <ButtonDark>Trade</ButtonDark>
                 </Link>
               </Flex>
             ))}
@@ -276,7 +276,11 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
 
   return (
     <ListWrapper>
-      <DashGrid center={true} disbaleLinks={disbaleLinks} style={{ height: 'fit-content', padding: '0 0 1rem 0', margin: 0 }}>
+      <DashGrid
+        center={true}
+        disbaleLinks={disbaleLinks}
+        style={{ height: 'fit-content', padding: '0 0 1rem 0', margin: 0 }}
+      >
         <Flex alignItems="center" justifyContent="flexStart">
           <Text area="name" fontWeight="500">
             Name

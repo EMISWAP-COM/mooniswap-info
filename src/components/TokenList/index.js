@@ -25,7 +25,7 @@ const PageButtons = styled.div`
 `
 
 const Arrow = styled.div`
-  color: #2f80ed;
+  color: ${({ theme }) => theme.shadow1};
   opacity: ${props => (props.faded ? 0.3 : 1)};
   padding: 0 20px;
   user-select: none;
@@ -289,7 +289,7 @@ function TopTokenList({ tokens, history, itemMax = 10 }) {
         {filteredList &&
           filteredList.map((item, index) => {
             if (item?.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
-              item.symbol = 'yCRV';
+              item.symbol = 'yCRV'
             }
             return (
               <div key={index}>

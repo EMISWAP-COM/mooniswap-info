@@ -2,31 +2,36 @@ import gql from 'graphql-tag'
 import { FACTORY_ADDRESS, BUNDLE_ID } from '../constants'
 
 export const V1_DATA_QUERY = gql`
-    query mooniswap($date: Int!, $date2: Int!) {
-        current: mooniswap(id: "1") {
-            totalVolumeUSD
-            totalLiquidityUSD
-            txCount
-        }
-        oneDay: mooniswapHistoricalDatas(where: { timestamp_lt: $date }, first: 1, orderBy: timestamp, orderDirection: desc) {
-            totalVolumeUSD
-            totalLiquidityUSD
-            txCount
-        }
-        twoDay: mooniswapHistoricalDatas(
-            where: { timestamp_lt: $date2 }
-            first: 1
-            orderBy: timestamp
-            orderDirection: desc
-        ) {
-            totalVolumeUSD
-            totalLiquidityUSD
-            txCount
-        }
-        exchanges(first: 200, orderBy: ethBalance, orderDirection: desc) {
-            ethBalance
-        }
+  query mooniswap($date: Int!, $date2: Int!) {
+    current: mooniswap(id: "1") {
+      totalVolumeUSD
+      totalLiquidityUSD
+      txCount
     }
+    oneDay: mooniswapHistoricalDatas(
+      where: { timestamp_lt: $date }
+      first: 1
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      totalVolumeUSD
+      totalLiquidityUSD
+      txCount
+    }
+    twoDay: mooniswapHistoricalDatas(
+      where: { timestamp_lt: $date2 }
+      first: 1
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      totalVolumeUSD
+      totalLiquidityUSD
+      txCount
+    }
+    exchanges(first: 200, orderBy: ethBalance, orderDirection: desc) {
+      ethBalance
+    }
+  }
 `
 
 export const GET_BLOCK = gql`
@@ -307,26 +312,26 @@ export const PAIR_DAY_DATA_BULK = (pairs, startTimestamp) => {
 }
 
 export const GLOBAL_CHART = gql`
-    query mooniswapDayDatas($startTime: Int!) {
-        mooniswapDayDatas(where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
-            id
-            date
-            totalVolumeUSD
-            dailyVolumeUSD
-            dailyVolumeETH
-            totalLiquidityUSD
-            totalLiquidityETH
-            mostLiquidTokens {
-                id
-                totalLiquidityETH
-                totalLiquidityUSD
-                token {
-                    id
-                    symbol
-                }
-            }
+  query mooniswapDayDatas($startTime: Int!) {
+    mooniswapDayDatas(where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
+      id
+      date
+      totalVolumeUSD
+      dailyVolumeUSD
+      dailyVolumeETH
+      totalLiquidityUSD
+      totalLiquidityETH
+      mostLiquidTokens {
+        id
+        totalLiquidityETH
+        totalLiquidityUSD
+        token {
+          id
+          symbol
         }
+      }
     }
+  }
 `
 
 export const GLOBAL_DATA = block => {
@@ -561,7 +566,7 @@ export const ALL_TOKENS = gql`
   }
 `
 
-export const ALL_TOKENS_BY_BLOCK = (block) => gql`
+export const ALL_TOKENS_BY_BLOCK = block => gql`
     query tokens($skip: Int!) {
         tokens(first: 1000, skip: $skip, block: {number: ${block}}) {
             id

@@ -144,7 +144,14 @@ export default function Provider({ children }) {
       value={useMemo(
         () => [
           state,
-          { update, updateTransactions, updateChart, updateEthPrice, updateAllPairsInMooniswap, updateAllTokensInMooniswap }
+          {
+            update,
+            updateTransactions,
+            updateChart,
+            updateEthPrice,
+            updateAllPairsInMooniswap,
+            updateAllTokensInMooniswap
+          }
         ],
         [
           state,

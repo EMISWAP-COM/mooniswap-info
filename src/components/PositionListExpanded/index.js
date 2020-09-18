@@ -25,7 +25,7 @@ const PageButtons = styled.div`
 `
 
 const Arrow = styled.div`
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.shadow1};
   opacity: ${props => (props.faded ? 0.3 : 1)};
   padding: 0 20px;
   user-select: none;
@@ -200,7 +200,8 @@ function PositionList({ positions, transactions }) {
             )}{' '}
             {!showFlyout && (
               <DataText area="return">
-                {formattedNum(position?.mooniswapReturn, true, true)} ({formattedPercent(position?.mooniswapPercentChange)})
+                {formattedNum(position?.mooniswapReturn, true, true)} (
+                {formattedPercent(position?.mooniswapPercentChange)})
               </DataText>
             )}{' '}
             {!showFlyout && (
@@ -277,7 +278,7 @@ function PositionList({ positions, transactions }) {
                     </AutoColumn>
                     <AutoColumn gap="10px">
                       <Text fontSize={16} color={'#888D9B'} fontWeight={500}>
-                        Mooniswap Return
+                        Emiswap Return
                       </Text>
                       <Text fontWeight={500}>
                         <RowFixed>
@@ -364,7 +365,7 @@ function PositionList({ positions, transactions }) {
                 setSortDirection(sortedColumn !== SORT_FIELD.VOL_7DAYS ? true : !sortDirection)
               }}
             >
-              Mooniswap Return {sortedColumn === SORT_FIELD.VOL_7DAYS ? (!sortDirection ? '↑' : '↓') : ''}
+              Emiswap Return {sortedColumn === SORT_FIELD.VOL_7DAYS ? (!sortDirection ? '↑' : '↓') : ''}
             </ClickableText>
           </Flex>
         )}

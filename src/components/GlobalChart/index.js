@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar } from 'recharts'
+import { CartesianGrid, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar } from 'recharts'
 import Row, { RowBetween } from '../Row'
 import { toK, toNiceDate, toWeeklyDate, toNiceDateYear } from '../../helpers'
 import { OptionButton } from '../ButtonStyled'
@@ -96,12 +96,12 @@ const GlobalChart = ({ display }) => {
     <>
       {below600 ? (
         <RowBetween mb={40}>
-          <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#1557b4'} />
+          <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#11B382'} />
           <DropdownSelect
             options={timeframeOptions}
             active={localWindow}
             setActive={setLocalWindow}
-            color={'#1557b4'}
+            color={'#11B382'}
           />
         </RowBetween>
       ) : (
@@ -113,7 +113,7 @@ const GlobalChart = ({ display }) => {
               onClick={!display ? toggleView : () => {}}
               disabled={!!display}
             >
-              <TYPE.main>{chartView}</TYPE.main>
+              <TYPE.main fontSize={20}>{chartView}</TYPE.main>
             </OptionButton>
           </Row>
           <Row justify="flex-end">
@@ -122,28 +122,32 @@ const GlobalChart = ({ display }) => {
                 style={{ marginRight: '0px' }}
                 active={volumeWindow === VOLUME_WINDOW.DAYS}
                 onClick={() => setVolumeWindow(VOLUME_WINDOW.DAYS)}
+                isButtonGroup
               >
-                <TYPE.pink faded={volumeWindow === VOLUME_WINDOW.WEEKLY}>Daily</TYPE.pink>
+                Daily
               </OptionButton>
             )}
             {chartView === CHART_VIEW.VOLUME && (
               <OptionButton
                 active={volumeWindow === VOLUME_WINDOW.WEEKLY}
                 onClick={() => setVolumeWindow(VOLUME_WINDOW.WEEKLY)}
+                isButtonGroup
               >
-                <TYPE.pink faded={volumeWindow === VOLUME_WINDOW.DAYS}>Weekly</TYPE.pink>
+                Weekly
               </OptionButton>
             )}
             <OptionButton
               style={{ marginRight: '0px', marginLeft: '20px' }}
               active={localWindow === timeframeOptions.WEEK}
               onClick={() => setLocalWindow(timeframeOptions.WEEK)}
+              isButtonGroup
             >
               1 Week
             </OptionButton>
             <OptionButton
               active={localWindow === timeframeOptions.ALL_TIME}
               onClick={() => setLocalWindow(timeframeOptions.ALL_TIME)}
+              isButtonGroup
             >
               All Time
             </OptionButton>
@@ -154,19 +158,25 @@ const GlobalChart = ({ display }) => {
       {chartData && chartView === CHART_VIEW.LIQUIDITY && (
         <ResponsiveContainer aspect={below1080 ? 60 / 28 : 60 / 28}>
           <AreaChart margin={{ top: 20, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+            <defs>
+              <linearGradient id="Gradient" x1="0" x2="0" y1="1" y2="0">
+                <stop offset="0%" stopColor="rgba(17, 179, 130, 0.05)" />
+                <stop offset="100%" stopColor="rgba(17, 179, 130, 0.5)" />
+              </linearGradient>
+            </defs>
             <Area
               key={'other'}
               dataKey={'totalLiquidityUSD'}
               stackId="2"
               strokeWidth={1}
-              stroke={'#1557b4'}
+              stroke={'#11B382'}
               dot={false}
               type="monotone"
               name={'Liquidity'}
               yAxisId={0}
-              opacity={'1'}
-              isAnimationActive={false}
-              fill="#1557b4"
+              opacity={'0.7'}
+              isAnimationActive={true}
+              fill="url(#Gradient)"
             />
             <XAxis
               tickLine={true}
@@ -177,14 +187,15 @@ const GlobalChart = ({ display }) => {
               tickFormatter={tick => toNiceDate(tick)}
               dataKey="date"
               // mirror={true}
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
               padding={{ right: 0, bottom: 0 }}
               type={'number'}
               domain={domain}
+              stroke="#EAEEEE"
             />
             <YAxis
               type="number"
-              orientation="right"
+              orientation="left"
               tickFormatter={tick => '$' + toK(tick)}
               axisLine={true}
               tickLine={true}
@@ -192,23 +203,25 @@ const GlobalChart = ({ display }) => {
               minTickGap={50}
               yAxisId={0}
               // mirror={true}
-              padding={{ top: 0, bottom: 0 }}
-              tick={{ fill: 'black' }}
+              padding={{ top: 0, bottom: 15 }}
+              tick={{ fill: '#BDBDBD' }}
               hide={below600}
               contentStyle={{
                 zIndex: '100'
               }}
+              stroke="none"
             />
+            <CartesianGrid stroke="#EAEEEE" vertical={false} />
             <Tooltip
-              cursor={{ stroke: 'white', strokeWidth: 1 }}
+              cursor={{ stroke: 'rgb(157, 191, 183)', strokeWidth: 1 }}
               formatter={val => '$' + toK(val, true)}
               labelFormatter={label => toNiceDateYear(label)}
               labelStyle={{ paddingTop: 4 }}
               contentStyle={{
                 padding: '10px 14px',
                 borderRadius: 10,
-                borderColor: '#1557b4',
-                color: 'black'
+                borderColor: 'transparent',
+                color: '#555959'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
@@ -231,10 +244,11 @@ const GlobalChart = ({ display }) => {
                 volumeWindow === VOLUME_WINDOW.WEEKLY ? toWeeklyDate(tick - 1) : toNiceDate(tick)
               }
               dataKey="date"
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
               padding={{ right: 0, bottom: 0 }}
               allowDataOverflow={true}
               minTickGap={80}
+              stroke="#EAEEEE"
             />
 
             <YAxis
@@ -245,12 +259,14 @@ const GlobalChart = ({ display }) => {
               minTickGap={20}
               padding={{ top: 0, bottom: 0, left: 20 }}
               yAxisId={0}
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
               domain={[0, 'dataMax']}
-              orientation={'right'}
+              orientation={'left'}
+              stroke="none"
             />
+            <CartesianGrid stroke="#EAEEEE" vertical={false} />
             <Tooltip
-              cursor={{ fill: '#1557b4', opacity: 0.1 }}
+              cursor={{ fill: '#11B382', opacity: 0.1 }}
               formatter={val => '$' + toK(val, true)}
               labelFormatter={label =>
                 volumeWindow === VOLUME_WINDOW.WEEKLY ? toWeeklyDate(label - 1) : toNiceDateYear(label)
@@ -259,8 +275,8 @@ const GlobalChart = ({ display }) => {
               contentStyle={{
                 padding: '10px 14px',
                 borderRadius: 10,
-                borderColor: '#1557b4',
-                color: 'black'
+                borderColor: 'transparent',
+                color: '#555959'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
@@ -268,12 +284,12 @@ const GlobalChart = ({ display }) => {
               type="monotone"
               name={'Volume'}
               dataKey={volumeWindow === VOLUME_WINDOW.DAYS ? 'dailyVolumeUSD' : 'weeklyVolumeUSD'}
-              fill="#1557b4"
-              opacity={'0.5'}
+              fill="#11B382"
+              opacity={'1'}
               yAxisId={0}
               strokeWidth={2}
-              stroke={'#1557b4'}
-              isAnimationActive={false}
+              stroke={'#fff'}
+              isAnimationActive={true}
             />
           </BarChart>
         </ResponsiveContainer>

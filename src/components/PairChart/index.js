@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar } from 'recharts'
+import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar, CartesianGrid } from 'recharts'
 import { RowBetween, AutoRow } from '../Row'
 
 import { toK, toNiceDate, toNiceDateYear, formattedNum } from '../../helpers'
@@ -96,12 +96,14 @@ const PairChart = ({ address, color }) => {
             <OptionButton
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
+              isButtonGroup
             >
               1 Week
             </OptionButton>
             <OptionButton
               active={timeWindow === timeframeOptions.ALL_TIME}
               onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
+              isButtonGroup
             >
               All Time
             </OptionButton>
@@ -125,9 +127,10 @@ const PairChart = ({ address, color }) => {
               minTickGap={80}
               tickFormatter={tick => toNiceDate(tick)}
               dataKey="date"
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
               type={'number'}
               domain={domain}
+              stroke="#EAEEEE"
             />
             <YAxis
               type="number"
@@ -138,8 +141,11 @@ const PairChart = ({ address, color }) => {
               interval="preserveEnd"
               minTickGap={80}
               yAxisId={0}
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
+              padding={{ top: 0, bottom: 15 }}
+              stroke="none"
             />
+            <CartesianGrid stroke="#EAEEEE" vertical={false} />
             <Tooltip
               cursor={true}
               formatter={val => formattedNum(val, true)}
@@ -148,8 +154,8 @@ const PairChart = ({ address, color }) => {
               contentStyle={{
                 padding: '10px 14px',
                 borderRadius: 10,
-                borderColor: color,
-                color: 'black'
+                borderColor: 'transparent',
+                color: '#555959'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
@@ -162,6 +168,7 @@ const PairChart = ({ address, color }) => {
               yAxisId={0}
               stroke={darken(0.12, color)}
               fill="url(#colorUv)"
+              isAnimationActive={true}
             />
           </AreaChart>
         </ResponsiveContainer>

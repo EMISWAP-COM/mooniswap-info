@@ -18,6 +18,10 @@ const TitleWrapper = styled.div`
   z-index: 10;
 `
 
+const LogoWrapper = styled.div`
+  margin-right: 10px;
+`
+
 const UniIcon = styled(Link)`
   transition: transform 0.3s ease;
   :hover {
@@ -26,7 +30,7 @@ const UniIcon = styled(Link)`
 `
 
 const WrapImage = styled.div`
-  margin-left: 4px; 
+  margin-left: 4px;
   margin-top: 0px;
   max-width: 300px;
 `
@@ -44,7 +48,7 @@ export default function Title({ account }) {
     if (account) {
       return (
         <div>
-          <span style={ { fontWeight: 400, verticalAlign: '-webkit-baseline-middle' } }> → Account → Overview </span>
+          <span style={{ fontWeight: 400, verticalAlign: '-webkit-baseline-middle' }}> → Account → Overview </span>
         </div>
       )
     }
@@ -72,18 +76,18 @@ export default function Title({ account }) {
   }
 
   return (
-    <TitleWrapper onClick={ () => history.push('/') }>
+    <TitleWrapper onClick={() => history.push('/')}>
       <Flex alignItems="center">
-        <div>
-          <UniIcon id="link" onClick={ () => history.push('/') }>
-            <img src={ Logo } alt="logo" width="55px"/>
+        <LogoWrapper>
+          <UniIcon id="link" onClick={() => history.push('/')}>
+            <img src={Logo} alt="logo" width="42.6px" />
           </UniIcon>
-        </div>
+        </LogoWrapper>
         <WrapImage>
-          <img style={ { width: '100%' } } src={ Wordmark } alt="logo"/>
+          <img style={{ width: 108.8 }} src={Wordmark} alt="logo" />
         </WrapImage>
-        <Text fontWeight={ 600 } mx="4px" lineHeight="1.5rem">
-          { getName() }
+        <Text fontWeight={600} mx="4px" lineHeight="1.5rem">
+          {getName()}
         </Text>
       </Flex>
     </TitleWrapper>

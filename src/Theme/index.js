@@ -13,7 +13,7 @@ export default function ThemeProvider({ children }) {
 
 const theme = (darkMode, color) => ({
   customColor: color,
-  textColor: darkMode ? color : 'black',
+  textColor: darkMode ? color : '#24272C',
 
   panelColor: darkMode ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)',
   backgroundColor: darkMode ? '#212429' : '#F7F8FA',
@@ -22,10 +22,10 @@ const theme = (darkMode, color) => ({
 
   concreteGray: darkMode ? '#292C2F' : '#FAFAFA',
   inputBackground: darkMode ? '#1F1F1F' : '#FAFAFA',
-  shadowColor: darkMode ? '#000' : '#2F80ED',
+  shadowColor: darkMode ? '#000' : '#3B403F',
   mercuryGray: darkMode ? '#333333' : '#E1E1E1',
 
-  text1: darkMode ? '#FFFFFF' : '#000000',
+  text1: darkMode ? '#FFFFFF' : '#24272C',
   text2: darkMode ? '#C3C5CB' : '#565A69',
   text3: darkMode ? '#6C7284' : '#888D9B',
   text4: darkMode ? '#565A69' : '#C3C5CB',
@@ -43,7 +43,7 @@ const theme = (darkMode, color) => ({
   advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)',
 
   //primary colors
-  primary1: darkMode ? '#3A619D' : '#3A619D',
+  primary1: darkMode ? '#FFD541' : '#FFD541',
   primary2: darkMode ? '#3680E7' : '#3680E7',
   primary3: darkMode ? '#4D8FEA' : '#4D8FEA',
   primary4: darkMode ? '#376bad70' : '#376bad70',
@@ -57,7 +57,7 @@ const theme = (darkMode, color) => ({
   secondary2: darkMode ? '#17000b26' : '#F6DDE8',
   secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
-  shadow1: darkMode ? '#000' : '#2F80ED',
+  shadow1: darkMode ? '#000' : '#3B403F',
 
   // other
   red1: '#FF6871',
@@ -65,8 +65,8 @@ const theme = (darkMode, color) => ({
   green1: '#27AE60',
   yellow1: '#FFE270',
   yellow2: '#F3841E',
-  horse: darkMode ? '#ffffff' : '#3A619D',
-  link: '#2172E5',
+  horse: darkMode ? '#ffffff' : '#FFD541',
+  link: '#11B382',
 
   background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #376bad15 0%, #376bad00 100%)`
 })
@@ -128,7 +128,7 @@ export const ThemedBackground = styled.div`
   max-width: 100vw !important;
   width: 100vw !important;
   height: 200vh;
-  
+
   position: absolute;
   top: 0px;
   left: 0px;
@@ -138,10 +138,10 @@ export const ThemedBackground = styled.div`
 `
 
 export const GlobalStyle = createGlobalStyle`
-  @import url('https://rsms.me/inter/inter.css');
-  html { font-family: 'Inter', sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+  html { font-family: 'IBM Plex Sans', sans-serif; }
   @supports (font-variation-settings: normal) {
-    html { font-family: 'Inter var', sans-serif; }
+    html { font-family: 'IBM Plex Sans', sans-serif; }
   }
   
   html,
@@ -151,7 +151,8 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     overflow: auto;
-    font-size: 14px;    
+    font-size: 14px;  
+    background-color: rgb(251, 251, 251);  
   }
 
   a {
@@ -167,9 +168,9 @@ export const GlobalStyle = createGlobalStyle`
     font-variant: none;
     color: 'black';
     background-image: ${({ theme }) =>
-  `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
-    1,
-    theme.bg1
-  )} 100%)`};
+      `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
+        1,
+        theme.bg1
+      )} 100%)`};
   }
 `

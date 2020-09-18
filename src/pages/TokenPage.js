@@ -205,10 +205,10 @@ function TokenPage({ address, history }) {
               style={{ flexDirection: below1080 ? 'row-reverse' : 'initial' }}
             >
               <Link href={getPoolLink(address)} target="_blank">
-                <ButtonLight color={backgroundColor}>+ Add Liquidity</ButtonLight>
+                <ButtonLight>+ Add Liquidity</ButtonLight>
               </Link>
               <Link href={getSwapLink(address)} target="_blank">
-                <ButtonDark ml={'.5rem'} mr={below1080 && '.5rem'} color={backgroundColor}>
+                <ButtonDark ml={'.5rem'} mr={below1080 && '.5rem'}>
                   Trade
                 </ButtonDark>
               </Link>
@@ -351,7 +351,7 @@ function TokenPage({ address, history }) {
                     <CopyHelper toCopy={address} />
                   </AutoRow>
                 </Column>
-                <ButtonLight color={backgroundColor}>
+                <ButtonLight>
                   <Link color={backgroundColor} external href={'https://etherscan.io/address/' + address}>
                     View on Etherscan ↗
                   </Link>

@@ -6,7 +6,7 @@ import { getLogoUrlList, isAddress } from '../helpers'
 import copy from 'copy-to-clipboard'
 
 export function useColor(tokenAddress, token) {
-  const [color, setColor] = useState('#2172E5')
+  const [color, setColor] = useState('#11B382')
   if (tokenAddress) {
     const pathList = getLogoUrlList(isAddress(
       tokenAddress

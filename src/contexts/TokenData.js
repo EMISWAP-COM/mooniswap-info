@@ -108,7 +108,7 @@ export default function Provider({ children }) {
     })
   }, [])
 
-  const updateVerifiedTokens = useCallback((verifiedTokens) => {
+  const updateVerifiedTokens = useCallback(verifiedTokens => {
     dispatch({
       type: UPDATE_VERIFIED_TOKENS,
       payload: {
@@ -149,15 +149,13 @@ export default function Provider({ children }) {
 
   return (
     <TokenDataContext.Provider
-      value={useMemo(() => [state, { update, updateTokenTxns, updateChartData, updateTopTokens, updateAllPairs, updateVerifiedTokens }], [
-        state,
-        update,
-        updateTokenTxns,
-        updateChartData,
-        updateTopTokens,
-        updateAllPairs,
-        updateVerifiedTokens
-      ])}
+      value={useMemo(
+        () => [
+          state,
+          { update, updateTokenTxns, updateChartData, updateTopTokens, updateAllPairs, updateVerifiedTokens }
+        ],
+        [state, update, updateTokenTxns, updateChartData, updateTopTokens, updateAllPairs, updateVerifiedTokens]
+      )}
     >
       {children}
     </TokenDataContext.Provider>
@@ -399,12 +397,12 @@ const getTokenTransactions = async allPairsFormatted => {
 const getVerifiedTokens = async () => {
   try {
     // const res = await fetch('http://tokens.1inch.eth.link');
-    const res = await fetch('https://gateway.ipfs.io/ipfs/QmbrAQYoLLUxQcDyVLyJ2mcUYRFVQai3u4eLWJkBj9C8pU');
-    const tokens = (await res.json()).tokens.map((x) => x.address.toLowerCase());
-    tokens.push(ETH);
-    return tokens;
+    const res = await fetch('https://gateway.ipfs.io/ipfs/QmbrAQYoLLUxQcDyVLyJ2mcUYRFVQai3u4eLWJkBj9C8pU')
+    const tokens = (await res.json()).tokens.map(x => x.address.toLowerCase())
+    tokens.push(ETH)
+    return tokens
   } catch (e) {
-    return SURPRESS_WARNINGS;
+    return SURPRESS_WARNINGS
   }
 }
 
@@ -520,7 +518,7 @@ export function useTokenData(tokenAddress) {
 }
 
 export function useVerifiedTokens() {
-  const [state, {updateVerifiedTokens}] = useTokenDataContext()
+  const [state, { updateVerifiedTokens }] = useTokenDataContext()
 
   useMemo(() => {
     if (!state?.verifiedTokens) {

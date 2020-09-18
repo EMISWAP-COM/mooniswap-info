@@ -197,12 +197,21 @@ function PairPage({ pairAddress, history }) {
       <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
       <Warning
         type={'pair'}
-        show={!dismissed && verifiedTokens && (!(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id)) && token1 && token0)}
+        show={
+          !dismissed &&
+          verifiedTokens &&
+          !(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id)) &&
+          token1 &&
+          token0
+        }
         setShow={markAsDismissed}
         address={pairAddress}
       />
       <WarningGrouping
-        disabled={!dismissed && (!verifiedTokens || !(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id)))}
+        disabled={
+          !dismissed &&
+          (!verifiedTokens || !(verifiedTokens.includes(token0?.id) && verifiedTokens.includes(token1?.id)))
+        }
       >
         <RowBetween mt={20} style={{ flexWrap: 'wrap' }}>
           <RowFixed style={{ flexWrap: 'wrap' }}>
@@ -229,10 +238,10 @@ function PairPage({ pairAddress, history }) {
             style={{ flexDirection: below1080 ? 'row-reverse' : 'initial' }}
           >
             <Link external href={getPoolLink(token0?.id, token1?.id)}>
-              <ButtonLight color={backgroundColor}>+ Add Liquidity</ButtonLight>
+              <ButtonLight>+ Add Liquidity</ButtonLight>
             </Link>
             <Link external href={getSwapLink(token0?.id, token1?.id)}>
-              <ButtonDark ml={'.5rem'} mr={below1080 && '.5rem'} color={backgroundColor}>
+              <ButtonDark ml={'.5rem'} mr={below1080 && '.5rem'}>
                 Trade
               </ButtonDark>
             </Link>
@@ -305,7 +314,7 @@ function PairPage({ pairAddress, history }) {
                   <RowBetween>
                     <TYPE.main>
                       Fees (24hrs)
-                      <Question style={{ marginLeft: 2 }} text="0.15 percent swap earning + LP slippage profit"/>
+                      <Question style={{ marginLeft: 2 }} text="0.15 percent swap earning + LP slippage profit" />
                     </TYPE.main>
                     <div />
                   </RowBetween>
@@ -319,13 +328,7 @@ function PairPage({ pairAddress, history }) {
                         ? '$0'
                         : '-'}
                     </TYPE.main>
-                    <TYPE.main>
-                      {
-                        !oneDayExtraFee || oneDayExtraFee <= 0
-                          ? volumeChange
-                          : feePercentChange
-                      }
-                    </TYPE.main>
+                    <TYPE.main>{!oneDayExtraFee || oneDayExtraFee <= 0 ? volumeChange : feePercentChange}</TYPE.main>
                   </RowBetween>
                 </AutoColumn>
               </Panel>
@@ -428,7 +431,7 @@ function PairPage({ pairAddress, history }) {
                     <CopyHelper toCopy={token1?.id} />
                   </AutoRow>
                 </Column>
-                <ButtonLight color={backgroundColor}>
+                <ButtonLight>
                   <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
                     View on Etherscan ↗
                   </Link>
