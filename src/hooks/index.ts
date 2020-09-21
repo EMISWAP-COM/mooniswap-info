@@ -2,8 +2,9 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 import { shade } from 'polished'
 import Vibrant from 'node-vibrant'
 import { hex } from 'wcag-contrast'
-import { getLogoUrlList, isAddress } from '../helpers'
+import { getIsValidNumber, getLogoUrlList, isAddress } from '../helpers'
 import copy from 'copy-to-clipboard'
+import { PAGES } from '../constants'
 
 export function useColor(tokenAddress, token) {
   const [color, setColor] = useState('#11B382')
@@ -96,3 +97,34 @@ export default function useInterval(callback: () => void, delay: null | number) 
     return
   }, [delay])
 }
+
+export const usePagination = (initPage, maxPage) => {
+  const [page, setPage] = useState(initPage);
+
+  const handlePageChange = ({ target }) => {
+    const btnType = target.getAttribute('data-name');
+
+    getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType);
+  };
+
+  const handleSpecificBtnType = btnType => {
+    switch (btnType) {
+      case PAGES.PREV:
+        setPage(page - 1);
+        break;
+      case PAGES.NEXT:
+        setPage(page + 1);
+        break;
+      case PAGES.FIRST:
+        setPage(1);
+        break;
+      case PAGES.LAST:
+        setPage(maxPage);
+        break;
+      default:
+        break;
+    }
+  };
+
+  return [page, handlePageChange];
+};

@@ -9,12 +9,13 @@ import styled from 'styled-components'
 import Link, { CustomLink } from '../Link'
 import { Divider } from '../../components'
 
-import { formattedNum, getPoolLink, getSwapLink } from '../../helpers'
+import { formattedNum, getIsValidNumber, getPoolLink, getSwapLink } from '../../helpers'
 import DoubleTokenLogo from '../DoubleLogo'
 import { ButtonLight, ButtonDark } from '../ButtonStyled'
 import { withRouter } from 'react-router-dom'
-import { OVERVIEW_PAIR_BLACKLIST } from '../../constants'
+import { OVERVIEW_PAIR_BLACKLIST, PAGES } from '../../constants'
 import { IncentivisedPairUrls } from './insetivisedPoolList'
+import Pagination from '../Pagination'
 
 dayjs.extend(utc)
 
@@ -26,31 +27,20 @@ const PageButtons = styled.div`
   margin-bottom: 0.5em;
 `
 
-const Arrow = styled.div`
-  color: ${({ theme }) => theme.shadow1};
-  opacity: ${props => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
-`
-
 const List = styled(Box)`
   -webkit-overflow-scrolling: touch;
 `
 
 const FarmingLabel = styled.div`
-    margin-left: 20px;
-    padding: 1px 5px;
-    font-size: 0.65em !important;
-    border-radius: 4px;
-    width: 40px;
-    margin-top: 5px;
-    text-transform: uppercase;
-    color: #11B382;
-    background-color: rgba(84, 180, 137, 0.1);
-}
+  margin-left: 20px;
+  padding: 1px 5px;
+  font-size: 0.65em !important;
+  border-radius: 4px;
+  width: 40px;
+  margin-top: 5px;
+  text-transform: uppercase;
+  color: #11b382;
+  background-color: rgba(84, 180, 137, 0.1);
 `
 
 const DashGrid = styled.div`
@@ -275,6 +265,31 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
         )
       })
 
+  const handlePageChange = ({ target }) => {
+    const btnType = target.getAttribute('data-name')
+
+    getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType)
+  }
+
+  const handleSpecificBtnType = btnType => {
+    switch (btnType) {
+      case PAGES.PREV:
+        setPage(page - 1)
+        break
+      case PAGES.NEXT:
+        setPage(page + 1)
+        break
+      case PAGES.FIRST:
+        setPage(1)
+        break
+      case PAGES.LAST:
+        setPage(maxPage)
+        break
+      default:
+        break
+    }
+  }
+
   return (
     <ListWrapper>
       <DashGrid
@@ -344,23 +359,11 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
       </DashGrid>
       <Divider />
       <List p={0}>{!pairList ? <LocalLoader /> : pairList}</List>
-      <PageButtons>
-        <div
-          onClick={e => {
-            setPage(page === 1 ? page : page - 1)
-          }}
-        >
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        {'Page ' + page + ' of ' + maxPage}
-        <div
-          onClick={e => {
-            setPage(page === maxPage ? page : page + 1)
-          }}
-        >
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons>
+      {pairList?.length > 0 && (
+        <PageButtons>
+          <Pagination page={page} lastPage={maxPage} onClick={handlePageChange} />
+        </PageButtons>
+      )}
     </ListWrapper>
   )
 }

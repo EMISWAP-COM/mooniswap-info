@@ -152,3 +152,10 @@ export const SURPRESS_WARNINGS = [
   '0x84ca8bc7997272c7cfb4d0cd3d55cd942b3c9419', // DIA
   '0x09e64c2b61a5f1690ee6fbed9baf5d6990f8dfd0' // GRO
 ]
+
+export const PAGES = {
+  PREV: 'prev',
+  NEXT: 'next',
+  FIRST: 'first',
+  LAST: 'last'
+}

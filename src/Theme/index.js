@@ -3,7 +3,6 @@ import { ThemeProvider as StyledComponentsThemeProvider, createGlobalStyle } fro
 import { useDarkModeManager } from '../contexts/LocalStorage'
 import styled from 'styled-components'
 import { Text } from 'rebass'
-import { transparentize } from 'polished'
 
 export default function ThemeProvider({ children }) {
   const [darkMode] = useDarkModeManager()
@@ -152,7 +151,6 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     overflow: auto;
     font-size: 14px;  
-    background-color: rgb(251, 251, 251);  
   }
 
   a {
@@ -166,11 +164,7 @@ export const GlobalStyle = createGlobalStyle`
   html {
     font-size: 1rem;
     font-variant: none;
-    color: 'black';
-    background-image: ${({ theme }) =>
-      `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize(
-        1,
-        theme.bg1
-      )} 100%)`};
+    color: #24272C;
+    background-color: rgb(251, 251, 251);  
   }
 `

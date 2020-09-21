@@ -85,14 +85,19 @@ const PairChart = ({ address, color }) => {
             <OptionButton
               active={chartFilter === CHART_VIEW.LIQUIDITY}
               onClick={() => setChartFilter(CHART_VIEW.LIQUIDITY)}
+              isButtonGroup
             >
               Liquidity
             </OptionButton>
-            <OptionButton active={chartFilter === CHART_VIEW.VOLUME} onClick={() => setChartFilter(CHART_VIEW.VOLUME)}>
+            <OptionButton
+              active={chartFilter === CHART_VIEW.VOLUME}
+              onClick={() => setChartFilter(CHART_VIEW.VOLUME)}
+              isButtonGroup
+            >
               Volume
             </OptionButton>
           </AutoRow>
-          <AutoRow justify="flex-end" gap="10px">
+          <AutoRow justify="flex-end">
             <OptionButton
               active={timeWindow === timeframeOptions.WEEK}
               onClick={() => setTimeWindow(timeframeOptions.WEEK)}
@@ -155,7 +160,8 @@ const PairChart = ({ address, color }) => {
                 padding: '10px 14px',
                 borderRadius: 10,
                 borderColor: 'transparent',
-                color: '#555959'
+                color: '#555959',
+                boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
@@ -188,7 +194,7 @@ const PairChart = ({ address, color }) => {
               tickMargin={14}
               tickFormatter={tick => toNiceDate(tick)}
               dataKey="date"
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
               type={'number'}
               domain={domain}
             />
@@ -201,8 +207,9 @@ const PairChart = ({ address, color }) => {
               interval="preserveEnd"
               minTickGap={80}
               yAxisId={0}
-              tick={{ fill: 'black' }}
+              tick={{ fill: '#BDBDBD' }}
             />
+            <CartesianGrid stroke="#EAEEEE" vertical={false} />
             <Tooltip
               cursor={{ fill: color, opacity: 0.1 }}
               formatter={val => formattedNum(val, true)}
@@ -211,8 +218,9 @@ const PairChart = ({ address, color }) => {
               contentStyle={{
                 padding: '10px 14px',
                 borderRadius: 10,
-                borderColor: color,
-                color: 'black'
+                borderColor: 'transparent',
+                color: '#555959',
+                boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
@@ -221,9 +229,9 @@ const PairChart = ({ address, color }) => {
               name={'Volume'}
               dataKey={'dailyVolumeUSD'}
               fill={color}
-              opacity={'0.4'}
               yAxisId={0}
               stroke={color}
+              isAnimationActive={true}
             />
           </BarChart>
         </ResponsiveContainer>

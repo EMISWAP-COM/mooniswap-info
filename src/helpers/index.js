@@ -369,3 +369,5 @@ export function getLogoUrlList(address) {
     `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
   ]
 }
+
+export const getIsValidNumber = number => !Number.isNaN(parseInt(number, 10))

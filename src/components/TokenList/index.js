@@ -9,10 +9,11 @@ import { CustomLink } from '../Link'
 import Row from '../Row'
 import { Divider } from '..'
 
-import { formattedNum, formattedPercent } from '../../helpers'
+import { formattedNum, formattedPercent, getIsValidNumber } from '../../helpers'
 import { useMedia } from 'react-use'
 import { withRouter } from 'react-router-dom'
-import { OVERVIEW_TOKEN_BLACKLIST } from '../../constants'
+import { OVERVIEW_TOKEN_BLACKLIST, PAGES } from '../../constants'
+import Pagination from '../Pagination'
 
 dayjs.extend(utc)
 
@@ -22,16 +23,6 @@ const PageButtons = styled.div`
   justify-content: center;
   margin-top: 2em;
   margin-bottom: 2em;
-`
-
-const Arrow = styled.div`
-  color: ${({ theme }) => theme.shadow1};
-  opacity: ${props => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
 `
 
 const List = styled(Box)`
@@ -203,6 +194,31 @@ function TopTokenList({ tokens, history, itemMax = 10 }) {
     )
   }
 
+  const handlePageChange = ({ target }) => {
+    const btnType = target.getAttribute('data-name')
+
+    getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType)
+  }
+
+  const handleSpecificBtnType = btnType => {
+    switch (btnType) {
+      case PAGES.PREV:
+        setPage(page - 1)
+        break
+      case PAGES.NEXT:
+        setPage(page + 1)
+        break
+      case PAGES.FIRST:
+        setPage(1)
+        break
+      case PAGES.LAST:
+        setPage(maxPage)
+        break
+      default:
+        break
+    }
+  }
+
   return (
     <ListWrapper>
       <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0', margin: 0 }}>
@@ -299,23 +315,11 @@ function TopTokenList({ tokens, history, itemMax = 10 }) {
             )
           })}
       </List>
-      <PageButtons>
-        <div
-          onClick={e => {
-            setPage(page === 1 ? page : page - 1)
-          }}
-        >
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        {'Page ' + page + ' of ' + maxPage}
-        <div
-          onClick={e => {
-            setPage(page === maxPage ? page : page + 1)
-          }}
-        >
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons>
+      {filteredList?.length > 0 && (
+        <PageButtons>
+          <Pagination page={page} lastPage={maxPage} onClick={handlePageChange} />
+        </PageButtons>
+      )}
     </ListWrapper>
   )
 }

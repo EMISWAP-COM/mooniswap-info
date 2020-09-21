@@ -106,10 +106,11 @@ const TokenDetailsLayout = styled.div`
 const FixedPanel = styled(Panel)`
   width: fit-content;
   padding: 8px 12px;
+  background-color: ${({ color }) => (color ? transparentize(0.9, color) : transparentize(0.85, '#9ECFC3'))};
 
   :hover {
     cursor: pointer;
-    background-color: ${({ theme }) => theme.bg2};
+    background-color: ${({ color }) => (color ? transparentize(0.8, color) : transparentize(0.8, '#9ECFC3'))};
   }
 `
 
@@ -251,7 +252,7 @@ function PairPage({ pairAddress, history }) {
           <FixedPanel onClick={() => history.push(`/token/${token0?.id}`)}>
             <RowFixed>
               <TokenLogo address={token0?.id} size={'16px'} />
-              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'}>
+              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} color={'#648280'}>
                 {token0 && token1
                   ? `1 ${token0?.symbol} = ${token0Rate} ${token1?.symbol} ${
                       parseFloat(token0?.derivedETH) ? '(' + token0USD + ')' : ''
@@ -263,7 +264,7 @@ function PairPage({ pairAddress, history }) {
           <FixedPanel onClick={() => history.push(`/token/${token1?.id}`)}>
             <RowFixed>
               <TokenLogo address={token1?.id} size={'16px'} />
-              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'}>
+              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} color={'#648280'}>
                 {token0 && token1
                   ? `1 ${token1?.symbol} = ${token1Rate} ${token0?.symbol}  ${
                       parseFloat(token1?.derivedETH) ? '(' + token1USD + ')' : ''
@@ -374,28 +375,29 @@ function PairPage({ pairAddress, history }) {
                 <PairChart address={pairAddress} color={backgroundColor} />
               </Panel>
             </PanelWrapper>
-            <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-              Transactions
-            </TYPE.main>{' '}
             <Panel
               style={{
                 border: '1px solid rgba(43, 43, 43, 0.05)',
-                marginTop: '1.5rem'
+                marginTop: '3rem'
               }}
             >
+              <TYPE.main fontSize={'1.125rem'} style={{ marginBottom: '1.5rem' }}>
+                Transactions
+              </TYPE.main>{' '}
               {transactions ? <TxnList transactions={transactions} /> : <Loader />}
             </Panel>
-            <RowBetween style={{ marginTop: '3rem' }}>
-              <TYPE.main fontSize={'1.125rem'}>Pair Information</TYPE.main>{' '}
-            </RowBetween>
             <Panel
               rounded
               style={{
                 border: '1px solid rgba(43, 43, 43, 0.05)',
-                marginTop: '1.5rem'
+                marginTop: '3rem'
               }}
               p={20}
             >
+              <RowBetween style={{ marginBottom: '1.5rem' }}>
+                <TYPE.main fontSize={'1.125rem'}>Pair Information</TYPE.main>{' '}
+              </RowBetween>
+
               <TokenDetailsLayout>
                 <Column>
                   <TYPE.main>Pair Name</TYPE.main>

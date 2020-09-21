@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { formatTime, formattedNum, urls } from '../../helpers'
+import { formatTime, formattedNum, urls, getIsValidNumber } from '../../helpers'
 import { useMedia } from 'react-use'
 import { useCurrentCurrency } from '../../contexts/Application'
 import { RowFixed, RowBetween } from '../Row'
@@ -13,6 +13,8 @@ import { Box, Flex, Text } from 'rebass'
 import Link from '../Link'
 import { Divider, EmptyCard } from '..'
 import DropdownSelect from '../DropdownSelect'
+import { PAGES } from '../../constants'
+import Pagination from '../Pagination'
 
 dayjs.extend(utc)
 
@@ -22,16 +24,6 @@ const PageButtons = styled.div`
   justify-content: center;
   margin-top: 2em;
   margin-bottom: 0.5em;
-`
-
-const Arrow = styled.div`
-  color: ${({ theme }) => theme.shadow1};
-  opacity: ${props => (props.faded ? 0.3 : 1)};
-  padding: 0 20px;
-  user-select: none;
-  :hover {
-    cursor: pointer;
-  }
 `
 
 const List = styled(Box)`
@@ -58,7 +50,7 @@ const DashGrid = styled.div`
   @media screen and (min-width: 500px) {
     > * {
       &:first-child {
-        width: 260px;
+        width: 280px;
       }
     }
   }
@@ -70,7 +62,7 @@ const DashGrid = styled.div`
 
     > * {
       &:first-child {
-        width: 260px;
+        width: 280px;
       }
     }
   }
@@ -325,6 +317,31 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     )
   }
 
+  const handlePageChange = ({ target }) => {
+    const btnType = target.getAttribute('data-name')
+
+    getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType)
+  }
+
+  const handleSpecificBtnType = btnType => {
+    switch (btnType) {
+      case PAGES.PREV:
+        setPage(page - 1)
+        break
+      case PAGES.NEXT:
+        setPage(page + 1)
+        break
+      case PAGES.FIRST:
+        setPage(1)
+        break
+      case PAGES.LAST:
+        setPage(maxPage)
+        break
+      default:
+        break
+    }
+  }
+
   return (
     <>
       <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0' }}>
@@ -450,23 +467,11 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           })
         )}
       </List>
-      <PageButtons>
-        <div
-          onClick={e => {
-            setPage(page === 1 ? page : page - 1)
-          }}
-        >
-          <Arrow faded={page === 1 ? true : false}>←</Arrow>
-        </div>
-        {'Page ' + page + ' of ' + maxPage}
-        <div
-          onClick={e => {
-            setPage(page === maxPage ? page : page + 1)
-          }}
-        >
-          <Arrow faded={page === maxPage ? true : false}>→</Arrow>
-        </div>
-      </PageButtons>
+      {filteredList?.length > 0 && (
+        <PageButtons>
+          <Pagination page={page} lastPage={maxPage} onClick={handlePageChange} />
+        </PageButtons>
+      )}
     </>
   )
 }

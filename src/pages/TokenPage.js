@@ -289,46 +289,49 @@ function TokenPage({ address, history }) {
               </Panel>
             </PanelWrapper>
           </>
-          <TYPE.main fontSize={'1.125rem'} style={{ marginTop: '3rem' }}>
-            Top Pairs
-          </TYPE.main>{' '}
           <Panel
             rounded
             style={{
               border: '1px solid rgba(43, 43, 43, 0.05)',
-              marginTop: '1.5rem'
+              marginTop: '3rem'
             }}
             p={20}
           >
+            <TYPE.main fontSize={'1.125rem'} style={{ marginBottom: '1.5rem' }}>
+              Top Pairs
+            </TYPE.main>{' '}
             {address && fetchedPairsList ? (
               <PairList color={backgroundColor} address={address} pairs={fetchedPairsList} />
             ) : (
               <Loader />
             )}
           </Panel>
-          <RowBetween mt={40} mb={'1rem'}>
-            <TYPE.main fontSize={'1.125rem'}>Transactions</TYPE.main> <div />
-          </RowBetween>
           <Panel
             rounded
             style={{
-              border: '1px solid rgba(43, 43, 43, 0.05)'
+              border: '1px solid rgba(43, 43, 43, 0.05)',
+              marginTop: '3rem'
             }}
           >
+            <RowBetween mb={'1.5rem'}>
+              <TYPE.main fontSize={'1.125rem'}>Transactions</TYPE.main> <div />
+            </RowBetween>
+
             {transactions ? <TxnList color={backgroundColor} transactions={transactions} /> : <Loader />}
           </Panel>
           <>
-            <RowBetween style={{ marginTop: '3rem' }}>
-              <TYPE.main fontSize={'1.125rem'}>Token Information</TYPE.main>{' '}
-            </RowBetween>
             <Panel
               rounded
               style={{
                 border: '1px solid rgba(43, 43, 43, 0.05)',
-                marginTop: '1.5rem'
+                marginTop: '3rem'
               }}
               p={20}
             >
+              <RowBetween style={{ marginBottom: '1.5rem' }}>
+                <TYPE.main fontSize={'1.125rem'}>Token Information</TYPE.main>{' '}
+              </RowBetween>
+
               <TokenDetailsLayout>
                 <Column>
                   <TYPE.main>Symbol</TYPE.main>

@@ -221,7 +221,8 @@ const GlobalChart = ({ display }) => {
                 padding: '10px 14px',
                 borderRadius: 10,
                 borderColor: 'transparent',
-                color: '#555959'
+                color: '#555959',
+                boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
@@ -276,7 +277,8 @@ const GlobalChart = ({ display }) => {
                 padding: '10px 14px',
                 borderRadius: 10,
                 borderColor: 'transparent',
-                color: '#555959'
+                color: '#555959',
+                boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)'
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
