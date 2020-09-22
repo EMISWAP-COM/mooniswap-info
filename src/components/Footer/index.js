@@ -4,8 +4,8 @@ import { Flex } from 'rebass'
 import Link from '../Link'
 
 const links = [
-  { url: 'https://mooniswap.exchange', text: 'Exchange' },
-  { url: 'https://github.com/CryptoManiacsZone/mooniswap-info', text: 'Code' }
+  { url: process.env.REACT_APP_INTERFACE_URL, text: 'Exchange' },
+  { url: process.env.REACT_APP_CODE_LINK, text: 'Code' }
 ]
 
 const FooterLink = ({ children, ...rest }) => (
