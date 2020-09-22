@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Link, { CustomLink } from '../Link'
 import { Divider } from '../../components'
 
-import { formattedNum, getIsValidNumber, getPoolLink, getSwapLink } from '../../helpers'
+import { calcIndexMargin, formattedNum, getIsValidNumber, getPoolLink, getSwapLink } from '../../helpers'
 import DoubleTokenLogo from '../DoubleLogo'
 import { ButtonLight, ButtonDark } from '../ButtonStyled'
 import { withRouter } from 'react-router-dom'
@@ -194,7 +194,7 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
           onClick={() => history.push('/pair/' + pairAddress)}
         >
           <DataText area="name" fontWeight="500">
-            {!below600 && <div style={{ marginRight: `${30 - ((index.toString().length - 1) * 10)}px` }}>{index}</div>}
+            {!below600 && <div style={{ marginRight: `${calcIndexMargin(index)}px` }}>{index}</div>}
             <DoubleTokenLogo
               size={below600 ? 16 : 20}
               a0={pairData.token0.id}
