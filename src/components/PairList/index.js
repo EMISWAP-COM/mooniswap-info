@@ -194,7 +194,7 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
           onClick={() => history.push('/pair/' + pairAddress)}
         >
           <DataText area="name" fontWeight="500">
-            {!below600 && <div style={{ marginRight: '20px' }}>{index}</div>}
+            {!below600 && <div style={{ marginRight: `${30 - ((index.toString().length - 1) * 10)}px` }}>{index}</div>}
             <DoubleTokenLogo
               size={below600 ? 16 : 20}
               a0={pairData.token0.id}

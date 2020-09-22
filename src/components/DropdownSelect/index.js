@@ -27,6 +27,7 @@ const Wrapper = styled.div`
 const Dropdown = styled.div`
   position: absolute;
   top: 34px;
+  left: 1px;
   padding-top: 40px;
   width: calc(100% - 40px);
   background-color: ${({ theme }) => theme.bg1};
