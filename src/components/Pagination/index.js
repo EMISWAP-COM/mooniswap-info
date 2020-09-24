@@ -57,7 +57,7 @@ const renderPaginationBtns = (onClick, page, lastPage) => {
 
   let btnsArr = []
 
-  if (page < lastPage - 5) {
+  if (page < lastPage - 4) {
     btnsArr = [...startBtns, ...middleBtn, ...lastBtns]
   } else if (lastPage <= 6) {
     btnsArr = [...Array(lastPage).keys()].map(page => ++page)
