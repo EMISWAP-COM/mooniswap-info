@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { Flex, Text } from 'rebass'
 import Link from '../Link'
 import Logo from '../../assets/logo.svg'
-import Wordmark from '../../assets/wordmark.svg'
 import { useMedia } from 'react-use'
 
 const TitleWrapper = styled.div`
@@ -27,12 +26,6 @@ const UniIcon = styled(Link)`
   :hover {
     transform: rotate(-5deg);
   }
-`
-
-const WrapImage = styled.div`
-  margin-left: 4px;
-  margin-top: 0px;
-  max-width: 300px;
 `
 
 export default function Title({ account }) {
@@ -80,12 +73,9 @@ export default function Title({ account }) {
       <Flex alignItems="center">
         <LogoWrapper>
           <UniIcon id="link" onClick={() => history.push('/')}>
-            <img src={Logo} alt="logo" width="42.6px" />
+            <img src={Logo} alt="logo" />
           </UniIcon>
         </LogoWrapper>
-        <WrapImage>
-          <img style={{ width: 108.8 }} src={Wordmark} alt="logo" />
-        </WrapImage>
         <Text fontWeight={600} mx="4px" lineHeight="1.5rem">
           {getName()}
         </Text>
