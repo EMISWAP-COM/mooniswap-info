@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -57,8 +57,10 @@ const renderPaginationBtns = (onClick, page, lastPage) => {
 
   let btnsArr = []
 
-  if (page < lastPage - 5) {
+  if (page < lastPage - 4) {
     btnsArr = [...startBtns, ...middleBtn, ...lastBtns]
+  } else if (lastPage <= 6) {
+    btnsArr = [...Array(lastPage).keys()].map(page => ++page)
   } else if (page < lastPage - 3) {
     btnsArr = [...gapBtns, ...middleBtn, ...lastBtns]
   } else if (page < lastPage - 2) {
@@ -69,15 +71,17 @@ const renderPaginationBtns = (onClick, page, lastPage) => {
     btnsArr = [...middleBtn, ...lastBtns] // last 3 pages
   }
 
-  return btnsArr.map(num =>
-    num === '...' ? (
-      <PaginationDots>{num}</PaginationDots>
-    ) : (
-      <PaginationButton key={num} data-name={num} onClick={onClick} active={num === page}>
-        {num}
-      </PaginationButton>
-    )
-  )
+  return btnsArr.map(num => (
+    <Fragment key={num}>
+      {num === '...' ? (
+        <PaginationDots>{num}</PaginationDots>
+      ) : (
+        <PaginationButton data-name={num} onClick={onClick} active={num === page}>
+          {num}
+        </PaginationButton>
+      )}
+    </Fragment>
+  ))
 }
 
 const Pagination = ({ onClick, page, lastPage }) => {

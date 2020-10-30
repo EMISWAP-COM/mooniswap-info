@@ -9,7 +9,7 @@ import { CustomLink } from '../Link'
 import { Divider } from '..'
 import DoubleTokenLogo from '../DoubleLogo'
 import { withRouter } from 'react-router-dom'
-import { formattedNum, rawPercent, formattedPercent } from '../../helpers'
+import { formattedNum, rawPercent, formattedPercent, calcIndexMargin } from '../../helpers'
 import { AutoRow, RowFixed } from '../Row'
 import { AutoColumn } from '../Column'
 import TokenLogo from '../TokenLogo'
@@ -180,7 +180,7 @@ function PositionList({ positions, transactions }) {
             onClick={() => setOpenPool(showFlyout ? null : position.pair.id)}
           >
             <DataText area="name" fontWeight="500">
-              {!below600 && <div style={{ marginRight: '20px' }}>{index}</div>}
+              {!below600 && <div style={{ marginRight: `${calcIndexMargin(index)}px` }}>{index}</div>}
               <DoubleTokenLogo
                 size={below600 ? 16 : 20}
                 a0={position.pair.token0.id}
