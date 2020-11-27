@@ -247,10 +247,10 @@ export function useReturnsPerPairHistory(position, account) {
         token0PriceUSD: parseFloat(pairSnapshots[0].token0PriceUSD),
         token1PriceUSD: parseFloat(pairSnapshots[0].token1PriceUSD),
         assetReturn: 0,
-        mooniswapReturn: 0,
+        emiswapReturn: 0,
         netReturn: 0,
         assetChange: 0,
-        mooniswapChange: 0,
+        emiswapChange: 0,
         netChange: 0
       }
 
@@ -328,7 +328,7 @@ export function useReturnsPerPairHistory(position, account) {
           token1_amount_t0 * parseFloat(positionT1.token1PriceUSD)
 
         const imp_loss_usd = no_fees_usd - assetValueT1
-        const mooniswap_return = difference_fees_usd + imp_loss_usd
+        const emiswap_return = difference_fees_usd + imp_loss_usd
 
         // calculate value delta based on  prices_t1 - prices_t0 * token_amounts
         const assetReturn = assetValueT1 - assetValueT0
@@ -341,19 +341,19 @@ export function useReturnsPerPairHistory(position, account) {
         if (needsUpdate) {
           returns.netReturn = returns.netReturn + netValueT1 - netValueT0
           returns.assetReturn = returns.assetReturn + assetReturn
-          returns.mooniswapReturn = returns.mooniswapReturn + mooniswap_return
+          returns.emiswapReturn = returns.emiswapReturn + emiswap_return
           returns.netChange = returns.netChange + ((netValueT1 - netValueT0) / netValueT0) * 100
           returns.assetChange = returns.assetChange + (assetReturn / assetValueT0) * 100
         }
 
         const localNetReturn = returns.netReturn + netValueT1 - netValueT0
         const localAssetReturn = returns.assetReturn + assetReturn
-        const localUnsiwapReturn = returns.mooniswapReturn + mooniswap_return
+        const localUnsiwapReturn = returns.emiswapReturn + emiswap_return
 
         // calculate the weighted percent changes for each metric
         const localAssetChange = (assetReturn / assetValueT0) * 100
         const localNetChange = ((netValueT1 - netValueT0) / netValueT0) * 100
-        const localMooniswapChange = localNetChange - localAssetChange
+        const localEmiswapChange = localNetChange - localAssetChange
 
         const currentLiquidityValue =
           parseFloat(positionT0.liquidityTokenBalance) * parseFloat(positionT1.sharePriceUsd)
@@ -363,10 +363,10 @@ export function useReturnsPerPairHistory(position, account) {
           usdValue: currentLiquidityValue,
           netReturn: localNetReturn,
           assetReturn: localAssetReturn,
-          mooniswapReturn: localUnsiwapReturn,
+          emiswapReturn: localUnsiwapReturn,
           netChange: localNetChange,
           assetChange: localAssetChange,
-          mooniswapChange: localMooniswapChange
+          emiswapChange: localEmiswapChange
         })
       }
 
@@ -524,7 +524,7 @@ export function useUserLiquidityHistory(account) {
             totalUSD +
             (ownershipPerPair[dayData.pairAddress]
               ? (parseFloat(ownershipPerPair[dayData.pairAddress].lpTokenBalance) / parseFloat(dayData.totalSupply)) *
-                parseFloat(dayData.reserveUSD)
+              parseFloat(dayData.reserveUSD)
               : 0))
         }, 0)
 
@@ -591,7 +591,7 @@ export async function getReturns(user, pair, ethPrice) {
     totalAmountProvidedUSD =
       totalAmountProvidedUSD +
       (parseFloat(positionT0.liquidityTokenBalance) / parseFloat(positionT0.liquidityTokenTotalSupply)) *
-        parseFloat(positionT0.reserveUSD)
+      parseFloat(positionT0.reserveUSD)
   }
 
   for (const index in history) {
@@ -671,7 +671,7 @@ export async function getReturns(user, pair, ethPrice) {
       token1_amount_t0 * parseFloat(positionT1.token1PriceUSD)
 
     // const imp_loss_usd = no_fees_usd - assetValueT1
-    // const mooniswap_return = difference_fees_usd + imp_loss_usd
+    // const emiswap_return = difference_fees_usd + imp_loss_usd
 
     // calculate value delta based on  prices_t1 - prices_t0 * token_amounts
     const assetValueChange = assetValueT1 - assetValueT0
@@ -694,9 +694,9 @@ export async function getReturns(user, pair, ethPrice) {
     netPercentChange = netPercentChange ? netPercentChange + wieghtedNetChange : wieghtedNetChange
   }
 
-  // mooniswap specific return
-  let mooniswapReturn = netReturn - assetReturn
-  let mooniswapPercentChange = netPercentChange - assetPercentChange
+  // emiswap specific return
+  let emiswapReturn = netReturn - assetReturn
+  let emiswapPercentChange = netPercentChange - assetPercentChange
 
   return {
     asset: {
@@ -707,9 +707,9 @@ export async function getReturns(user, pair, ethPrice) {
       return: netReturn,
       percent: netPercentChange
     },
-    mooniswap: {
-      return: mooniswapReturn,
-      percent: mooniswapPercentChange
+    emiswap: {
+      return: emiswapReturn,
+      percent: emiswapPercentChange
     }
   }
 }
@@ -739,8 +739,8 @@ export function useUserPositions(account) {
                 assetPercentChange: returnData.asset.percent,
                 netReturn: returnData.net.return,
                 netPercentChange: returnData.net.percent,
-                mooniswapReturn: returnData.mooniswap.return,
-                mooniswapPercentChange: returnData.mooniswap.percent
+                emiswapReturn: returnData.emiswap.return,
+                emiswapPercentChange: returnData.emiswap.percent
               }
             })
           )

@@ -2,13 +2,13 @@ import gql from 'graphql-tag'
 import { FACTORY_ADDRESS, BUNDLE_ID } from '../constants'
 
 export const V1_DATA_QUERY = gql`
-  query mooniswap($date: Int!, $date2: Int!) {
-    current: mooniswap(id: "1") {
+  query emiswap($date: Int!, $date2: Int!) {
+    current: emiswap(id: "1") {
       totalVolumeUSD
       totalLiquidityUSD
       txCount
     }
-    oneDay: mooniswapHistoricalDatas(
+    oneDay: emiswapHistoricalDatas(
       where: { timestamp_lt: $date }
       first: 1
       orderBy: timestamp
@@ -18,7 +18,7 @@ export const V1_DATA_QUERY = gql`
       totalLiquidityUSD
       txCount
     }
-    twoDay: mooniswapHistoricalDatas(
+    twoDay: emiswapHistoricalDatas(
       where: { timestamp_lt: $date2 }
       first: 1
       orderBy: timestamp
@@ -312,8 +312,8 @@ export const PAIR_DAY_DATA_BULK = (pairs, startTimestamp) => {
 }
 
 export const GLOBAL_CHART = gql`
-  query mooniswapDayDatas($startTime: Int!) {
-    mooniswapDayDatas(where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
+  query emiswapDayDatas($startTime: Int!) {
+    emiswapDayDatas(where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
       id
       date
       totalVolumeUSD
@@ -336,8 +336,8 @@ export const GLOBAL_CHART = gql`
 
 export const GLOBAL_DATA = block => {
   const queryString = block
-    ? ` query mooniswapFactories {
-      mooniswapFactories(block:   
+    ? ` query emiswapFactories {
+      emiswapFactories(block:   
        {number: ${block}} 
        where: { id: "${FACTORY_ADDRESS}" }) {
         id
@@ -348,8 +348,8 @@ export const GLOBAL_DATA = block => {
         txCount
       }
     }`
-    : `query mooniswapFactories {
-      mooniswapFactories(
+    : `query emiswapFactories {
+      emiswapFactories(
         where: { id: "${FACTORY_ADDRESS}" }) {
         id
         totalVolumeUSD
@@ -469,8 +469,8 @@ export const PAIR_DATA = (pairAddress, block) => {
     }`
     : ` query pairs {
       pairs( where: { id: "` +
-      pairAddress +
-      `"}) {
+    pairAddress +
+    `"}) {
         id
         txCount
         token0 {

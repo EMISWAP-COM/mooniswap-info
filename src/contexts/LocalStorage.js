@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect } from 'react'
 
-const MOONISWAP = 'MOONISWAP'
+const EMISWAP = 'EMISWAP'
 
 const VERSION = 'VERSION'
 const CURRENT_VERSION = 0
@@ -46,7 +46,7 @@ function init() {
   }
 
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(MOONISWAP))
+    const parsed = JSON.parse(window.localStorage.getItem(EMISWAP))
     if (parsed[VERSION] !== CURRENT_VERSION) {
       // this is where we could run migration logic
       return defaultLocalStorage
@@ -76,7 +76,7 @@ export function Updater() {
   const [state] = useLocalStorageContext()
 
   useEffect(() => {
-    window.localStorage.setItem(MOONISWAP, JSON.stringify({ ...state, [LAST_SAVED]: Math.floor(Date.now() / 1000) }))
+    window.localStorage.setItem(EMISWAP, JSON.stringify({ ...state, [LAST_SAVED]: Math.floor(Date.now() / 1000) }))
   })
 
   return null
