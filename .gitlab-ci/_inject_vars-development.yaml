@@ -1,0 +1,9 @@
+inject_vars:
+  emiswap-info:
+    fullnameOverride: emiswap-info
+    image:
+      repository: "{{ lookup('env', '_img_repo') }}/{{ lookup( 'env', '_img_name') }}"
+      tag: "{{ lookup('env', '_img_tag') }}"
+      pullPolicy: Always
+    imagePullSecrets:
+    - name: "{{ lookup('env', $CI_PROJECT_PATH_SLUG) }}"
