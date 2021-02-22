@@ -184,23 +184,22 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       .startOf('minute')
       .unix()
     let [oneDayBlock, twoDayBlock] = await getBlocksFromTimestamps([utcOneDayBack, utcTwoDaysBack])
-
     let result = await client.query({
       query: GLOBAL_DATA(),
       fetchPolicy: 'cache-first'
     })
-    data = result.data.mooniswapFactories[0]
+    data = result.data.emiswapFactories[0]
     let oneDayResult = await client.query({
       query: GLOBAL_DATA(oneDayBlock?.number),
       fetchPolicy: 'cache-first'
     })
-    oneDayData = oneDayResult.data.mooniswapFactories[0]
+    oneDayData = oneDayResult.data.emiswapFactories[0]
 
     let twoDayResult = await client.query({
       query: GLOBAL_DATA(twoDayBlock?.number),
       fetchPolicy: 'cache-first'
     })
-    twoDayData = twoDayResult.data.mooniswapFactories[0]
+    twoDayData = twoDayResult.data.emiswapFactories[0]
 
     if (data && oneDayData && twoDayData) {
       let [oneDayVolumeUSD, volumeChangeUSD] = get2DayPercentChange(
@@ -256,8 +255,7 @@ const getChartData = async oldestDateToFetch => {
       },
       fetchPolicy: 'cache-first'
     })
-
-    data = [...result.data.mooniswapDayDatas]
+    data = [...result.data.emiswapDayDatas]
 
     if (data) {
       let dayIndexSet = new Set()
@@ -328,24 +326,24 @@ const getGlobalTransactions = async () => {
     transactions.swaps = []
 
     result?.data?.transactions &&
-      result.data.transactions.map(transaction => {
-        if (transaction.mints.length > 0) {
-          transaction.mints.map(mint => {
-            return transactions.mints.push(mint)
-          })
-        }
-        if (transaction.burns.length > 0) {
-          transaction.burns.map(burn => {
-            return transactions.burns.push(burn)
-          })
-        }
-        if (transaction.swaps.length > 0) {
-          transaction.swaps.map(swap => {
-            return transactions.swaps.push(swap)
-          })
-        }
-        return true
-      })
+    result.data.transactions.map(transaction => {
+      if (transaction.mints.length > 0) {
+        transaction.mints.map(mint => {
+          return transactions.mints.push(mint)
+        })
+      }
+      if (transaction.burns.length > 0) {
+        transaction.burns.map(burn => {
+          return transactions.burns.push(burn)
+        })
+      }
+      if (transaction.swaps.length > 0) {
+        transaction.swaps.map(swap => {
+          return transactions.swaps.push(swap)
+        })
+      }
+      return true
+    })
   } catch (e) {
     console.log(e)
   }
