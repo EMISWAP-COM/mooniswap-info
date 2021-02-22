@@ -53,7 +53,7 @@ export const GET_BLOCKS = timestamps => {
   let queryString = 'query blocks {'
   queryString += timestamps.map(
     timestamp => `t${timestamp}:blocks(first: 1, orderBy: timestamp, orderDirection: asc, where: { timestamp_gt: ${timestamp}, timestamp_lt: ${timestamp +
-      600} }) {
+    600} }) {
       number
     }`
   )
