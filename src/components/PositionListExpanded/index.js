@@ -200,8 +200,8 @@ function PositionList({ positions, transactions }) {
             )}{' '}
             {!showFlyout && (
               <DataText area="return">
-                {formattedNum(position?.mooniswapReturn, true, true)} (
-                {formattedPercent(position?.mooniswapPercentChange)})
+                {formattedNum(position?.emiswapReturn, true, true)} (
+                {formattedPercent(position?.emiswapPercentChange)})
               </DataText>
             )}{' '}
             {!showFlyout && (
@@ -282,8 +282,8 @@ function PositionList({ positions, transactions }) {
                       </Text>
                       <Text fontWeight={500}>
                         <RowFixed>
-                          {formattedNum(position?.mooniswapReturn, true, true)} (
-                          {formattedPercent(position?.mooniswapPercentChange)})
+                          {formattedNum(position?.emiswapReturn, true, true)} (
+                          {formattedPercent(position?.emiswapPercentChange)})
                         </RowFixed>
                       </Text>
                     </AutoColumn>

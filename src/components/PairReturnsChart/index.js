@@ -29,16 +29,16 @@ const PairReturnsChart = ({
   account,
   baseNetReturn,
   baseAssetReturn,
-  baseMooniswapReturn,
+  baseEmiswapReturn,
   setAnimatedNetReturn,
   setAnimatedAssetReturn,
-  setAnimatedMooniswapReturn,
+  setAnimatedEmiswapReturn,
   setAnimatedAssetChange,
   setAnimatedNetChange,
-  setAnimatedMooniswapChange,
+  setAnimatedEmiswapChange,
   baseAssetChange,
   baseNetChange,
-  baseMooniswapChange,
+  baseEmiswapChange,
   setAnimatedPositionVal,
   positionValue,
   position
@@ -87,33 +87,33 @@ const PairReturnsChart = ({
           <DropdownSelect options={timeframeOptions} active={timeWindow} setActive={setTimeWindow} color={'#ff007a'} />
         </RowBetween>
       ) : (
-        <RowBetween mb={40}>
-          <AutoRow gap="10px">
-            <OptionButton
-              active={chartFilter === CHART_VIEW.LIQUIDITY}
-              onClick={() => setChartFilter(CHART_VIEW.LIQUIDITY)}
-            >
-              Liquidity
+          <RowBetween mb={40}>
+            <AutoRow gap="10px">
+              <OptionButton
+                active={chartFilter === CHART_VIEW.LIQUIDITY}
+                onClick={() => setChartFilter(CHART_VIEW.LIQUIDITY)}
+              >
+                Liquidity
             </OptionButton>
-          </AutoRow>
-          <AutoRow justify="flex-end" gap="10px">
-            <OptionButton
-              active={timeWindow === timeframeOptions.WEEK}
-              onClick={() => setTimeWindow(timeframeOptions.WEEK)}
-              isButtonGroup
-            >
-              1 Week
+            </AutoRow>
+            <AutoRow justify="flex-end" gap="10px">
+              <OptionButton
+                active={timeWindow === timeframeOptions.WEEK}
+                onClick={() => setTimeWindow(timeframeOptions.WEEK)}
+                isButtonGroup
+              >
+                1 Week
             </OptionButton>
-            <OptionButton
-              active={timeWindow === timeframeOptions.ALL_TIME}
-              onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
-              isButtonGroup
-            >
-              All Time
+              <OptionButton
+                active={timeWindow === timeframeOptions.ALL_TIME}
+                onClick={() => setTimeWindow(timeframeOptions.ALL_TIME)}
+                isButtonGroup
+              >
+                All Time
             </OptionButton>
-          </AutoRow>
-        </RowBetween>
-      )}
+            </AutoRow>
+          </RowBetween>
+        )}
       {chartFilter === CHART_VIEW.LIQUIDITY && chartData && (
         <ResponsiveContainer aspect={below1080 ? 60 / 32 : below600 ? 60 / 42 : 60 / 26}>
           <ComposedChart
@@ -121,10 +121,10 @@ const PairReturnsChart = ({
               if (e?.activePayload?.[0]?.value) {
                 setAnimatedPositionVal(e.activePayload[0].value)
                 setAnimatedAssetReturn(e.activePayload[1].value)
-                setAnimatedMooniswapReturn(e.activePayload[2].value)
+                setAnimatedEmiswapReturn(e.activePayload[2].value)
                 setAnimatedNetReturn(e.activePayload[3].value)
                 setAnimatedAssetChange(e.activePayload[4].value)
-                setAnimatedMooniswapChange(e.activePayload[5].value)
+                setAnimatedEmiswapChange(e.activePayload[5].value)
                 setAnimatedNetChange(e.activePayload[6].value)
               }
             }}
@@ -132,10 +132,10 @@ const PairReturnsChart = ({
               setAnimatedPositionVal(positionValue)
               setAnimatedNetReturn(baseNetReturn)
               setAnimatedAssetReturn(baseAssetReturn)
-              setAnimatedMooniswapReturn(baseMooniswapReturn)
+              setAnimatedEmiswapReturn(baseEmiswapReturn)
               setAnimatedAssetChange(baseAssetChange)
               setAnimatedNetChange(baseNetChange)
-              setAnimatedMooniswapChange(baseMooniswapChange)
+              setAnimatedEmiswapChange(baseEmiswapChange)
             }}
             margin={{ top: 0, right: 10, bottom: 6, left: 0 }}
             barCategoryGap={1}
@@ -192,10 +192,10 @@ const PairReturnsChart = ({
             />
             <Bar type="monotone" dataKey="usdValue" fill="rgba(0,0,0,0.05)" yAxisId={1} />
             <Line type="monotone" dataKey="assetReturn" stroke="#82ca9d" />
-            <Line type="monotone" dataKey="mooniswapReturn" stroke="blue" />
+            <Line type="monotone" dataKey="emiswapReturn" stroke="blue" />
             <Line type="monotone" dataKey="netReturn" stroke="purple" />
             <Line dataKey="assetChange" stroke="transparent" />
-            <Line dataKey="mooniswapChange" stroke="transparent" />
+            <Line dataKey="emiswapChange" stroke="transparent" />
             <Line dataKey="netChange" stroke="transparent" />
           </ComposedChart>
         </ResponsiveContainer>

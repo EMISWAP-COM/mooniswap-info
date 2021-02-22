@@ -137,8 +137,8 @@ function AccountPage({ account }) {
   let totalSwappedUSD = useMemo(() => {
     return transactions?.swaps
       ? transactions?.swaps.reduce((total, swap) => {
-          return total + parseFloat(swap.amountUSD)
-        }, 0)
+        return total + parseFloat(swap.amountUSD)
+      }, 0)
       : 0
   }, [transactions])
 
@@ -151,17 +151,17 @@ function AccountPage({ account }) {
   // get derived totals
   const positionValue = calculateTotalLiquidity(positions)
   const transactionCount = transactions?.swaps?.length + transactions?.burns?.length + transactions?.mints?.length
-  const netReturn = positions?.reduce(function(total, position) {
+  const netReturn = positions?.reduce(function (total, position) {
     return total + position.netReturn
   }, 0)
-  const assetReturn = positions?.reduce(function(total, position) {
+  const assetReturn = positions?.reduce(function (total, position) {
     return total + position.assetReturn
   }, 0)
-  const netChange = positions?.reduce(function(total, position) {
+  const netChange = positions?.reduce(function (total, position) {
     return total + position.netPercentChange
   }, 0)
   const averageNetChange = netChange / positions?.length
-  const assetChange = positions?.reduce(function(total, position) {
+  const assetChange = positions?.reduce(function (total, position) {
     return total + position.assetPercentChange
   }, 0)
   const averageAssetChange = assetChange / positions?.length
@@ -169,13 +169,13 @@ function AccountPage({ account }) {
   // animated dollar values
   const [animatedNetReturn, setAnimatedNetReturn] = useState()
   const [animatedAssetReturn, setAnimatedAssetReturn] = useState()
-  const [animatedMooniswapReturn, setAnimatedMooniswapReturn] = useState() // derive from net and asset
+  const [animatedEmiswapReturn, setAnimatedEmiswapReturn] = useState() // derive from net and asset
   const [animatedPositionValue, setAnimatedPositionVal] = useState()
 
   // animated percent values
   const [animatedNetChange, setAnimatedNetChange] = useState()
   const [animatedAssetChange, setAnimatedAssetChange] = useState()
-  const [animatedMooniswapChange, setAnimatedMooniswapChange] = useState()
+  const [animatedEmiswapChange, setAnimatedEmiswapChange] = useState()
 
   // reset aggregate values if they change
   useEffect(() => {
@@ -184,8 +184,8 @@ function AccountPage({ account }) {
     averageNetChange && setAnimatedNetChange(averageNetChange)
     averageAssetChange && setAnimatedAssetChange(averageAssetChange)
     assetReturn && setAnimatedAssetReturn(assetReturn)
-    netReturn && assetReturn && setAnimatedMooniswapReturn(netReturn - assetReturn)
-    averageNetChange && averageAssetChange && setAnimatedMooniswapChange(averageNetChange - averageAssetChange)
+    netReturn && assetReturn && setAnimatedEmiswapReturn(netReturn - assetReturn)
+    averageNetChange && averageAssetChange && setAnimatedEmiswapChange(averageNetChange - averageAssetChange)
   }, [assetReturn, averageAssetChange, averageNetChange, netReturn, positionValue])
 
   return (
@@ -305,11 +305,11 @@ function AccountPage({ account }) {
                 </RowBetween>
                 <RowFixed align="flex-end">
                   <TYPE.main fontSize={'24px'} lineHeight={1} fontWeight={600}>
-                    <AnimatedNumber value={animatedMooniswapReturn} formatValue={formatValue} duration={200} />
+                    <AnimatedNumber value={animatedEmiswapReturn} formatValue={formatValue} duration={200} />
                   </TYPE.main>
                   <TYPE.main fontSize="18px" ml="8px">
                     <AnimatedNumber
-                      value={animatedMooniswapChange}
+                      value={animatedEmiswapChange}
                       formatValue={formatAnimatedPercent}
                       duration={200}
                     />
@@ -340,29 +340,29 @@ function AccountPage({ account }) {
                 account={account}
                 baseNetReturn={netReturn}
                 baseAssetReturn={assetReturn}
-                baseMooniswapReturn={netReturn - assetReturn}
+                baseEmiswapReturn={netReturn - assetReturn}
                 baseAssetChange={averageAssetChange}
                 baseNetChange={averageNetChange}
-                baseMooniswapChange={averageNetChange - averageAssetChange}
+                baseEmiswapChange={averageNetChange - averageAssetChange}
                 setAnimatedAssetReturn={setAnimatedAssetReturn}
                 setAnimatedNetReturn={setAnimatedNetReturn}
-                setAnimatedMooniswapReturn={setAnimatedMooniswapReturn}
+                setAnimatedEmiswapReturn={setAnimatedEmiswapReturn}
                 setAnimatedAssetChange={setAnimatedAssetChange}
                 setAnimatedNetChange={setAnimatedNetChange}
-                setAnimatedMooniswapChange={setAnimatedMooniswapChange}
+                setAnimatedEmiswapChange={setAnimatedEmiswapChange}
                 position={activePosition}
                 setAnimatedPositionVal={setAnimatedPositionVal}
                 positionValue={positionValue}
               />
             ) : (
-              <UserChart
-                account={account}
-                setAnimatedVal={setAnimatedPositionVal}
-                animatedVal={animatedPositionValue}
-                positionValue={positionValue}
-                position={activePosition}
-              />
-            )}
+                <UserChart
+                  account={account}
+                  setAnimatedVal={setAnimatedPositionVal}
+                  animatedVal={animatedPositionValue}
+                  positionValue={positionValue}
+                  position={activePosition}
+                />
+              )}
           </Panel>
         </PanelWrapper>
         <AutoColumn gap="16px">
@@ -412,34 +412,34 @@ function AccountPage({ account }) {
             transactions ? (
               <TxnList transactions={transactions} />
             ) : (
-              <Loader />
-            )
+                <Loader />
+              )
           ) : listView === LIST_VIEW.POSITIONS ? (
             <PositionList positions={positions} />
           ) : (
-            <div>
-              <AutoRow gap="20px">
-                <AutoColumn gap="8px">
-                  <Text fontSize={24} fontWeight={600}>
-                    {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
-                  </Text>
-                  <Text fontSize={16}>Total Value Swapped</Text>
-                </AutoColumn>
-                <AutoColumn gap="8px">
-                  <Text fontSize={24} fontWeight={600}>
-                    {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
-                  </Text>
-                  <Text fontSize={16}>Total Fees Paid</Text>
-                </AutoColumn>
-                <AutoColumn gap="8px">
-                  <Text fontSize={24} fontWeight={600}>
-                    {transactionCount ? transactionCount : '-'}
-                  </Text>
-                  <Text fontSize={16}>Total Transactions</Text>
-                </AutoColumn>
-              </AutoRow>
-            </div>
-          )}
+                <div>
+                  <AutoRow gap="20px">
+                    <AutoColumn gap="8px">
+                      <Text fontSize={24} fontWeight={600}>
+                        {totalSwappedUSD ? formattedNum(totalSwappedUSD, true) : '-'}
+                      </Text>
+                      <Text fontSize={16}>Total Value Swapped</Text>
+                    </AutoColumn>
+                    <AutoColumn gap="8px">
+                      <Text fontSize={24} fontWeight={600}>
+                        {totalSwappedUSD ? formattedNum(totalSwappedUSD * 0.003, true) : '-'}
+                      </Text>
+                      <Text fontSize={16}>Total Fees Paid</Text>
+                    </AutoColumn>
+                    <AutoColumn gap="8px">
+                      <Text fontSize={24} fontWeight={600}>
+                        {transactionCount ? transactionCount : '-'}
+                      </Text>
+                      <Text fontSize={16}>Total Transactions</Text>
+                    </AutoColumn>
+                  </AutoRow>
+                </div>
+              )}
         </Panel>
       </DashboardWrapper>
     </PageWrapper>
