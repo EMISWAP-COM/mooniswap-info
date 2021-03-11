@@ -7,3 +7,6 @@ inject_vars:
       pullPolicy: Always
     imagePullSecrets:
     - name: "{{ lookup('env', $CI_PROJECT_PATH_SLUG) }}"
+  postgresql:
+    global:
+      storageClass: csi-krbd-sc
