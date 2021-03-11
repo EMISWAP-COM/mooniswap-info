@@ -1,3 +1,12 @@
+emirex_charts:
+  app:
+  - postgresql
+  - emiswap-oracle
+  - emiswap-ui
+  - emiswap-nft
+  - emiswap-landing
+  - emiswap-info
+
 inject_vars:
   emiswap-info:
     fullnameOverride: emiswap-info
