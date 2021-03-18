@@ -208,6 +208,8 @@ async function getGlobalData(ethPrice, oldEthPrice) {
         twoDayData.totalVolumeUSD ? twoDayData.totalVolumeUSD : 0
       )
 
+      console.log(oneDayData, data.totalVolumeUSD, oneDayVolumeUSD, volumeChangeUSD);
+
       const [oneDayVolumeETH, volumeChangeETH] = get2DayPercentChange(
         data.totalVolumeETH,
         oneDayData.totalVolumeETH ? oneDayData.totalVolumeETH : 0,
