@@ -274,7 +274,7 @@ async function getBulkPairData(pairList, ethPrice) {
         data.oneDayTotalFee = totalFeeOneDay
         data.extraFeeChangeUSD = feeChangeUSD
         data.reserveUSD = data.reserveETH ? data.reserveETH * ethPrice : data.reserveUSD
-        data.trackedReserveUSD = parseFloat(pair.trackedReserveETH) * ethPrice
+        data.trackedReserveUSD = pair.totalLiquidityUSD || (parseFloat(pair.trackedReserveETH) * ethPrice)
         data.oneDayVolumeUSD = oneDayVolumeUSD
         data.oneDayVolumeETH = oneDayVolumeETH
         data.oneWeekVolumeUSD = oneWeekVolumeUSD
@@ -382,7 +382,7 @@ const getPairData = async (address, ethPrice) => {
       // extraFee0TwoDaysAgo + extraFee1DayAgo
     )
 
-    data.trackedReserveUSD = data.trackedReserveETH * ethPrice
+    data.trackedReserveUSD = data.totalLiquidityUSD || (data.trackedReserveETH * ethPrice)
     data.oneDayExtraFee = String(extraFee0 + extraFee1)
     data.oneDayTotalFee = totalFeeOneDay
     data.extraFeeChangeUSD = feeChangeUSD

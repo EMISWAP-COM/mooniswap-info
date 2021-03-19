@@ -2,7 +2,7 @@
   "name": "emiswap-info",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://emiswap.info",
+  "homepage": ".",
   "dependencies": {
     "@popperjs/core": "^2.4.2",
     "@reach/portal": "^0.10.3",
@@ -31,6 +31,7 @@
     "jazzicon": "^1.5.0",
     "node-vibrant": "^3.1.5",
     "polished": "^3.4.4",
+    "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-apollo": "^3.1.1",
     "react-device-detect": "^1.9.10",

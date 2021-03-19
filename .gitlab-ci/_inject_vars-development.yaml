@@ -1,0 +1,21 @@
+emirex_charts:
+  app:
+  - postgresql
+  - emiswap-oracle
+  - emiswap-ui
+  - emiswap-nft
+  - emiswap-landing
+  - emiswap-info
+
+inject_vars:
+  emiswap-info:
+    fullnameOverride: emiswap-info
+    image:
+      repository: "{{ lookup('env', '_img_repo') }}/{{ lookup( 'env', '_img_name') }}"
+      tag: "{{ lookup('env', '_img_tag') }}"
+      pullPolicy: Always
+    imagePullSecrets:
+    - name: "{{ lookup('env', 'CI_PROJECT_PATH_SLUG') }}"
+  postgresql:
+    global:
+      storageClass: csi-krbd-sc
