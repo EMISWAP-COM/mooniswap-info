@@ -201,6 +201,8 @@ async function getGlobalData(ethPrice, oldEthPrice) {
     })
     twoDayData = twoDayResult.data.emiswapFactories[0]
 
+    console.log(data, oneDayData, twoDayData)
+
     if (data && oneDayData && twoDayData) {
       let [oneDayVolumeUSD, volumeChangeUSD] = get2DayPercentChange(
         data.totalVolumeUSD,
@@ -222,7 +224,9 @@ async function getGlobalData(ethPrice, oldEthPrice) {
         twoDayData.txCount ? twoDayData.txCount : 0
       )
 
-      data.totalLiquidityUSD = data.totalLiquidityETH * ethPrice
+      if (!data.totalLiquidityUSD) {
+        data.totalLiquidityUSD = data.totalLiquidityETH * ethPrice
+      }
 
       const liquidityChangeUSD = getPercentChange(
         data.totalLiquidityETH * ethPrice,

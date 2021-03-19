@@ -70,9 +70,11 @@ export const SHARE_VALUE = (pairAddress, blocks) => {
     reserveUSD
     totalSupply 
     token0{
+      derivedUSD
       derivedETH
     }
     token1{
+      derivedUSD
       derivedETH
     }
   }
@@ -181,11 +183,13 @@ export const USER_POSITIONS = gql`
         token0 {
           id
           symbol
+          derivedUSD
           derivedETH
         }
         token1 {
           id
           symbol
+          derivedUSD
           derivedETH
         }
         totalSupply
@@ -361,6 +365,8 @@ export const GLOBAL_DATA = block => {
       }
     }`
 
+  console.log('GLOBAL_DATA', queryString);
+
   return gql(queryString)
 }
 
@@ -448,6 +454,7 @@ export const PAIR_DATA = (pairAddress, block) => {
           symbol
           name
           totalLiquidity
+          derivedUSD
           derivedETH
         }
         token1 {
@@ -455,6 +462,7 @@ export const PAIR_DATA = (pairAddress, block) => {
           symbol
           name
           totalLiquidity
+          derivedUSD
           derivedETH
         }
         reserve0
@@ -479,6 +487,7 @@ export const PAIR_DATA = (pairAddress, block) => {
           symbol
           name
           totalLiquidity
+          derivedUSD
           derivedETH
         }
         token1 {
@@ -486,6 +495,7 @@ export const PAIR_DATA = (pairAddress, block) => {
           symbol
           name
           totalLiquidity
+          derivedUSD
           derivedETH
         }
         reserve0
@@ -534,12 +544,14 @@ export const PAIRS_BULK = gql`
         id
         symbol
         name
+        derivedUSD
         derivedETH
       }
       token1 {
         id
         symbol
         name
+        derivedUSD
         derivedETH
       }
       reserve0
@@ -573,6 +585,7 @@ export const ALL_TOKENS_BY_BLOCK = block => gql`
             id
             name
             symbol
+            derivedUSD
             derivedETH
         }
     }
@@ -635,10 +648,12 @@ export const TOKEN_CHART = gql`
         id
         token0 {
           id
+          derivedUSD
           derivedETH
         }
         token1 {
           id
+          derivedUSD
           derivedETH
         }
       }
@@ -651,6 +666,7 @@ const TokenFields = `
     id
     name
     symbol
+    derivedUSD
     derivedETH
     tradeVolume
     tradeVolumeUSD
