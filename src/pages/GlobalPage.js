@@ -110,6 +110,8 @@ function GlobalPage({ history }) {
   const allPairs = useAllPairData()
   const allTokens = useAllTokenData()
 
+  console.log(allTokens);
+
   const [ethPrice, ethPriceOld] = useEthPrice()
 
   const ethPriceChange = (parseFloat(ethPrice - ethPriceOld) / parseFloat(ethPriceOld)) * 100

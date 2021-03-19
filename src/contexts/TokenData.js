@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react'
 
 import { client } from '../apollo/client'
-import { TOKEN_DATA, FILTERED_TRANSACTIONS, TOKEN_CHART, TOKENS_CURRENT, TOKENS_DYNAMIC } from '../apollo/queries'
+import { FILTERED_TRANSACTIONS, TOKEN_CHART, TOKEN_DATA, TOKENS_CURRENT, TOKENS_DYNAMIC } from '../apollo/queries'
 
 import { useEthPrice } from './GlobalData'
 
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { get2DayPercentChange, getPercentChange, getBlockFromTimestamp, isAddress, ETH } from '../helpers'
+import { ETH, get2DayPercentChange, getBlockFromTimestamp, getPercentChange, isAddress } from '../helpers'
 import { SURPRESS_WARNINGS } from '../constants'
 
 const UPDATE = 'UPDATE'
@@ -232,17 +232,19 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             twoDayHistory?.txCount ?? 0
           )
 
-          const currentLiquidityUSD = data?.totalLiquidity * ethPrice * data?.derivedETH
+          const currentLiquidityUSD = data.totalLiquidity
+            ? data.totalLiquidity
+            : (data?.totalLiquidity * ethPrice * data?.derivedETH)
           const oldLiquidityUSD = oneDayHistory?.totalLiquidity * ethPriceOld * oneDayHistory?.derivedETH
 
           // percent changes
           const priceChangeUSD = getPercentChange(
-            data?.derivedETH * ethPrice,
-            oneDayHistory?.derivedETH ? oneDayHistory?.derivedETH * ethPriceOld : 0
+            data.derivedUSD ? data.derivedUSD : (data.derivedETH * ethPrice),
+            oneDayHistory.derivedUSD ? oneDayHistory.derivedUSD : (oneDayHistory.derivedETH * ethPriceOld)
           )
 
           // set data
-          data.priceUSD = data?.derivedETH * ethPrice
+          data.priceUSD = data.derivedUSD ? data.derivedUSD : (data.derivedETH * ethPrice)
           data.totalLiquidityUSD = currentLiquidityUSD
           data.oneDayVolumeUSD = oneDayVolumeUSD
           data.volumeChangeUSD = volumeChangeUSD
@@ -345,12 +347,17 @@ const getTokenData = async (address, ethPrice, ethPriceOld) => {
       twoDayData?.txCount ?? 0
     )
 
-    const priceChangeUSD = getPercentChange(data?.derivedETH * ethPrice, oneDayData?.derivedETH ?? 0 * ethPriceOld)
+    const priceChangeUSD = getPercentChange(
+      data.derivedUSD ? data.derivedUSD : (data.derivedETH * ethPrice),
+      oneDayData.derivedUSD ? oneDayData.derivedUSD : (oneDayData.derivedETH * ethPriceOld)
+    )
     const liquidityChangeUSD = getPercentChange(data?.totalLiquidityUSD, oneDayData?.totalLiquidityUSD ?? 0)
 
     // set data
-    data.priceUSD = data?.derivedETH * ethPrice
-    data.totalLiquidityUSD = data?.totalLiquidity * ethPrice * data?.derivedETH
+    data.priceUSD = data.derivedUSD ? data.derivedUSD : (data.derivedETH * ethPrice)
+    data.totalLiquidityUSD = data.totalLiquidityUSD
+      ? data.totalLiquidityUSD
+      : (data?.totalLiquidity * ethPrice * data?.derivedETH)
     data.oneDayVolumeUSD = oneDayVolumeUSD
     data.volumeChangeUSD = volumeChangeUSD
     data.priceChangeUSD = priceChangeUSD
