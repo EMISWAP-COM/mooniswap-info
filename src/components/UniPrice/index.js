@@ -57,13 +57,13 @@ export default function UniPrice() {
     <PriceCard>
       <AutoColumn gap="10px">
         <RowFixed>
-          <TYPE.main>DAI/ETH: {daiPerEth ? daiPerEth : '-'}</TYPE.main>
+          <TYPE.main>DAI/ETH: {daiPerEth && !isNaN(daiPerEth) ? daiPerEth : '-'}</TYPE.main>
           <TYPE.light style={{ marginLeft: '10px' }}>
             {daiPair && totalLiquidity ? formatPercent(daiPair.trackedReserveUSD / totalLiquidity) : '-'}
           </TYPE.light>
         </RowFixed>
         <RowFixed>
-          <TYPE.main>USDC/ETH: {usdcPerEth ? usdcPerEth : '-'}</TYPE.main>
+          <TYPE.main>USDC/ETH: {usdcPerEth && !isNaN(usdcPerEth) ? usdcPerEth : '-'}</TYPE.main>
           <TYPE.light style={{ marginLeft: '10px' }}>
             {usdcPair && totalLiquidity ? formatPercent(usdcPair.trackedReserveUSD / totalLiquidity) : '-'}
           </TYPE.light>
@@ -77,7 +77,7 @@ export default function UniPrice() {
           </TYPE.light>
         </RowFixed> */}
         <RowFixed>
-          <TYPE.main>USDT/ETH: {usdtPerEth ? usdtPerEth : '-'}</TYPE.main>
+          <TYPE.main>USDT/ETH: {usdtPerEth && !isNaN(usdtPerEth) ? usdtPerEth : '-'}</TYPE.main>
           <TYPE.light style={{ marginLeft: '10px' }}>
             {usdtPair && totalLiquidity ? formatPercent(usdtPair.trackedReserveUSD / totalLiquidity) : '-'}
           </TYPE.light>
