@@ -110,13 +110,11 @@ function GlobalPage({ history }) {
   const allPairs = useAllPairData()
   const allTokens = useAllTokenData()
 
-  console.log(allTokens);
+  // console.log(allTokens);
 
   const [ethPrice, ethPriceOld] = useEthPrice()
 
   const ethPriceChange = (parseFloat(ethPrice - ethPriceOld) / parseFloat(ethPriceOld)) * 100
-
-  const formattedEthPrice = ethPrice ? formattedNum(ethPrice, true) : '-'
 
   const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : '-'
 
@@ -132,6 +130,24 @@ function GlobalPage({ history }) {
   const below600 = useMedia('(max-width: 600px)')
 
   const [showPriceCard, setShowPriceCard] = useState(false)
+
+  const getFormattedEthPrice = () => {
+    // console.log(allPairs);
+    for (const prop in allPairs) {
+      if (allPairs[prop].token0.symbol === 'ESW' && allPairs[prop].token1.symbol === 'USDT') {
+        return formattedNum(allPairs[prop].token1Price, true);
+      } else if (allPairs[prop].token0.symbol === 'USDT' && allPairs[prop].token1.symbol === 'ESW') {
+        return formattedNum(allPairs[prop].token0Price, true);
+      }
+    }
+    if (ethPrice) {
+      return formattedNum(ethPrice, true);
+    } else {
+      allPairs.forEach(pair => {
+      })
+    }
+    return '-'
+  };
 
   return (
     <PageWrapper>
@@ -210,9 +226,9 @@ function GlobalPage({ history }) {
                 <TokenLogo address={ETH} />
               </RowBetween>
               <RowBetween align="flex-end">
-                {formattedEthPrice && (
+                {getFormattedEthPrice() && (
                   <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                    {formattedEthPrice}
+                    {getFormattedEthPrice()}
                   </TYPE.main>
                 )}
                 {formattedPercent(ethPriceChange)}
