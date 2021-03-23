@@ -339,7 +339,7 @@ export const GLOBAL_CHART = gql`
 `
 
 export const GLOBAL_DATA = block => {
-  console.log(block, FACTORY_ADDRESS);
+  // console.log(block, FACTORY_ADDRESS);
   const queryString = block
     ? ` query emiswapFactories {
       emiswapFactories(block:   
@@ -365,7 +365,7 @@ export const GLOBAL_DATA = block => {
       }
     }`
 
-  console.log('GLOBAL_DATA', queryString);
+  // console.log('GLOBAL_DATA', queryString);
 
   return gql(queryString)
 }
