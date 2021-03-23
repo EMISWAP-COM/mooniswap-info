@@ -41,7 +41,7 @@ function App() {
         Object.keys(globalData).length > 0 &&
         globalChartData &&
         Object.keys(globalChartData).length > 0 ? (
-          <BrowserRouter>
+          <BrowserRouter basename="/analytics">
             <Switch>
               <Route
                 exacts
