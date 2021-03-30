@@ -132,19 +132,17 @@ function GlobalPage({ history }) {
   const [showPriceCard, setShowPriceCard] = useState(false)
 
   const getFormattedEthPrice = () => {
-    // console.log(allPairs);
-    for (const prop in allPairs) {
+    // Подсчет курса из прямой пары
+    /*for (const prop in allPairs) {
       if (allPairs[prop].token0.symbol === 'ESW' && allPairs[prop].token1.symbol === 'USDT') {
         return formattedNum(allPairs[prop].token1Price, true);
       } else if (allPairs[prop].token0.symbol === 'USDT' && allPairs[prop].token1.symbol === 'ESW') {
         return formattedNum(allPairs[prop].token0Price, true);
       }
-    }
+    }*/
+
     if (ethPrice) {
       return formattedNum(ethPrice, true);
-    } else {
-      allPairs.forEach(pair => {
-      })
     }
     return '-'
   };
