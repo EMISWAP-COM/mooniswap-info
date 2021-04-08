@@ -141,10 +141,11 @@ function GlobalPage({ history }) {
       }
     }*/
 
+    let price = '-';
     if (ethPrice) {
-      return formattedNum(ethPrice, true);
+      price = formattedNum(ethPrice, true);
     }
-    return '-'
+    return !price || price === '$0' ? '-' : price;
   };
 
   return (
