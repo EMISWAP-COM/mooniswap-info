@@ -11,6 +11,11 @@ const PaginationWrapper = styled.div`
   font-weight: 700;
   margin-bottom: 20px;
   padding: 20px 40px;
+  max-width: 100%;
+  
+  @media screen and (max-width: 680px) {
+    padding: 0;
+  }
 `
 
 const PaginationButton = styled.button`
@@ -43,6 +48,10 @@ const PaginationArrow = styled.button`
   :last-child {
     padding: 0 10px;
   }
+  
+  @media screen and (max-width: 680px) {
+    padding: 0 10px;
+  }
 `
 
 const PaginationDots = styled.span`
@@ -50,25 +59,25 @@ const PaginationDots = styled.span`
 `
 
 const renderPaginationBtns = (onClick, page, lastPage) => {
-  const startBtns = [page, page + 1, page + 2]
-  const gapBtns = [page - 2, page - 1, page]
+  const startBtns = [page, page + 1]
+  const gapBtns = [page - 1, page]
   const middleBtn = ['...']
-  const lastBtns = [lastPage - 2, lastPage - 1, lastPage]
+  const lastBtns = [lastPage - 1, lastPage]
 
   let btnsArr = []
 
-  if (page < lastPage - 4) {
+  if (page < lastPage - 3) {
     btnsArr = [...startBtns, ...middleBtn, ...lastBtns]
-  } else if (lastPage <= 6) {
+  } else if (lastPage <= 4) {
     btnsArr = [...Array(lastPage).keys()].map(page => ++page)
-  } else if (page < lastPage - 3) {
-    btnsArr = [...gapBtns, ...middleBtn, ...lastBtns]
   } else if (page < lastPage - 2) {
-    btnsArr = [...gapBtns, ...lastBtns] // last 6 pages
+    btnsArr = [...gapBtns, ...middleBtn, ...lastBtns]
+  } else if (page < lastPage - 1) {
+    btnsArr = [...gapBtns, ...lastBtns] // last 4 pages
   } else if (page === 0 && lastPage === 0) {
     btnsArr = []
   } else {
-    btnsArr = [...middleBtn, ...lastBtns] // last 3 pages
+    btnsArr = [...middleBtn, ...lastBtns] // last 2 pages
   }
 
   return btnsArr.map(num => (
