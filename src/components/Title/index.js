@@ -22,10 +22,16 @@ const LogoWrapper = styled.div`
 `
 
 const UniIcon = styled(Link)`
+  display: block;
+  width: 174px;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
   }
+`
+
+const LogoImg = styled.img`
+  width: 100%;;
 `
 
 export default function Title({ account }) {
@@ -73,7 +79,7 @@ export default function Title({ account }) {
       <Flex alignItems="center">
         <LogoWrapper>
           <UniIcon id="link" onClick={() => history.push('/')}>
-            <img src={Logo} alt="logo" />
+            <LogoImg src={Logo} alt="logo" />
           </UniIcon>
         </LogoWrapper>
         <Text fontWeight={600} mx="4px" lineHeight="1.5rem">
