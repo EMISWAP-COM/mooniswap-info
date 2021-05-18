@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { isAddress } from '../../helpers/index.js'
-import EmiswapLogo from '../../assets/esw.png'
+import EmiswapLogo from '../../assets/esw.svg'
 import EthereumLogo from '../../assets/eth.png'
 import { getLogoUrlList } from '../../helpers/index'
 import { ETH } from '../../helpers'
