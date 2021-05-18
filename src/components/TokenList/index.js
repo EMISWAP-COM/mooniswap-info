@@ -182,7 +182,7 @@ function TopTokenList({ tokens, history, itemMax = 10 }) {
             {item.symbol}
           </DataText>
         )}
-        <DataText area="liq">{formattedNum(item.totalLiquidityUSD) + ' ' + item.symbol}</DataText>
+        <DataText area="liq">{formattedNum(item.totalLiquidityUSD)}</DataText>
         <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText>
         {!below1080 && (
           <DataText area="price" color="text" fontWeight="500">
