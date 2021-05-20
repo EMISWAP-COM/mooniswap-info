@@ -252,7 +252,7 @@ function PairPage({ pairAddress, history }) {
           <FixedPanel onClick={() => history.push(`/token/${token0?.id}`)}>
             <RowFixed>
               <TokenLogo address={token0?.id} size={'16px'} />
-              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} color={'#648280'}>
+              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} color={'#ffffff'}>
                 {token0 && token1
                   ? `1 ${token0?.symbol} = ${token0Rate} ${token1?.symbol} ${
                       parseFloat(token0?.derivedETH) ? '(' + token0USD + ')' : ''
@@ -264,7 +264,7 @@ function PairPage({ pairAddress, history }) {
           <FixedPanel onClick={() => history.push(`/token/${token1?.id}`)}>
             <RowFixed>
               <TokenLogo address={token1?.id} size={'16px'} />
-              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} color={'#648280'}>
+              <TYPE.main fontSize={'16px'} lineHeight={1} fontWeight={500} ml={'4px'} color={'#ffffff'}>
                 {token0 && token1
                   ? `1 ${token1?.symbol} = ${token1Rate} ${token0?.symbol}  ${
                       parseFloat(token1?.derivedETH) ? '(' + token1USD + ')' : ''

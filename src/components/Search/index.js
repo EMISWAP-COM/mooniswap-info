@@ -87,7 +87,7 @@ const MenuItem = styled(Row)`
   }
   :hover {
     cursor: pointer;
-    background-color: #f7f8fa;
+    background-color: ${({ theme }) => theme.focus};
   }
 `
 
@@ -98,7 +98,7 @@ const Heading = styled(Row)`
 
 const FilterSection = styled(Heading)`
   z-index: 32;
-  background-color: #f7f8fa;
+  background: ${({ theme }) => theme.bg2};
 `
 
 const Gray = styled.span`
@@ -106,7 +106,7 @@ const Gray = styled.span`
 `
 
 const Green = styled.span`
-  color: #11b382;
+  color: #37FFDB;
   :hover {
     cursor: pointer;
   }

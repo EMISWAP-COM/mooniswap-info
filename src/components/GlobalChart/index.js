@@ -101,7 +101,7 @@ const GlobalChart = ({ display }) => {
             options={timeframeOptions}
             active={localWindow}
             setActive={setLocalWindow}
-            color={'#11B382'}
+            color={'#37FFDB'}
           />
         </RowBetween>
       ) : (

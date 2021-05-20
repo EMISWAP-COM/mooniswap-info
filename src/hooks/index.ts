@@ -7,7 +7,7 @@ import copy from 'copy-to-clipboard'
 import { PAGES } from '../constants'
 
 export function useColor(tokenAddress, token) {
-  const [color, setColor] = useState('#11B382')
+  const [color, setColor] = useState('#37FFDB')
   if (tokenAddress) {
     const pathList = getLogoUrlList(isAddress(
       tokenAddress
