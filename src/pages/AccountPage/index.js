@@ -212,14 +212,14 @@ function AccountPage({ account }) {
               onClick={() => setShowDropdown(!showDropdown)}
             >
               {!activePosition && (
-                <Text fontSize="20px" color="black" fontWeight={500}>
+                <Text fontSize="20px" color="white" fontWeight={500}>
                   Overview
                 </Text>
               )}
               {activePosition && (
                 <RowFixed>
                   <DoubleTokenLogo a0={activePosition.pair.token0.id} a1={activePosition.pair.token1.id} />
-                  <Text fontWeight={500} color="black" ml={'16px'}>
+                  <Text fontWeight={500} color="white" ml={'16px'}>
                     {activePosition.pair.token0.symbol}-{activePosition.pair.token1.symbol} Pair Data
                   </Text>
                 </RowFixed>
@@ -240,7 +240,7 @@ function AccountPage({ account }) {
                             }}
                           >
                             <DoubleTokenLogo a0={p.pair.token0.id} a1={p.pair.token1.id} />
-                            <Text fontWeight={500} color="black" ml={'16px'}>
+                            <Text fontWeight={500} color="white" ml={'16px'}>
                               {p.pair.token0.symbol}-{p.pair.token1.symbol}
                             </Text>
                           </RowFixed>
@@ -255,7 +255,7 @@ function AccountPage({ account }) {
                         setShowDropdown(false)
                       }}
                     >
-                      <Text fontWeight={500} color="black" ml={'16px'}>
+                      <Text fontWeight={500} color="white" ml={'16px'}>
                         Account Overview
                       </Text>
                     </RowFixed>
@@ -373,7 +373,7 @@ function AccountPage({ account }) {
                   setListView(LIST_VIEW.POSITIONS)
                 }}
                 fontSize={'1.125rem'}
-                color={listView !== LIST_VIEW.POSITIONS ? '#aeaeae' : 'black'}
+                color={listView !== LIST_VIEW.POSITIONS ? '#B7B7CA' : 'white'}
               >
                 Positions
               </TYPE.main>
@@ -384,7 +384,7 @@ function AccountPage({ account }) {
                   setListView(LIST_VIEW.TRANSACTIONS)
                 }}
                 fontSize={'1.125rem'}
-                color={listView !== LIST_VIEW.TRANSACTIONS ? '#aeaeae' : 'black'}
+                color={listView !== LIST_VIEW.TRANSACTIONS ? '#B7B7CA' : 'white'}
               >
                 Transactions
               </TYPE.main>
@@ -395,7 +395,7 @@ function AccountPage({ account }) {
                   setListView(LIST_VIEW.STATS)
                 }}
                 fontSize={'1.125rem'}
-                color={listView !== LIST_VIEW.STATS ? '#aeaeae' : 'black'}
+                color={listView !== LIST_VIEW.STATS ? '#B7B7CA' : 'white'}
               >
                 Account Stats
               </TYPE.main>
@@ -404,7 +404,7 @@ function AccountPage({ account }) {
         </AutoColumn>
         <Panel
           style={{
-            border: '1px solid rgba(43, 43, 43, 0.05)',
+            border: '1px solid #4A4757',
             marginTop: '1.5rem'
           }}
         >

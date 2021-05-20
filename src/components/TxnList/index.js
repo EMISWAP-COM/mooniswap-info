@@ -79,7 +79,7 @@ const ClickableText = styled(Text)`
     cursor: pointer;
     opacity: 0.6;
   }
-  color: #89919a;
+  color: ${({theme}) => theme.text2};
   user-select: none;
   text-align: end;
 
@@ -103,14 +103,13 @@ const DataText = styled(Flex)`
 
 const SortText = styled.button`
   cursor: pointer;
-  font-weight: ${({ active, theme }) => (active ? 500 : 400)};
+  font-weight: ${({ active, }) => (active ? 500 : 400)};
   margin-right: 0.5rem !important;
   border: none;
-  background-color: ${({ active }) => (active ? '#54B489' : 'rgba(166, 173, 192, 0.15)')};
+  background-color: ${({ theme, active }) => (active ? theme.active : theme.btn1)};
   border-radius: 6px;
   font-size: 1rem;
-  padding: 0px;
-  color: ${({ active, theme }) => (active ? 'white' : theme.text3)};
+  color: ${({ theme, active }) => (active ? 'white' : 'white')};
   outline: none;
   padding: 6px 12px;
 
@@ -388,7 +387,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
         <Flex alignItems="center" justifyContent="flexStart">
           <ClickableText
-            color="textDim"
+            color="#B7B7CA"
             area="value"
             onClick={e => {
               setSortedColumn(SORT_FIELD.VALUE)
@@ -402,7 +401,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           <Flex alignItems="center">
             <ClickableText
               area="amountToken"
-              color="textDim"
+              color="#B7B7CA"
               onClick={() => {
                 setSortedColumn(SORT_FIELD.AMOUNT0)
                 setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT0 ? true : !sortDirection)
@@ -418,7 +417,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
             <Flex alignItems="center">
               <ClickableText
                 area="amountOther"
-                color="textDim"
+                color="#B7B7CA"
                 onClick={() => {
                   setSortedColumn(SORT_FIELD.AMOUNT1)
                   setSortDirection(sortedColumn !== SORT_FIELD.AMOUNT1 ? true : !sortDirection)
@@ -431,7 +430,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           )}
           {!below1080 && (
             <Flex alignItems="center">
-              <Text area="account" color="textDim">
+              <Text area="account" color="#B7B7CA">
                 Account
               </Text>
             </Flex>
@@ -439,7 +438,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           <Flex alignItems="center">
             <ClickableText
               area="time"
-              color="textDim"
+              color="#B7B7CA"
               onClick={() => {
                 setSortedColumn(SORT_FIELD.TIMESTAMP)
                 setSortDirection(sortedColumn !== SORT_FIELD.TIMESTAMP ? true : !sortDirection)

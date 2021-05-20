@@ -79,7 +79,7 @@ const ClickableText = styled(Text)`
   }
   text-align: end;
   user-select: none;
-  color: #89919a;
+  color: #B7B7CA;
 `
 
 const DataText = styled(Flex)`

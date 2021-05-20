@@ -19,8 +19,8 @@ const PaginationWrapper = styled.div`
 `
 
 const PaginationButton = styled.button`
-  background-color: ${({ active }) => (active ? '#11B382' : 'transparent')};
-  color: ${({ active }) => (active ? '#fff' : '#555959')};
+  background-color: ${({ theme, active }) => (active ? theme.active : 'transparent')};
+  color: ${({ theme, active }) => (active ? '#fff' : theme.text1)};
   border: none;
   cursor: pointer;
   outline: none;
@@ -33,7 +33,7 @@ const PaginationButton = styled.button`
 `
 
 const PaginationArrow = styled.button`
-  color: ${({ theme }) => theme.shadow1};
+  color: ${({ theme }) => theme.text1};
   opacity: ${props => (props.disabled ? 0.3 : 1)};
   padding: 0 20px;
   user-select: none;

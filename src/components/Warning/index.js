@@ -12,10 +12,10 @@ import { useMedia } from 'react-use'
 
 const WarningWrapper = styled.div`
   border-radius: 20px;
-  border: 1px solid #f82d3a;
+  border: 1px solid ${({ theme }) => theme.red2};
   background: rgba(248, 45, 58, 0.05);
   padding: 1rem;
-  color: #f82d3a;
+  color: ${({ theme }) => theme.red2};
   width: 80% !important;
   max-width: 1000px;
   display: ${({ show }) => !show && 'none'};
@@ -26,7 +26,7 @@ const WarningWrapper = styled.div`
 const StyledWarningIcon = styled(AlertTriangle)`
   min-height: 20px;
   min-width: 20px;
-  stroke: red;
+  stroke: ${({ theme }) => theme.red1};
 `
 
 export default function Warning({ type, show, setShow, address }) {
@@ -68,7 +68,7 @@ export default function Warning({ type, show, setShow, address }) {
               <Link
                 fontWeight={500}
                 lineHeight={'145.23%'}
-                color={'#54B489'}
+                color={'#7A2DF4'}
                 href={'https://etherscan.io/address/' + address}
                 target="_blank"
               >
@@ -77,7 +77,7 @@ export default function Warning({ type, show, setShow, address }) {
             </Hover>
             <RowBetween style={{ marginTop: '20px' }}>
               <div />
-              <ButtonDark color={'#f82d3a'} style={{ minWidth: '140px' }} onClick={() => setShow(false)}>
+              <ButtonDark color={'#E85E59'} style={{ minWidth: '140px' }} onClick={() => setShow(false)}>
                 I understand
               </ButtonDark>
             </RowBetween>
@@ -88,14 +88,14 @@ export default function Warning({ type, show, setShow, address }) {
               <Link
                 fontWeight={500}
                 lineHeight={'145.23%'}
-                color={'#54B489'}
+                color={'#7A2DF4'}
                 href={'https://etherscan.io/address/' + address}
                 target="_blank"
               >
                 View {type === 'token' ? 'token' : 'pair'} contract on Etherscan
               </Link>
             </Hover>
-            <ButtonDark color={'#f82d3a'} style={{ minWidth: '140px' }} onClick={() => setShow(false)}>
+            <ButtonDark color={'#E85E59'} style={{ minWidth: '140px' }} onClick={() => setShow(false)}>
               I understand
             </ButtonDark>
           </RowBetween>

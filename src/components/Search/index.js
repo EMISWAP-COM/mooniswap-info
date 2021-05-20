@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   padding: ${({ small }) => (!small ? '12px' : '8px 16px')};
+  border: 1px solid ${({ theme }) => theme.border1};
   border-radius: 12px;
   background: ${({ theme }) => theme.bg1};
   border-bottom-right-radius: ${({ open }) => (open ? '0px' : '12px')};
@@ -36,7 +37,7 @@ const Input = styled.input`
   align-items: center;
   width: 100%;
   white-space: nowrap;
-  background: none;
+  background: ${({ theme }) => theme.bg1};
   border: none;
   outline: none;
   color: ${({ theme }) => theme.textColor};
@@ -62,7 +63,7 @@ const SearchIconLarge = styled(SearchIcon)`
 `
 
 const Menu = styled.div`
-  display: flex;
+  display: ${({ hide }) => hide && 'none'};
   flex-direction: column;
   z-index: 10;
   width: 100%;
@@ -71,12 +72,11 @@ const Menu = styled.div`
   overflow: scroll;
   left: 0;
   padding-bottom: 20px;
-  background: white;
+  background: ${({ theme }) => theme.bg1};
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.04);
-  display: ${({ hide }) => hide && 'none'};
 `
 
 const MenuItem = styled(Row)`

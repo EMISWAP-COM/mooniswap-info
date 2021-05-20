@@ -96,7 +96,7 @@ const GlobalChart = ({ display }) => {
     <>
       {below600 ? (
         <RowBetween mb={40}>
-          <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#11B382'} />
+          <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#37FFDB'} />
           <DropdownSelect
             options={timeframeOptions}
             active={localWindow}
@@ -169,7 +169,7 @@ const GlobalChart = ({ display }) => {
               dataKey={'totalLiquidityUSD'}
               stackId="2"
               strokeWidth={1}
-              stroke={'#11B382'}
+              stroke={'#37FFDB'}
               dot={false}
               type="monotone"
               name={'Liquidity'}
@@ -267,7 +267,7 @@ const GlobalChart = ({ display }) => {
             />
             <CartesianGrid stroke="#EAEEEE" vertical={false} />
             <Tooltip
-              cursor={{ fill: '#11B382', opacity: 0.1 }}
+              cursor={{ fill: '#37FFDB', opacity: 0.1 }}
               formatter={val => '$' + toK(val, true)}
               labelFormatter={label =>
                 volumeWindow === VOLUME_WINDOW.WEEKLY ? toWeeklyDate(label - 1) : toNiceDateYear(label)
@@ -286,7 +286,7 @@ const GlobalChart = ({ display }) => {
               type="monotone"
               name={'Volume'}
               dataKey={volumeWindow === VOLUME_WINDOW.DAYS ? 'dailyVolumeUSD' : 'weeklyVolumeUSD'}
-              fill="#11B382"
+              fill="#37FFDB"
               opacity={'1'}
               yAxisId={0}
               strokeWidth={2}

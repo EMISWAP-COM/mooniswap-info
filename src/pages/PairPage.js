@@ -377,7 +377,7 @@ function PairPage({ pairAddress, history }) {
             </PanelWrapper>
             <Panel
               style={{
-                border: '1px solid rgba(43, 43, 43, 0.05)',
+                border: '1px solid #4A4757',
                 marginTop: '3rem'
               }}
             >
@@ -389,7 +389,7 @@ function PairPage({ pairAddress, history }) {
             <Panel
               rounded
               style={{
-                border: '1px solid rgba(43, 43, 43, 0.05)',
+                border: '1px solid #4A4757',
                 marginTop: '3rem'
               }}
               p={20}

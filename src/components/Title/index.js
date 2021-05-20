@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Flex, Text } from 'rebass'
 import Link from '../Link'
-import Logo from '../../assets/logo.svg'
+import Logo from '../../assets/logo_white_text.svg'
 import { useMedia } from 'react-use'
 
 const TitleWrapper = styled.div`

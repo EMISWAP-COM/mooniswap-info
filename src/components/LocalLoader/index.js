@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import logo from '../../assets/logo.svg'
+import logo from '../../assets/logo_white_text.svg'
 
 const Loader = styled.div`
   pointer-events: none;
@@ -21,7 +21,7 @@ const Loader = styled.div`
           position: fixed;
           top: 0;
           z-index: 99999;
-          background: #fff; /* fallback for old browsers */
+          background: #26252C;
         `
       : css`
           height: 180px;
