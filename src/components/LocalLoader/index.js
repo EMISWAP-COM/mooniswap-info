@@ -31,7 +31,7 @@ const LocalLoader = ({ fill }) => {
     <Loader fill={fill}>
         <iframe
           style={{ width: '80%', maxWidth: '800px' }}
-          src="../preloader/preloader.html"
+          src="analytics/preloader/preloader.html"
           height="100%"
           width="100%"
           frameBorder="0"
