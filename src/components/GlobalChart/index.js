@@ -96,12 +96,12 @@ const GlobalChart = ({ display }) => {
     <>
       {below600 ? (
         <RowBetween mb={40}>
-          <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#11B382'} />
+          <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#37FFDB'} />
           <DropdownSelect
             options={timeframeOptions}
             active={localWindow}
             setActive={setLocalWindow}
-            color={'#11B382'}
+            color={'#37FFDB'}
           />
         </RowBetween>
       ) : (
@@ -160,8 +160,8 @@ const GlobalChart = ({ display }) => {
           <AreaChart margin={{ top: 20, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
             <defs>
               <linearGradient id="Gradient" x1="0" x2="0" y1="1" y2="0">
-                <stop offset="0%" stopColor="rgba(17, 179, 130, 0.05)" />
-                <stop offset="100%" stopColor="rgba(17, 179, 130, 0.5)" />
+                <stop offset="0%" stopColor="rgba(93, 9, 225, 0)" />
+                <stop offset="100%" stopColor="rgba(228, 120, 255, 1)" />
               </linearGradient>
             </defs>
             <Area
@@ -169,7 +169,7 @@ const GlobalChart = ({ display }) => {
               dataKey={'totalLiquidityUSD'}
               stackId="2"
               strokeWidth={1}
-              stroke={'#11B382'}
+              stroke={'#E478FF'}
               dot={false}
               type="monotone"
               name={'Liquidity'}
@@ -267,7 +267,7 @@ const GlobalChart = ({ display }) => {
             />
             <CartesianGrid stroke="#EAEEEE" vertical={false} />
             <Tooltip
-              cursor={{ fill: '#11B382', opacity: 0.1 }}
+              cursor={{ fill: '#5D09E1', opacity: 0.1 }}
               formatter={val => '$' + toK(val, true)}
               labelFormatter={label =>
                 volumeWindow === VOLUME_WINDOW.WEEKLY ? toWeeklyDate(label - 1) : toNiceDateYear(label)
@@ -286,11 +286,11 @@ const GlobalChart = ({ display }) => {
               type="monotone"
               name={'Volume'}
               dataKey={volumeWindow === VOLUME_WINDOW.DAYS ? 'dailyVolumeUSD' : 'weeklyVolumeUSD'}
-              fill="#11B382"
+              fill="#E478FF"
               opacity={'1'}
               yAxisId={0}
               strokeWidth={2}
-              stroke={'#fff'}
+              stroke={'#27272E'}
               isAnimationActive={true}
             />
           </BarChart>

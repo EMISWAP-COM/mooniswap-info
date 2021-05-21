@@ -25,13 +25,13 @@ const theme = (darkMode, color) => ({
   mercuryGray: darkMode ? '#333333' : '#E1E1E1',
 
   text1: darkMode ? '#FFFFFF' : '#24272C',
-  text2: darkMode ? '#C3C5CB' : '#565A69',
-  text3: darkMode ? '#6C7284' : '#888D9B',
+  text2: darkMode ? '#89919a' : '#565A69',
+  text3: darkMode ? '#B7B7CA' : '#888D9B',
   text4: darkMode ? '#565A69' : '#C3C5CB',
   text5: darkMode ? '#2C2F36' : '#EDEEF2',
 
-  // backgrounds / greys
-  bg1: darkMode ? '#212429' : '#FFFFFF',
+// backgrounds / greys
+  bg1: darkMode ? '#27272E' : '#FFFFFF',
   bg2: darkMode ? '#2C2F36' : '#F7F8FA',
   bg3: darkMode ? '#40444F' : '#EDEEF2',
   bg4: darkMode ? '#565A69' : '#CED0D9',
@@ -42,7 +42,7 @@ const theme = (darkMode, color) => ({
   advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)',
 
   //primary colors
-  primary1: darkMode ? '#FFD541' : '#FFD541',
+  primary1: darkMode ? '#7A2DF4' : '#FFD541',
   primary2: darkMode ? '#3680E7' : '#3680E7',
   primary3: darkMode ? '#4D8FEA' : '#4D8FEA',
   primary4: darkMode ? '#376bad70' : '#376bad70',
@@ -56,16 +56,23 @@ const theme = (darkMode, color) => ({
   secondary2: darkMode ? '#17000b26' : '#F6DDE8',
   secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
+  btn1: '#393946',
+  focus: '#4A4757',
+  active: '#7A2DF4',
+
+  border1: darkMode ? '#4A4757' : 'transparent',
+  border2: '#615C69',
+
   shadow1: darkMode ? '#000' : '#3B403F',
 
   // other
-  red1: '#FF6871',
-  red2: '#F82D3A',
-  green1: '#27AE60',
+  red1: '#E85E59',
+  red2: '#E85E59',
+  green1: '#37FFDB',
   yellow1: '#FFE270',
   yellow2: '#F3841E',
   horse: darkMode ? '#ffffff' : '#FFD541',
-  link: '#11B382',
+  link: darkMode ? '#37FFDB' : '#11B382',
 
   background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #376bad15 0%, #376bad00 100%)`
 })
@@ -150,7 +157,8 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     overflow: auto;
-    font-size: 14px;  
+    font-size: 14px;
+    background: #26252C;
   }
 
   a {
@@ -164,7 +172,7 @@ export const GlobalStyle = createGlobalStyle`
   html {
     font-size: 1rem;
     font-variant: none;
-    color: #24272C;
+    color: ${({ theme }) => theme.text1};
     background-color: rgb(251, 251, 251);  
   }
 `

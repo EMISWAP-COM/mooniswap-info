@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button as RebassButton } from 'rebass/styled-components'
 import styled from 'styled-components'
-import { Plus, ChevronDown } from 'react-feather'
+import { ChevronDown, Plus } from 'react-feather'
 import { darken, transparentize } from 'polished'
 import { RowBetween } from '../Row'
 
@@ -57,19 +57,19 @@ const ContentWrapper = styled.div`
 `
 
 export const ButtonLight = styled(Base)`
-  background-color: ${({ color }) => (color ? transparentize(0.9, color) : transparentize(0.85, '#9ECFC3'))};
-  color: ${({ color }) => (color ? darken(0.1, color) : '#648280')};
+  background-color: ${({ theme, color }) => (color ? transparentize(0.9, color) : theme.btn1)};
+  color: ${({ theme, color }) => (color ? darken(0.1, color) : theme.text1)};
 
   min-width: fit-content;
   border-radius: 12px;
   white-space: nowrap;
 
   a {
-    color: ${({ color }) => (color ? darken(0.1, color) : '#648280')};
+    color: ${({ theme, color }) => (color ? darken(0.1, color) : theme.text1)};
   }
 
   :hover {
-    background-color: ${({ color }) => (color ? transparentize(0.8, color) : transparentize(0.8, '#9ECFC3'))};
+    background-color: ${({ theme, color }) => (color ? transparentize(0.8, color) :theme.btn1)};
   }
 `
 
@@ -130,9 +130,9 @@ export const OptionButton = styled.div`
   white-space: nowrap;
   padding: 6px 12px;
   border-radius: 6px;
-  background-color: ${({ active, isButtonGroup }) =>
-    !isButtonGroup ? 'transparent !important' : active ? '#54B489' : 'rgba(166, 173, 192, 0.15)'};
-  color: ${({ active }) => (active ? 'white' : '#24272C')};
+  background-color: ${({ theme, active, isButtonGroup }) => 
+    !isButtonGroup ? 'transparent !important' : active ? theme.active : theme.btn1};
+  color: ${({ active }) => (active ? 'white' : 'white')};
   transition: all 0.3s ease;
   margin-right: 0.5rem !important;
 
@@ -143,6 +143,6 @@ export const OptionButton = styled.div`
   :hover {
     cursor: ${({ disabled }) => !disabled && 'pointer'};
     color: ${({ isButtonGroup }) => isButtonGroup && 'white'};
-    background-color: ${({ disabled }) => !disabled && '#54B489'};
+    background-color: ${({ theme, disabled }) => !disabled && theme.focus};
   }
 `

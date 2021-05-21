@@ -302,7 +302,7 @@ function GlobalPage({ history }) {
                 setListView(LIST_VIEW.PAIRS)
               }}
               fontSize={'1.125rem'}
-              color={listView === LIST_VIEW.TOKENS ? '#aeaeae' : 'black'}
+              color={listView === LIST_VIEW.TOKENS ? '#B7B7CA' : 'white'}
             >
               Pairs
             </TYPE.main>
@@ -313,7 +313,7 @@ function GlobalPage({ history }) {
                 setListView(LIST_VIEW.TOKENS)
               }}
               fontSize={'1.125rem'}
-              color={listView === LIST_VIEW.PAIRS ? '#aeaeae' : 'black'}
+              color={listView === LIST_VIEW.PAIRS ? '#B7B7CA' : 'white'}
             >
               Tokens
             </TYPE.main>

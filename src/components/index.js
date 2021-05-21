@@ -8,7 +8,7 @@ import { urls } from '../helpers'
 
 const Divider = styled(Box)`
   height: 1px;
-  background-color: rgba(43, 43, 43, 0.035);
+  background-color: ${({ theme }) => theme.border2};
 `
 
 const Hint = ({ children, ...rest }) => (
