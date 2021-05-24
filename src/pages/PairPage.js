@@ -153,11 +153,13 @@ function PairPage({ pairAddress, history }) {
   const backgroundColor = useColor(pairAddress)
 
   // liquidity
-  const liquidity = trackedReserveUSD
-    ? formattedNum(trackedReserveUSD, true)
-    : reserveUSD
+  const liquidity = reserveUSD
     ? formattedNum(reserveUSD, true)
-    : '-'
+    : (trackedReserveUSD
+      ? formattedNum(trackedReserveUSD, true)
+      : '-'
+    );
+
   const liquidityChange = formattedPercent(liquidityChangeUSD)
 
   // mark if using untracked liquidity
