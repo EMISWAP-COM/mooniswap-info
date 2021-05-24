@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -106,7 +106,7 @@ const DataText = styled(Flex)`
 `
 
 const SORT_FIELD = {
-  LIQ: 'totalLiquidityUSD',
+  LIQ: 'manualLiquidity',
   VOL: 'oneDayVolumeUSD',
   SYMBOL: 'symbol',
   NAME: 'name',
@@ -115,7 +115,7 @@ const SORT_FIELD = {
 }
 
 // @TODO rework into virtualized list
-function TopTokenList({ tokens, history, itemMax = 10 }) {
+function TopTokenList({ tokens, pairs, history, itemMax = 10 }) {
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -136,8 +136,18 @@ function TopTokenList({ tokens, history, itemMax = 10 }) {
   const formattedTokens =
     tokens &&
     Object.keys(tokens).map(key => {
+      let calculated = 0
+      for (let pairAddress in pairs) {
+        const pair = pairs[pairAddress]
+        if (pair?.token0?.id === tokens[key].id || pair?.token1?.id === tokens[key].id) {
+          calculated = calculated + parseFloat(pair.reserveUSD ?? 0)
+        }
+      }
+      tokens[key].manualLiquidity = calculated / 2
+
       return !OVERVIEW_TOKEN_BLACKLIST.includes(key) && tokens[key]
     })
+
 
   useEffect(() => {
     if (tokens && formattedTokens) {
@@ -182,7 +192,7 @@ function TopTokenList({ tokens, history, itemMax = 10 }) {
             {item.symbol}
           </DataText>
         )}
-        <DataText area="liq">{formattedNum(item.totalLiquidityUSD)}</DataText>
+        <DataText area="liq">{formattedNum(item.manualLiquidity, true)}</DataText>
         <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText>
         {!below1080 && (
           <DataText area="price" color="text" fontWeight="500">

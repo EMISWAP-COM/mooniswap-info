@@ -228,8 +228,6 @@ async function getGlobalData(ethPrice, oldEthPrice) {
         data.totalLiquidityUSD = data.totalLiquidityETH * ethPrice
       }
 
-    console.log('totalLiquidity', data.totalLiquidityUSD, data.totalLiquidityETH * ethPrice);
-
       const liquidityChangeUSD = getPercentChange(
         data.totalLiquidityETH * ethPrice,
         oneDayData.totalLiquidityETH * oldEthPrice

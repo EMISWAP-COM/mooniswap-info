@@ -8,6 +8,7 @@ import { Search } from '../components/Search'
 import { useMedia } from 'react-use'
 import Panel from '../components/Panel'
 import { useAllTokenData } from '../contexts/TokenData'
+import { useAllPairData } from '../contexts/PairData'
 
 const PageWrapper = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const ThemedBackground = styled.div`
 
 function AllTokensPage() {
   const allTokens = useAllTokenData()
+  const allPairs = useAllPairData()
   const below1080 = useMedia('(max-width: 1080px)')
   const below600 = useMedia('(max-width: 600px)')
 
@@ -55,7 +57,7 @@ function AllTokensPage() {
         </TYPE.main>
       )}
       <Panel style={{ marginTop: '6px' }}>
-        <TopTokenList tokens={allTokens} itemMax={50} />
+        <TopTokenList tokens={allTokens} pairs={allPairs} itemMax={50} />
       </Panel>
     </PageWrapper>
   )
