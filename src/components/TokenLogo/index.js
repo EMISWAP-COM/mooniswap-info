@@ -40,7 +40,7 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
     setError(false)
   }, [address])
 
-  if (error) {
+  if (address?.toLowerCase() === '0x5a75A093747b72a0e14056352751eDF03518031d'.toLowerCase() || error) {
     return (
       <Inline>
         <Image {...rest} alt={''} src={EmiswapLogo} size={size} />

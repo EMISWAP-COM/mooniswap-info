@@ -113,7 +113,7 @@ function TokenPage({ address, history }) {
     symbol,
     priceUSD,
     oneDayVolumeUSD,
-    totalLiquidityUSD,
+    // totalLiquidityUSD,
     volumeChangeUSD,
     priceChangeUSD,
     liquidityChangeUSD,
@@ -147,7 +147,7 @@ function TokenPage({ address, history }) {
   const volumeChange = formattedPercent(volumeChangeUSD)
 
   // liquidity
-  const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : totalLiquidityUSD === 0 ? '$0' : ''
+  // const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : totalLiquidityUSD === 0 ? '$0' : ''
   const liquidityChange = formattedPercent(liquidityChangeUSD)
 
   // transactions
