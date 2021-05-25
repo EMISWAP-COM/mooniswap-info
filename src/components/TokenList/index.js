@@ -14,7 +14,6 @@ import { useMedia } from 'react-use'
 import { withRouter } from 'react-router-dom'
 import { OVERVIEW_TOKEN_BLACKLIST, PAGES } from '../../constants'
 import Pagination from '../Pagination'
-import { useEthPrice } from '../../contexts/GlobalData'
 
 dayjs.extend(utc)
 
@@ -125,8 +124,6 @@ function TopTokenList({ tokens, pairs, history, itemMax = 10 }) {
   // sorting
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.LIQ)
-
-  const [ethPrice] = useEthPrice()
 
   const below1080 = useMedia('(max-width: 1080px)')
   const below680 = useMedia('(max-width: 680px)')
