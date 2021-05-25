@@ -26,6 +26,7 @@ import { transparentize } from 'polished'
 import { useDataForList } from '../contexts/PairData'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
+import { useEthPrice } from '../contexts/GlobalData'
 
 const PageWrapper = styled.div`
   display: flex;
@@ -111,6 +112,7 @@ function TokenPage({ address, history }) {
     id,
     name,
     symbol,
+    derivedETH,
     priceUSD,
     oneDayVolumeUSD,
     // totalLiquidityUSD,

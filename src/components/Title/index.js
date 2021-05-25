@@ -75,10 +75,10 @@ export default function Title({ account }) {
   }
 
   return (
-    <TitleWrapper onClick={() => history.push('/')}>
+    <TitleWrapper onClick={() => window.location.href = 'https://emiswap.com'}>
       <Flex alignItems="center">
         <LogoWrapper>
-          <UniIcon id="link" onClick={() => history.push('/')}>
+          <UniIcon id="link" onClick={() => window.location.href = 'https://emiswap.com'}>
             <LogoImg src={Logo} alt="logo" />
           </UniIcon>
         </LogoWrapper>
