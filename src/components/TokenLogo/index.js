@@ -104,6 +104,7 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
             event.preventDefault()
           } else {
             FALLBACK_URIS[address] = urlList[1]
+            setError(true)
           }
         }}
       />

@@ -26,6 +26,7 @@ import { transparentize } from 'polished'
 import { useDataForList } from '../contexts/PairData'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
+import { BackButton } from '../components/BackButton'
 
 const PageWrapper = styled.div`
   display: flex;
@@ -181,6 +182,7 @@ function TokenPage({ address, history }) {
       <WarningGrouping disabled={!dismissed && verifiedTokens && !verifiedTokens.includes(address)}>
         <RowBetween mt={20} style={{ flexWrap: 'wrap' }}>
           <RowFixed style={{ flexWrap: 'wrap' }}>
+            <BackButton onClick={() => history.push(`/`)}/>
             <RowFixed mb={20} style={{ alignItems: 'baseline' }}>
               <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
               <Text fontSize={'2rem'} fontWeight={600} style={{ margin: '0 1rem' }}>
