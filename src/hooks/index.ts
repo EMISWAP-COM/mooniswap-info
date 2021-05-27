@@ -1,13 +1,12 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
-import { shade } from 'polished'
-import Vibrant from 'node-vibrant'
-import { hex } from 'wcag-contrast'
-import { getIsValidNumber, getLogoUrlList, isAddress } from '../helpers'
+import {useCallback, useEffect, useRef, useState} from 'react'
+import {getIsValidNumber} from '../helpers'
 import copy from 'copy-to-clipboard'
-import { PAGES } from '../constants'
+import {PAGES} from '../constants'
 
 export function useColor(tokenAddress, token) {
-  const [color, setColor] = useState('#37FFDB')
+  return '#37FFDB';
+
+  /*const [color, setColor] = useState('#37FFDB')
   if (tokenAddress) {
     const pathList = getLogoUrlList(isAddress(
       tokenAddress
@@ -30,7 +29,7 @@ export function useColor(tokenAddress, token) {
       })
     }
   }
-  return color
+  return color*/
 }
 
 export function useCopyClipboard(timeout = 500) {

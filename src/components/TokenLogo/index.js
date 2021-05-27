@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { isAddress } from '../../helpers/index.js'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'
+import NoLogoCoin from '../../assets/no_logo_coin.svg'
 import { getLogoUrlList } from '../../helpers/index'
 import { ETH } from '../../helpers'
 
@@ -41,6 +42,14 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
   }, [address])
 
   if (error) {
+    return (
+      <Inline>
+        <Image {...rest} alt={''} src={NoLogoCoin} size={size} />
+      </Inline>
+    )
+  }
+
+  if (address?.toLowerCase() === '0x5a75A093747b72a0e14056352751eDF03518031d'.toLowerCase()) {
     return (
       <Inline>
         <Image {...rest} alt={''} src={EmiswapLogo} size={size} />
@@ -95,6 +104,7 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
             event.preventDefault()
           } else {
             FALLBACK_URIS[address] = urlList[1]
+            setError(true)
           }
         }}
       />

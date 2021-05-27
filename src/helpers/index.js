@@ -365,8 +365,8 @@ export function getLogoUrlList(address) {
     return ['https://etherscan.io/images/main/empty-token.png']
   }
   return [
+    `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
     `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
-    `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
   ]
 }
 

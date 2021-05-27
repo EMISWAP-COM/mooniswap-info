@@ -21,7 +21,7 @@ const TransactionStatusText = styled.span`
   margin-left: 0.25rem;
   ${({ theme }) => theme.flexRowNoWrap};
   align-items: center;
-  color: black;
+  color: white;
 `
 
 export default function CopyHelper({ toCopy }) {
@@ -31,12 +31,12 @@ export default function CopyHelper({ toCopy }) {
     <CopyIcon onClick={() => setCopied(toCopy)}>
       {isCopied ? (
         <TransactionStatusText>
-          <CheckCircle size={'16'} stroke="black" />
+          <CheckCircle size={'16'} stroke="white" />
           {/* <TransactionStatusText>Copied</TransactionStatusText> */}
         </TransactionStatusText>
       ) : (
         <TransactionStatusText>
-          <Copy size={'16'} stroke="black" />
+          <Copy size={'16'} stroke="white" />
         </TransactionStatusText>
       )}
     </CopyIcon>

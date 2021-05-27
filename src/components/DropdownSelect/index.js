@@ -37,7 +37,7 @@ const Dropdown = styled.div`
   width: calc(100% - 20px);
   font-weight: 500;
   font-size: 1rem;
-  color: black;
+  color: ${({ theme }) => theme.text1};
   :hover {
     cursor: pointer;
   }

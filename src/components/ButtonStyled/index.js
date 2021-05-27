@@ -58,7 +58,7 @@ const ContentWrapper = styled.div`
 
 export const ButtonLight = styled(Base)`
   background-color: ${({ theme, color }) => (color ? transparentize(0.9, color) : theme.btn1)};
-  color: ${({ theme, color }) => (color ? darken(0.1, color) : theme.text1)};
+  color: ${({ theme, color }) => (theme.text1)};
 
   min-width: fit-content;
   border-radius: 12px;

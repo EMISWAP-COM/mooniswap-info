@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'feather-icons'
 import { withRouter } from 'react-router-dom'
 import { Text } from 'rebass'
@@ -11,22 +11,21 @@ import PairList from '../components/PairList'
 import Loader from '../components/Loader'
 import { AutoRow, RowBetween, RowFixed } from '../components/Row'
 import Column, { AutoColumn } from '../components/Column'
-import { ButtonLight, ButtonDark } from '../components/ButtonStyled'
+import { ButtonDark, ButtonLight } from '../components/ButtonStyled'
 import TxnList from '../components/TxnList'
 import TokenChart from '../components/TokenChart'
 
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink } from '../helpers'
 
-import { useTokenData, useTokenTransactions, useTokenPairs, useVerifiedTokens } from '../contexts/TokenData'
-import { TYPE, ThemedBackground } from '../Theme'
+import { useTokenData, useTokenPairs, useTokenTransactions, useVerifiedTokens } from '../contexts/TokenData'
+import { ThemedBackground, TYPE } from '../Theme'
 import { useColor } from '../hooks'
 import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
-import { transparentize } from 'polished'
 import { useDataForList } from '../contexts/PairData'
-import { useEffect } from 'react'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
+import { BackButton } from '../components/BackButton'
 
 const PageWrapper = styled.div`
   display: flex;
@@ -114,7 +113,6 @@ function TokenPage({ address, history }) {
     symbol,
     priceUSD,
     oneDayVolumeUSD,
-    totalLiquidityUSD,
     volumeChangeUSD,
     priceChangeUSD,
     liquidityChangeUSD,
@@ -148,7 +146,7 @@ function TokenPage({ address, history }) {
   const volumeChange = formattedPercent(volumeChangeUSD)
 
   // liquidity
-  const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : totalLiquidityUSD === 0 ? '$0' : ''
+  // const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : totalLiquidityUSD === 0 ? '$0' : ''
   const liquidityChange = formattedPercent(liquidityChangeUSD)
 
   // transactions
@@ -169,11 +167,11 @@ function TokenPage({ address, history }) {
     setManualLiquidity(calculated / 2)
   }, [fetchedPairsList])
 
-  const useManualLiquidity = parseFloat(totalLiquidityUSD / manualLiquidity) < 0.5
+  // const useManualLiquidity = parseFloat(totalLiquidityUSD / manualLiquidity) < 0.5
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
+      <ThemedBackground />
       <Warning
         type={'token'}
         show={!dismissed && verifiedTokens && !verifiedTokens.includes(address)}
@@ -183,6 +181,7 @@ function TokenPage({ address, history }) {
       <WarningGrouping disabled={!dismissed && verifiedTokens && !verifiedTokens.includes(address)}>
         <RowBetween mt={20} style={{ flexWrap: 'wrap' }}>
           <RowFixed style={{ flexWrap: 'wrap' }}>
+            <BackButton onClick={() => history.push(`/`)}/>
             <RowFixed mb={20} style={{ alignItems: 'baseline' }}>
               <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
               <Text fontSize={'2rem'} fontWeight={600} style={{ margin: '0 1rem' }}>
@@ -249,7 +248,7 @@ function TokenPage({ address, history }) {
                   </RowBetween>
                   <RowBetween align="flex-end">
                     <TYPE.main fontSize={'2rem'} lineHeight={1} fontWeight={600}>
-                      {useManualLiquidity ? formattedNum(manualLiquidity, true) : liquidity}
+                      {manualLiquidity ? formattedNum(manualLiquidity, true) : ''}
                     </TYPE.main>
                     <TYPE.main>{liquidityChange}</TYPE.main>
                   </RowBetween>

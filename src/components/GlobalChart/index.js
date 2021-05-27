@@ -282,16 +282,22 @@ const GlobalChart = ({ display }) => {
               }}
               wrapperStyle={{ top: -70, left: -10 }}
             />
+            <defs>
+              <linearGradient id="Gradient" x1="0" x2="0" y1="1" y2="0">
+                <stop offset="0%" stopColor="rgba(93, 9, 225, 0)" />
+                <stop offset="100%" stopColor="rgba(228, 120, 255, 1)" />
+              </linearGradient>
+            </defs>
             <Bar
               type="monotone"
               name={'Volume'}
               dataKey={volumeWindow === VOLUME_WINDOW.DAYS ? 'dailyVolumeUSD' : 'weeklyVolumeUSD'}
-              fill="#E478FF"
               opacity={'1'}
               yAxisId={0}
-              strokeWidth={2}
-              stroke={'#27272E'}
+              strokeWidth={1}
+              stroke={'#E478FF'}
               isAnimationActive={true}
+              fill="url(#Gradient)"
             />
           </BarChart>
         </ResponsiveContainer>

@@ -320,7 +320,10 @@ function GlobalPage({ history }) {
           </Hover>
         </ListOptions>
 
-        {listView === LIST_VIEW.PAIRS ? <PairList pairs={allPairs} /> : <TopTokenList tokens={allTokens} />}
+        {listView === LIST_VIEW.PAIRS
+          ? <PairList pairs={allPairs} />
+          : <TopTokenList tokens={allTokens} pairs={allPairs} />
+        }
       </Panel>
 
       <Panel style={{ margin: '2rem 0' }}>

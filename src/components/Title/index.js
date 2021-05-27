@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Flex, Text } from 'rebass'
@@ -35,8 +34,6 @@ const LogoImg = styled.img`
 `
 
 export default function Title({ account }) {
-  const history = useHistory()
-
   const below1080 = useMedia('(max-width: 1080px)')
 
   function getName() {
@@ -75,11 +72,11 @@ export default function Title({ account }) {
   }
 
   return (
-    <TitleWrapper onClick={() => history.push('/')}>
+    <TitleWrapper onClick={() => window.location.href = 'https://emiswap.com'}>
       <Flex alignItems="center">
         <LogoWrapper>
-          <UniIcon id="link" onClick={() => history.push('/')}>
-            <LogoImg src={Logo} alt="logo" />
+          <UniIcon id="link" onClick={() => window.location.href = 'https://emiswap.com'}>
+            <LogoImg src={Logo} alt="logo"/>
           </UniIcon>
         </LogoWrapper>
         <Text fontWeight={600} mx="4px" lineHeight="1.5rem">

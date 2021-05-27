@@ -29,6 +29,7 @@ import { useEthPrice } from '../contexts/GlobalData'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
 import { useVerifiedTokens } from '../contexts/TokenData'
+import { BackButton } from '../components/BackButton'
 
 const PageWrapper = styled.div`
   display: flex;
@@ -153,11 +154,13 @@ function PairPage({ pairAddress, history }) {
   const backgroundColor = useColor(pairAddress)
 
   // liquidity
-  const liquidity = trackedReserveUSD
-    ? formattedNum(trackedReserveUSD, true)
-    : reserveUSD
+  const liquidity = reserveUSD
     ? formattedNum(reserveUSD, true)
-    : '-'
+    : (trackedReserveUSD
+      ? formattedNum(trackedReserveUSD, true)
+      : '-'
+    );
+
   const liquidityChange = formattedPercent(liquidityChangeUSD)
 
   // mark if using untracked liquidity
@@ -195,7 +198,7 @@ function PairPage({ pairAddress, history }) {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
+      <ThemedBackground />
       <Warning
         type={'pair'}
         show={
@@ -216,6 +219,7 @@ function PairPage({ pairAddress, history }) {
       >
         <RowBetween mt={20} style={{ flexWrap: 'wrap' }}>
           <RowFixed style={{ flexWrap: 'wrap' }}>
+            <BackButton onClick={() => history.push(`/`)}/>
             <RowFixed mb={20}>
               {token0 && token1 && (
                 <DoubleTokenLogo a0={token0?.id || ''} a1={token1?.id || ''} size={32} margin={true} />
