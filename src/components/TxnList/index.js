@@ -5,7 +5,6 @@ import utc from 'dayjs/plugin/utc'
 
 import { formatTime, formattedNum, urls, getIsValidNumber } from '../../helpers'
 import { useMedia } from 'react-use'
-import { useCurrentCurrency } from '../../contexts/Application'
 import { RowFixed, RowBetween } from '../Row'
 
 import LocalLoader from '../LocalLoader'
@@ -158,8 +157,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.TIMESTAMP)
   const [filteredItems, setFilteredItems] = useState()
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
-
-  const [currency] = useCurrentCurrency()
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
