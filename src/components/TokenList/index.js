@@ -188,14 +188,14 @@ function TopTokenList({ tokens, pairs, history, itemMax = 10 }) {
           </Row>
         </DataText>
         {!below680 && (
-          <DataText area="symbol" color="text" fontWeight="500">
+          <DataText area="symbol" color="white" fontWeight="500">
             {item.symbol}
           </DataText>
         )}
         <DataText area="liq">{formattedNum(item.manualLiquidity, true)}</DataText>
         <DataText area="vol">{formattedNum(item.oneDayVolumeUSD, true)}</DataText>
         {!below1080 && (
-          <DataText area="price" color="text" fontWeight="500">
+          <DataText area="price" color="white" fontWeight="500">
             {formattedNum(item.priceUSD, true)}
           </DataText>
         )}
@@ -234,7 +234,7 @@ function TopTokenList({ tokens, pairs, history, itemMax = 10 }) {
       <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0', margin: 0 }}>
         <Flex alignItems="center" justifyContent="flexStart">
           <ClickableText
-            color="text"
+            color="white"
             area="name"
             fontWeight="500"
             onClick={e => {

@@ -22,7 +22,6 @@ import { ThemedBackground, TYPE } from '../Theme'
 import { useColor } from '../hooks'
 import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
-import { transparentize } from 'polished'
 import { useDataForList } from '../contexts/PairData'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
@@ -172,7 +171,7 @@ function TokenPage({ address, history }) {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, backgroundColor)} />
+      <ThemedBackground />
       <Warning
         type={'token'}
         show={!dismissed && verifiedTokens && !verifiedTokens.includes(address)}

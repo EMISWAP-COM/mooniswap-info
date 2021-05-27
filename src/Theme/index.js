@@ -10,72 +10,77 @@ export default function ThemeProvider({ children }) {
   return <StyledComponentsThemeProvider theme={theme(darkMode)}>{children}</StyledComponentsThemeProvider>
 }
 
-const theme = (darkMode, color) => ({
-  customColor: color,
-  textColor: darkMode ? color : '#24272C',
+const theme = (darkMode, color) => {
 
-  panelColor: darkMode ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)',
-  backgroundColor: darkMode ? '#212429' : '#F7F8FA',
+  color = '#37FFDB';
 
-  emiswapPink: darkMode ? '#ff007a' : 'black',
+  return {
+    customColor: color,
+    textColor: darkMode ? color : '#24272C',
 
-  concreteGray: darkMode ? '#292C2F' : '#FAFAFA',
-  inputBackground: darkMode ? '#1F1F1F' : '#FAFAFA',
-  shadowColor: darkMode ? '#000' : '#3B403F',
-  mercuryGray: darkMode ? '#333333' : '#E1E1E1',
+    panelColor: darkMode ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)',
+    backgroundColor: darkMode ? '#212429' : '#F7F8FA',
 
-  text1: darkMode ? '#FFFFFF' : '#24272C',
-  text2: darkMode ? '#89919a' : '#565A69',
-  text3: darkMode ? '#B7B7CA' : '#888D9B',
-  text4: darkMode ? '#565A69' : '#C3C5CB',
-  text5: darkMode ? '#2C2F36' : '#EDEEF2',
+    emiswapPink: darkMode ? '#ff007a' : 'black',
+
+    concreteGray: darkMode ? '#292C2F' : '#FAFAFA',
+    inputBackground: darkMode ? '#1F1F1F' : '#FAFAFA',
+    shadowColor: darkMode ? '#000' : '#3B403F',
+    mercuryGray: darkMode ? '#333333' : '#E1E1E1',
+
+    text1: darkMode ? '#FFFFFF' : '#24272C',
+    text2: darkMode ? '#89919a' : '#565A69',
+    text3: darkMode ? '#B7B7CA' : '#888D9B',
+    text4: darkMode ? '#565A69' : '#C3C5CB',
+    text5: darkMode ? '#2C2F36' : '#EDEEF2',
 
 // backgrounds / greys
-  bg1: darkMode ? '#27272E' : '#FFFFFF',
-  bg2: darkMode ? '#2C2F36' : '#F7F8FA',
-  bg3: darkMode ? '#40444F' : '#EDEEF2',
-  bg4: darkMode ? '#565A69' : '#CED0D9',
-  bg5: darkMode ? '#565A69' : '#888D9B',
+    bg1: darkMode ? '#27272E' : '#FFFFFF',
+    bg2: darkMode ? '#2C2F36' : '#F7F8FA',
+    bg3: darkMode ? '#40444F' : '#EDEEF2',
+    bg4: darkMode ? '#565A69' : '#CED0D9',
+    bg5: darkMode ? '#565A69' : '#888D9B',
 
-  //specialty colors
-  modalBG: darkMode ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.6)',
-  advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)',
+    //specialty colors
+    modalBG: darkMode ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.6)',
+    advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)',
 
-  //primary colors
-  primary1: darkMode ? '#7A2DF4' : '#FFD541',
-  primary2: darkMode ? '#3680E7' : '#3680E7',
-  primary3: darkMode ? '#4D8FEA' : '#4D8FEA',
-  primary4: darkMode ? '#376bad70' : '#376bad70',
-  primary5: darkMode ? '#153d6f70' : '#e7e7e7',
+    //primary colors
+    primary1: darkMode ? '#7A2DF4' : '#FFD541',
+    primary2: darkMode ? '#3680E7' : '#3680E7',
+    primary3: darkMode ? '#4D8FEA' : '#4D8FEA',
+    primary4: darkMode ? '#376bad70' : '#376bad70',
+    primary5: darkMode ? '#153d6f70' : '#e7e7e7',
 
-  // color text
-  primaryText1: darkMode ? '#6da8ff' : '#474747',
+    // color text
+    primaryText1: darkMode ? '#6da8ff' : '#474747',
 
-  // secondary colors
-  secondary1: darkMode ? '#2172E5' : '#ff007a',
-  secondary2: darkMode ? '#17000b26' : '#F6DDE8',
-  secondary3: darkMode ? '#17000b26' : '#FDEAF1',
+    // secondary colors
+    secondary1: darkMode ? '#2172E5' : '#ff007a',
+    secondary2: darkMode ? '#17000b26' : '#F6DDE8',
+    secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
-  btn1: '#393946',
-  focus: '#4A4757',
-  active: '#7A2DF4',
+    btn1: '#393946',
+    focus: '#4A4757',
+    active: '#7A2DF4',
 
-  border1: darkMode ? '#4A4757' : 'transparent',
-  border2: '#615C69',
+    border1: darkMode ? '#4A4757' : 'transparent',
+    border2: '#615C69',
 
-  shadow1: darkMode ? '#000' : '#3B403F',
+    shadow1: darkMode ? '#000' : '#3B403F',
 
-  // other
-  red1: '#E85E59',
-  red2: '#E85E59',
-  green1: '#37FFDB',
-  yellow1: '#FFE270',
-  yellow2: '#F3841E',
-  horse: darkMode ? '#ffffff' : '#FFD541',
-  link: darkMode ? '#37FFDB' : '#11B382',
+    // other
+    red1: '#E85E59',
+    red2: '#E85E59',
+    green1: '#37FFDB',
+    yellow1: '#FFE270',
+    yellow2: '#F3841E',
+    horse: darkMode ? '#ffffff' : '#FFD541',
+    link: darkMode ? '#37FFDB' : '#11B382',
 
-  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #376bad15 0%, #376bad00 100%)`
-})
+    background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #376bad15 0%, #376bad00 100%)`
+  }
+};
 
 const TextWrapper = styled(Text)`
   color: ${({ color, theme }) => theme[color]};

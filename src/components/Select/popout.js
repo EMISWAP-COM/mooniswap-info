@@ -44,7 +44,7 @@ export default class Popout extends Component {
         target={
           <Button
             border="text"
-            color="text"
+            color="white"
             variant="outline"
             onClick={this.toggleOpen}
             style={{
