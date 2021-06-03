@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import utc from 'dayjs/plugin/utc'
-import { client, blockClient } from '../apollo/client'
+import { blockClient, client } from '../apollo/client'
 import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
@@ -195,7 +195,7 @@ export const urls = {
   showBlock: block => `https://etherscan.io/block/${block}/`
 }
 
-export const formatTime = unix => {
+export const formatTime = (unix) => {
   const now = dayjs()
   const timestamp = dayjs.unix(unix)
 
@@ -204,7 +204,11 @@ export const formatTime = unix => {
   const inHours = now.diff(timestamp, 'hour')
   const inDays = now.diff(timestamp, 'day')
 
-  if (inHours >= 24) {
+  const hrs = inHours - (inDays * 24)
+
+  if (inHours >= 24 && hrs > 0) {
+    return `${inDays} ${inDays === 1 ? 'day' : 'days'} ${hrs} hrs ago`
+  } else if (inHours >= 24) {
     return `${inDays} ${inDays === 1 ? 'day' : 'days'} ago`
   } else if (inMinutes >= 60) {
     return `${inHours} ${inHours === 1 ? 'hour' : 'hours'} ago`
