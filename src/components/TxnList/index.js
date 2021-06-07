@@ -428,7 +428,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           {!below1080 && (
             <Flex alignItems="center">
               <Text area="account" color="#B7B7CA">
-                Account
+                Transaction
               </Text>
             </Flex>
           )}
