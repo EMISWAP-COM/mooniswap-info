@@ -3,12 +3,16 @@ import styled from 'styled-components'
 import { isAddress } from '../../helpers/index.js'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'
+import BerezkaLogo from '../../assets/berezka.png'
 import NoLogoCoin from '../../assets/no_logo_coin.svg'
 import { getLogoUrlList } from '../../helpers/index'
 import { ETH } from '../../helpers'
 
 const BAD_IMAGES = {}
 const FALLBACK_URIS = {}
+
+const FLEX_ADDRESS = '0x0d7dea5922535087078dd3d7c554ea9f2655d4cb'
+const BDQ_ADDRESS = '0xf6ce9bfa82d1088d3257a76ec2e0ce1c8060bf8c'
 
 const Inline = styled.div`
   display: flex;
@@ -23,7 +27,7 @@ const Image = styled.img`
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
 `
 
-const StyledEthereumLogo = styled.div`
+const StyledLogo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,13 +72,25 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
 
   if (address?.toLowerCase() === ETH) {
     return (
-      <StyledEthereumLogo size={size} {...rest}>
+      <StyledLogo size={size} {...rest}>
         <img
           src={EthereumLogo}
           style={{ boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px' }}
           alt=""
         />
-      </StyledEthereumLogo>
+      </StyledLogo>
+    )
+  }
+
+  if (address === FLEX_ADDRESS || address === BDQ_ADDRESS) {
+    return (
+      <StyledLogo size={size} {...rest}>
+        <img
+          src={BerezkaLogo}
+          style={{ boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px' }}
+          alt=""
+        />
+      </StyledLogo>
     )
   }
 
