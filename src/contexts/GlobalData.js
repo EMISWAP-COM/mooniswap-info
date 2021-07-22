@@ -483,10 +483,10 @@ export function useGlobalChartData() {
         utcStartTime = utcEndTime.subtract(1, 'week').startOf('day')
         break
       case timeframeOptions.ALL_TIME:
-        utcStartTime = utcEndTime.subtract(1, 'year')
+        utcStartTime = utcEndTime.subtract(3, 'month')
         break
       default:
-        utcStartTime = utcEndTime.subtract(1, 'year').startOf('year')
+        utcStartTime = utcEndTime.subtract(3, 'month')
         break
     }
     let startTime = utcStartTime.startOf('hour').unix() - 1
