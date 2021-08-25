@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, {css} from 'styled-components'
 
 const Loader = styled.div`
   pointer-events: none;
@@ -26,17 +26,21 @@ const Loader = styled.div`
           height: 180px;
         `}
 `
-const LocalLoader = ({ fill }) => {
+const LocalLoader = ({fill}) => {
+  const url = process.env.NODE_ENV === 'production'
+    ? 'analytics/preloader/preloader.html'
+    : '../preloader/preloader.html';
+
   return (
     <Loader fill={fill}>
-        <iframe
-          style={{ width: '80%', maxWidth: '800px' }}
-          src="analytics/preloader/preloader.html"
-          height="100%"
-          width="100%"
-          frameBorder="0"
-          title="preloader"
-        />
+      <iframe
+        style={{width: '80%', maxWidth: '800px'}}
+        src={url}
+        height="100%"
+        width="100%"
+        frameBorder="0"
+        title="preloader"
+      />
     </Loader>
   )
 }
