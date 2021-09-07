@@ -8,6 +8,7 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
+import {NETWORK} from "../constants";
 
 const Decimal = toFormat(_Decimal)
 
@@ -360,10 +361,26 @@ export function isEquivalent(a, b) {
   return true
 }
 
+export function isMainNetwork() {
+  return NETWORK === 'MAINNET';
+}
+
+export function isKuCoinNetwork() {
+  return NETWORK === 'KUCOIN';
+}
+
 export function getLogoUrlList(address) {
   if (!address) {
     return ['https://etherscan.io/images/main/empty-token.png']
   }
+
+  if (isKuCoinNetwork()) {
+    return [
+      `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    ]
+  }
+
   return [
     `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
     `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,

@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 import {getIsValidNumber} from '../helpers'
 import copy from 'copy-to-clipboard'
-import {PAGES} from '../constants'
+import {NETWORK, PAGES} from '../constants'
 
 export function useColor(tokenAddress, token) {
   return '#37FFDB';

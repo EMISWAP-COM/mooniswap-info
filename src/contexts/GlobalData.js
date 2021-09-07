@@ -201,7 +201,7 @@ async function getGlobalData(ethPrice, oldEthPrice) {
     })
     twoDayData = twoDayResult.data.emiswapFactories[0]
 
-    // console.log(data, oneDayData, twoDayData)
+    // console.log(result, data, oneDayData, twoDayData)
 
     if (data && oneDayData && twoDayData) {
       let [oneDayVolumeUSD, volumeChangeUSD] = get2DayPercentChange(
