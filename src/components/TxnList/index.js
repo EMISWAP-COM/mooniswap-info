@@ -12,7 +12,7 @@ import { Box, Flex, Text } from 'rebass'
 import Link from '../Link'
 import { Divider, EmptyCard } from '..'
 import DropdownSelect from '../DropdownSelect'
-import { PAGES } from '../../constants'
+import {PAGES, SCAN_URL} from '../../constants'
 import Pagination from '../Pagination'
 
 dayjs.extend(utc)
@@ -285,7 +285,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const below780 = useMedia('(max-width: 780px)')
 
   const ListItem = ({ item }) => {
-    console.log(item);
+    // console.log(item);
 
     return (
       <DashGrid style={{ height: '60px' }}>
@@ -305,7 +305,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         )}
         {!below1080 && (
           <DataText area="account">
-            <Link color={color} external href={'https://etherscan.io/address/' + item.account}>
+            <Link color={color} external href={`https://${SCAN_URL}/address/` + item.account}>
               {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
             </Link>
           </DataText>

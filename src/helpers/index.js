@@ -8,7 +8,7 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import {NETWORK} from "../constants";
+import {NETWORK, SCAN_URL} from "../constants";
 
 const Decimal = toFormat(_Decimal)
 
@@ -190,10 +190,10 @@ export const setThemeColor = theme => document.documentElement.style.setProperty
 export const Big = number => new BigNumber(number)
 
 export const urls = {
-  showTransaction: tx => `https://etherscan.io/tx/${tx}/`,
-  showAddress: address => `https://www.etherscan.io/address/${address}/`,
-  showToken: address => `https://www.etherscan.io/token/${address}/`,
-  showBlock: block => `https://etherscan.io/block/${block}/`
+  showTransaction: tx => `https://${SCAN_URL}/tx/${tx}/`,
+  showAddress: address => `https://${SCAN_URL}/address/${address}/`,
+  showToken: address => `https://${SCAN_URL}/token/${address}/`,
+  showBlock: block => `https://${SCAN_URL}/block/${block}/`
 }
 
 export const formatTime = unix => {
@@ -309,6 +309,14 @@ export function formattedPercent(percent, useBrackets = false) {
     )
   }
 
+  if (percent > 100000) {
+    return (
+      <Text fontWeight={500} color="#37FFDB">
+        {'> 100000%'}
+      </Text>
+    )
+  }
+
   let fixedPercent = percent.toFixed(2)
   if (fixedPercent === '0.00') {
     return '0%'
@@ -365,7 +373,7 @@ export function isMainNetwork() {
   return NETWORK === 'MAINNET';
 }
 
-export function isKuCoinNetwork() {
+export function usIsKuCoinNetwork() {
   return NETWORK === 'KUCOIN';
 }
 
@@ -374,7 +382,7 @@ export function getLogoUrlList(address) {
     return ['https://etherscan.io/images/main/empty-token.png']
   }
 
-  if (isKuCoinNetwork()) {
+  if (usIsKuCoinNetwork()) {
     return [
       `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
       `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,

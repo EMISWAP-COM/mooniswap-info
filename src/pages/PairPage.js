@@ -30,6 +30,7 @@ import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
 import { useVerifiedTokens } from '../contexts/TokenData'
 import { BackButton } from '../components/BackButton'
+import {SCAN_URL} from "../constants";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -438,7 +439,7 @@ function PairPage({ pairAddress, history }) {
                   </AutoRow>
                 </Column>
                 <ButtonLight>
-                  <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
+                  <Link color={backgroundColor} external href={`https://${SCAN_URL}/address/` + pairAddress}>
                     View on Etherscan ↗
                   </Link>
                 </ButtonLight>

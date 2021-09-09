@@ -9,6 +9,7 @@ import { AutoColumn } from '../Column'
 import { Hover } from '..'
 import Link from '../Link'
 import { useMedia } from 'react-use'
+import {SCAN_URL} from "../../constants";
 
 const WarningWrapper = styled.div`
   border-radius: 20px;
@@ -69,7 +70,7 @@ export default function Warning({ type, show, setShow, address }) {
                 fontWeight={500}
                 lineHeight={'145.23%'}
                 color={'#7A2DF4'}
-                href={'https://etherscan.io/address/' + address}
+                href={`https://${SCAN_URL}/address/` + address}
                 target="_blank"
               >
                 View {type === 'token' ? 'token' : 'pair'} contract on Etherscan
@@ -89,7 +90,7 @@ export default function Warning({ type, show, setShow, address }) {
                 fontWeight={500}
                 lineHeight={'145.23%'}
                 color={'#7A2DF4'}
-                href={'https://etherscan.io/address/' + address}
+                href={`https://${SCAN_URL}/address/` + address}
                 target="_blank"
               >
                 View {type === 'token' ? 'token' : 'pair'} contract on Etherscan

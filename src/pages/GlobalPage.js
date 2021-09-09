@@ -11,7 +11,7 @@ import TopTokenList from '../components/TokenList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
 import { Hover, TYPE } from '../Theme'
-import { ETH, formattedNum, formattedPercent } from '../helpers'
+import {ETH, formattedNum, formattedPercent, usIsKuCoinNetwork} from '../helpers'
 import { useEthPrice, useGlobalData, useGlobalTransactions } from '../contexts/GlobalData'
 import { useAllPairData } from '../contexts/PairData'
 import { Search } from '../components/Search'
@@ -131,6 +131,8 @@ function GlobalPage({ history }) {
 
   const [showPriceCard, setShowPriceCard] = useState(false)
 
+  const isKuCoinNetwork = usIsKuCoinNetwork();
+
   const getFormattedEthPrice = () => {
     // Подсчет курса из прямой пары
     /*for (const prop in allPairs) {
@@ -147,6 +149,8 @@ function GlobalPage({ history }) {
     }
     return !price || price === '$0' ? '-' : price;
   };
+
+  const priceText = isKuCoinNetwork ? 'KCS Price' : 'Emiswap ETH price';
 
   return (
     <PageWrapper>
@@ -218,11 +222,15 @@ function GlobalPage({ history }) {
               setShowPriceCard(false)
             }}
           >
-            {showPriceCard && <UniPrice />}
+            {showPriceCard && (
+              <UniPrice />
+            )}
             <AutoColumn gap="20px">
               <RowBetween>
-                <TYPE.main color="#89919A">Emiswap ETH price</TYPE.main>
-                <TokenLogo address={ETH} />
+                <TYPE.main color="#89919A">{priceText}</TYPE.main>
+                {false && (
+                  <TokenLogo address={ETH} />
+                )}
               </RowBetween>
               <RowBetween align="flex-end">
                 {getFormattedEthPrice() && (

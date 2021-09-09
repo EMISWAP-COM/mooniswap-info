@@ -53,6 +53,10 @@ export default function UniPrice() {
     usdtPair && setUSDTPerEth(parseFloat(usdtPair.token1Price).toFixed(2))
   }, [usdtPair])
 
+  if (true) {
+    return null;
+  }
+
   return (
     <PriceCard>
       <AutoColumn gap="10px">

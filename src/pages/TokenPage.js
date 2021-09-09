@@ -26,6 +26,7 @@ import { useDataForList } from '../contexts/PairData'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
 import { BackButton } from '../components/BackButton'
+import {SCAN_URL} from "../constants";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -354,7 +355,7 @@ function TokenPage({ address, history }) {
                   </AutoRow>
                 </Column>
                 <ButtonLight>
-                  <Link color={backgroundColor} external href={'https://etherscan.io/address/' + address}>
+                  <Link color={backgroundColor} external href={`https://${SCAN_URL}/address/` + address}>
                     View on Etherscan ↗
                   </Link>
                 </ButtonLight>
