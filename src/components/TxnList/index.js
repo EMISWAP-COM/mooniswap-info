@@ -167,7 +167,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       const token0USD = parseFloat(token0.derivedETH) * parseFloat(ethPrice);
       const token1USD = parseFloat(token1.derivedETH) * parseFloat(ethPrice);
 
-      console.log(token0, token1);
+      // console.log(token0, token1);
 
       return token0USD + token1USD;
     }
