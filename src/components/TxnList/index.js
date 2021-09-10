@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -162,7 +162,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [filteredItems, setFilteredItems] = useState()
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
 
-  const getAmountUSD = (amountUSD, token0, token1) => {
+  const getAmountUSD = useCallback((amountUSD, token0, token1) => {
     if (amountUSD === "0" && ethPrice) {
       const token0USD = parseFloat(token0.derivedETH) * parseFloat(ethPrice);
       const token1USD = parseFloat(token1.derivedETH) * parseFloat(ethPrice);
@@ -173,7 +173,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     }
 
     return amountUSD;
-  }
+  }, [ethPrice])
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -282,7 +282,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         setMaxPage(Math.floor(filtered.length / ITEMS_PER_PAGE) + extraPages)
       }
     }
-  }, [transactions, txFilter])
+  }, [transactions, txFilter, getAmountUSD])
 
   useEffect(() => {
     setPage(1)
