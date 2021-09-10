@@ -14,6 +14,7 @@ import { Divider, EmptyCard } from '..'
 import DropdownSelect from '../DropdownSelect'
 import {PAGES, SCAN_URL} from '../../constants'
 import Pagination from '../Pagination'
+import {useEthPrice} from "../../contexts/GlobalData";
 
 dayjs.extend(utc)
 
@@ -148,6 +149,9 @@ function getTransactionType(event, symbol0, symbol1) {
 
 // @TODO rework into virtualized list
 function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
+
+  const [ethPrice] = useEthPrice()
+
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -286,6 +290,14 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
   const ListItem = ({ item }) => {
     // console.log(item);
+
+    if (item.amountUSD === "0" && ethPrice) {
+      const token0USD = parseFloat(item.token0Amount) * parseFloat(ethPrice);
+      const token1USD = parseFloat(item.token1Amount) * parseFloat(ethPrice);
+      item.amountUSD = token0USD + token1USD;
+
+      console.log(item.amountUSD);
+    }
 
     return (
       <DashGrid style={{ height: '60px' }}>
