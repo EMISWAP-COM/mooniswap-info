@@ -15,6 +15,7 @@ import { ButtonLight, ButtonDark } from '../ButtonStyled'
 import { withRouter } from 'react-router-dom'
 import { OVERVIEW_PAIR_BLACKLIST, PAGES } from '../../constants'
 import Pagination from '../Pagination'
+import {useEthPrice} from "../../contexts/GlobalData";
 
 dayjs.extend(utc)
 
@@ -113,6 +114,8 @@ const FIELD_TO_VALUE = {
 }
 
 function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
+  const [ethPrice] = useEthPrice()
+
   const below600 = useMedia('(max-width: 600px)')
   const below740 = useMedia('(max-width: 740px)')
   const below1080 = useMedia('(max-width: 1080px)')
@@ -146,8 +149,19 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
 
     console.log(pairData);
 
+    const getLiquidity = () => {
+      if (pairData.reserveUSD === "0" && ethPrice) {
+        const token0USD = parseFloat(pairData.token0.derivedETH) * parseFloat(ethPrice);
+        const token1USD = parseFloat(pairData.token1.derivedETH) * parseFloat(ethPrice);
+
+        return token0USD + token1USD;
+      }
+
+      return pairData.reserveUSD;
+    }
+
     if (pairData && pairData.token0 && pairData.token1) {
-      const liquidity = formattedNum(pairData.reserveUSD, true)
+      const liquidity = formattedNum(getLiquidity(), true)
       const volume = formattedNum(pairData.oneDayVolumeUSD, true)
 
       if (pairData.token0.id === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {

@@ -162,6 +162,19 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [filteredItems, setFilteredItems] = useState()
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
 
+  const getAmountUSD = (amountUSD, token0, token1) => {
+    if (amountUSD === "0" && ethPrice) {
+      const token0USD = parseFloat(token0.derivedETH) * parseFloat(ethPrice);
+      const token1USD = parseFloat(token1.derivedETH) * parseFloat(ethPrice);
+
+      console.log(token0, token1);
+
+      return token0USD + token1USD;
+    }
+
+    return amountUSD;
+  }
+
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
     setPage(1)
@@ -192,7 +205,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.account = mint.sender
           newTxn.token0Symbol = mint.pair.token0.symbol
           newTxn.token1Symbol = mint.pair.token1.symbol
-          newTxn.amountUSD = mint.amountUSD
+          newTxn.amountUSD = getAmountUSD(mint.amountUSD, mint.pair.token0, mint.pair.token1)
           return newTxns.push(newTxn)
         })
       }
@@ -213,7 +226,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.account = burn.sender
           newTxn.token0Symbol = burn.pair.token0.symbol
           newTxn.token1Symbol = burn.pair.token1.symbol
-          newTxn.amountUSD = burn.amountUSD
+          newTxn.amountUSD = getAmountUSD(burn.amountUSD, burn.pair.token0, burn.pair.token1)
           return newTxns.push(newTxn)
         })
       }
@@ -245,7 +258,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.timestamp = swap.transaction.timestamp
           newTxn.type = TXN_TYPE.SWAP
 
-          newTxn.amountUSD = swap.amountUSD
+          newTxn.amountUSD = getAmountUSD(swap.amountUSD, swap.pair.token0, swap.pair.token1)
           newTxn.account = swap.sender
 
           return newTxns.push(newTxn)
@@ -290,14 +303,6 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
   const ListItem = ({ item }) => {
     // console.log(item);
-
-    if (item.amountUSD === "0" && ethPrice) {
-      const token0USD = parseFloat(item.token0Amount) * parseFloat(ethPrice);
-      const token1USD = parseFloat(item.token1Amount) * parseFloat(ethPrice);
-      item.amountUSD = token0USD + token1USD;
-
-      console.log(item.amountUSD);
-    }
 
     return (
       <DashGrid style={{ height: '60px' }}>
