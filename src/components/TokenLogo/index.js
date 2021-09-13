@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import { isAddress } from '../../helpers/index.js'
+import {isAddress} from '../../helpers'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'
+import KuCoinLogo from '../../assets/kcs.png'
 import BerezkaLogo from '../../assets/berezka.png'
 import NoLogoCoin from '../../assets/no_logo_coin.svg'
-import { getLogoUrlList } from '../../helpers/index'
-import { ETH } from '../../helpers'
+import {ETH} from '../../helpers'
+import {useLogoUrlList} from "../../hooks";
 
 const BAD_IMAGES = {}
 const FALLBACK_URIS = {}
@@ -41,6 +42,8 @@ const StyledLogo = styled.div`
 export default function TokenLogo({ address, header = false, size = '18px', ...rest }) {
   const [error, setError] = useState(false)
 
+  const urlList = useLogoUrlList(isAddress(address))
+
   useEffect(() => {
     setError(false)
   }, [address])
@@ -53,10 +56,21 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
     )
   }
 
-  if (address?.toLowerCase() === '0x5a75A093747b72a0e14056352751eDF03518031d'.toLowerCase()) {
+  if ([
+    '0x5a75A093747b72a0e14056352751eDF03518031d'.toLowerCase(),
+    '0x8933a6e58eeee063b5fd3221f2e1d17821dc1031'.toLowerCase()
+  ].includes(address?.toLowerCase())) {
     return (
       <Inline>
         <Image {...rest} alt={''} src={EmiswapLogo} size={size} />
+      </Inline>
+    )
+  }
+
+  if (address?.toLowerCase() === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+    return (
+      <Inline>
+        <Image {...rest} alt={''} src={KuCoinLogo} size={size}/>
       </Inline>
     )
   }
@@ -94,7 +108,6 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
     )
   }
 
-  const urlList = getLogoUrlList(isAddress(address))
   let uri
   if (!uri) {
     const defaultUri = urlList[0]

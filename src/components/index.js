@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { Text, Box } from 'rebass'
 
 import Link from './Link'
-
-import { urls } from '../helpers'
+import {useUrls} from "../hooks";
 
 const Divider = styled(Box)`
   height: 1px;
@@ -17,17 +16,21 @@ const Hint = ({ children, ...rest }) => (
   </Text>
 )
 
-const Address = ({ address, token, ...rest }) => (
-  <Link
-    color="button"
-    href={token ? urls.showToken(address) : urls.showAddress(address)}
-    external
-    style={{ wordBreak: 'break-all' }}
-    {...rest}
-  >
-    {address}
-  </Link>
-)
+const Address = ({ address, token, ...rest }) => {
+  const urls = useUrls();
+
+  return (
+    <Link
+      color="button"
+      href={token ? urls.showToken(address) : urls.showAddress(address)}
+      external
+      style={{wordBreak: 'break-all'}}
+      {...rest}
+    >
+      {address}
+    </Link>
+  )
+}
 
 export const Hover = styled.div`
   :hover {

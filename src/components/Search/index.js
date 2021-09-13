@@ -372,6 +372,16 @@ export const Search = ({ small = false }) => {
                   pair.token1.symbol = 'ETH'
                 }
 
+                if (pair?.token0?.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+                  pair.token0.name = 'KCS (Wrapped)'
+                  pair.token0.symbol = 'KCS'
+                }
+
+                if (pair?.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+                  pair.token1.name = 'KCS (Wrapped)'
+                  pair.token1.symbol = 'KCS'
+                }
+
                 return (
                   <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
                     <MenuItem>

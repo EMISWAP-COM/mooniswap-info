@@ -19,14 +19,13 @@ import { formattedNum, formattedPercent, getPoolLink, getSwapLink } from '../hel
 
 import { useTokenData, useTokenPairs, useTokenTransactions, useVerifiedTokens } from '../contexts/TokenData'
 import { ThemedBackground, TYPE } from '../Theme'
-import { useColor } from '../hooks'
+import {useColor, useNetworkData} from '../hooks'
 import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
 import { useDataForList } from '../contexts/PairData'
 import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
 import { BackButton } from '../components/BackButton'
-import {SCAN_URL} from "../constants";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -108,6 +107,8 @@ const WarningGrouping = styled.div`
 `
 
 function TokenPage({ address, history }) {
+  const {scanUrl, scanName} = useNetworkData();
+
   const {
     id,
     name,
@@ -355,8 +356,8 @@ function TokenPage({ address, history }) {
                   </AutoRow>
                 </Column>
                 <ButtonLight>
-                  <Link color={backgroundColor} external href={`https://${SCAN_URL}/address/` + address}>
-                    View on Etherscan ↗
+                  <Link color={backgroundColor} external href={`https://${scanUrl}/address/` + address}>
+                    View on {scanName} ↗
                   </Link>
                 </ButtonLight>
               </TokenDetailsLayout>

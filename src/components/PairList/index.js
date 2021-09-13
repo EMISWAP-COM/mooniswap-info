@@ -147,7 +147,7 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
   const ListItem = ({ pairAddress, index }) => {
     const pairData = pairs[pairAddress]
 
-    console.log(pairData);
+    // console.log(pairData);
 
     const getLiquidity = () => {
       if (pairData.reserveUSD === "0" && ethPrice) {
@@ -177,6 +177,16 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
       if (pairData.token1.id === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
         pairData.token1.name = 'ETH (Wrapped)'
         pairData.token1.symbol = 'ETH'
+      }
+
+      if (pairData.token0.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+        pairData.token0.name = 'KCS (Wrapped)'
+        pairData.token0.symbol = 'KCS'
+      }
+
+      if (pairData.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+        pairData.token1.name = 'KCS (Wrapped)'
+        pairData.token1.symbol = 'KCS'
       }
 
       if (pairData.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {

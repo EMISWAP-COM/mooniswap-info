@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { formatTime, formattedNum, urls, getIsValidNumber } from '../../helpers'
+import { formatTime, formattedNum, getIsValidNumber } from '../../helpers'
 import { useMedia } from 'react-use'
 import { RowFixed, RowBetween } from '../Row'
 
@@ -12,9 +12,11 @@ import { Box, Flex, Text } from 'rebass'
 import Link from '../Link'
 import { Divider, EmptyCard } from '..'
 import DropdownSelect from '../DropdownSelect'
-import {PAGES, SCAN_URL} from '../../constants'
+import {PAGES} from '../../constants'
 import Pagination from '../Pagination'
 import {useEthPrice} from "../../contexts/GlobalData";
+import {useNetworkData, useUrls} from "../../hooks";
+import {useAllTokenData} from "../../contexts/TokenData";
 
 dayjs.extend(utc)
 
@@ -150,7 +152,11 @@ function getTransactionType(event, symbol0, symbol1) {
 // @TODO rework into virtualized list
 function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
-  const [ethPrice] = useEthPrice()
+  const {scanUrl} = useNetworkData();
+  const urls = useUrls();
+  const [ethPrice] = useEthPrice();
+
+  const allTokens = useAllTokenData();
 
   // page state
   const [page, setPage] = useState(1)
@@ -162,18 +168,20 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const [filteredItems, setFilteredItems] = useState()
   const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
 
-  const getAmountUSD = useCallback((amountUSD, token0, token1) => {
-    if (amountUSD === "0" && ethPrice) {
-      const token0USD = parseFloat(token0.derivedETH) * parseFloat(ethPrice);
-      const token1USD = parseFloat(token1.derivedETH) * parseFloat(ethPrice);
+  // console.log(tokens);
 
-      // console.log(token0, token1);
+  const getAmountUSD = useCallback((amountUSD, transaction, txn) => {
+    if (amountUSD && transaction && txn) {
+      const token0Data = allTokens[transaction.pair.token0.id];
+      const token1Data = allTokens[transaction.pair.token1.id];
 
-      return token0USD + token1USD;
+      if (amountUSD === "0" && ethPrice && token0Data && token1Data) {
+        return (token0Data.priceUSD * txn.token0Amount) + (token1Data.priceUSD * txn.token1Amount);
+      }
     }
 
     return amountUSD;
-  }, [ethPrice])
+  }, [ethPrice, allTokens])
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -205,7 +213,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.account = mint.sender
           newTxn.token0Symbol = mint.pair.token0.symbol
           newTxn.token1Symbol = mint.pair.token1.symbol
-          newTxn.amountUSD = getAmountUSD(mint.amountUSD, mint.pair.token0, mint.pair.token1)
+          newTxn.amountUSD = getAmountUSD(mint.amountUSD, mint, newTxn)
           return newTxns.push(newTxn)
         })
       }
@@ -226,7 +234,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.account = burn.sender
           newTxn.token0Symbol = burn.pair.token0.symbol
           newTxn.token1Symbol = burn.pair.token1.symbol
-          newTxn.amountUSD = getAmountUSD(burn.amountUSD, burn.pair.token0, burn.pair.token1)
+          newTxn.amountUSD = getAmountUSD(burn.amountUSD, burn, newTxn)
           return newTxns.push(newTxn)
         })
       }
@@ -258,7 +266,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.timestamp = swap.transaction.timestamp
           newTxn.type = TXN_TYPE.SWAP
 
-          newTxn.amountUSD = getAmountUSD(swap.amountUSD, swap.pair.token0, swap.pair.token1)
+          newTxn.amountUSD = getAmountUSD(swap.amountUSD, swap, newTxn)
           newTxn.account = swap.sender
 
           return newTxns.push(newTxn)
@@ -322,7 +330,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
         )}
         {!below1080 && (
           <DataText area="account">
-            <Link color={color} external href={`https://${SCAN_URL}/address/` + item.account}>
+            <Link color={color} external href={`https://${scanUrl}/address/` + item.account}>
               {item.account && item.account.slice(0, 6) + '...' + item.account.slice(38, 42)}
             </Link>
           </DataText>

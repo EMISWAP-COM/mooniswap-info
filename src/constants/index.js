@@ -1,9 +1,5 @@
 import { ETH } from '../helpers'
 
-export const NETWORK = process.env.REACT_APP_NETWORK || 'MAINNET'
-export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || ''
-export const SCAN_URL = 'explorer.kcc.io' // 'etherscan.io'
-
 export const BUNDLE_ID = '1'
 
 export const timeframeOptions = {

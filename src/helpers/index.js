@@ -8,7 +8,6 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import {NETWORK, SCAN_URL} from "../constants";
 
 const Decimal = toFormat(_Decimal)
 
@@ -189,13 +188,6 @@ export const setThemeColor = theme => document.documentElement.style.setProperty
 
 export const Big = number => new BigNumber(number)
 
-export const urls = {
-  showTransaction: tx => `https://${SCAN_URL}/tx/${tx}/`,
-  showAddress: address => `https://${SCAN_URL}/address/${address}/`,
-  showToken: address => `https://${SCAN_URL}/token/${address}/`,
-  showBlock: block => `https://${SCAN_URL}/block/${block}/`
-}
-
 export const formatTime = unix => {
   const now = dayjs()
   const timestamp = dayjs.unix(unix)
@@ -367,32 +359,6 @@ export function isEquivalent(a, b) {
     }
   }
   return true
-}
-
-export function isMainNetwork() {
-  return NETWORK === 'MAINNET';
-}
-
-export function usIsKuCoinNetwork() {
-  return NETWORK === 'KUCOIN';
-}
-
-export function getLogoUrlList(address) {
-  if (!address) {
-    return ['https://etherscan.io/images/main/empty-token.png']
-  }
-
-  if (usIsKuCoinNetwork()) {
-    return [
-      `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
-      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
-    ]
-  }
-
-  return [
-    `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
-    `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
-  ]
 }
 
 export const getIsValidNumber = number => !Number.isNaN(parseInt(number, 10))

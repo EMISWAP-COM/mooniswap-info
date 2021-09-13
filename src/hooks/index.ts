@@ -127,3 +127,66 @@ export const usePagination = (initPage, maxPage) => {
 
   return [page, handlePageChange];
 };
+
+export const useNetworkData = () => {
+  const data = {
+    main: {
+      networkName: 'MAINNET',
+      factoryAddress: '0x1771dff85160768255F0a44D20965665806cBf48',
+      clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/emiswap8',
+      blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
+      scanUrl: 'etherscan.io',
+      scanName: 'Etherscan',
+      priceText: 'Emiswap ETH price',
+    },
+    kcc: {
+      networkName: 'KUCOIN',
+      factoryAddress: '0x945316F2964ef5C6C84921b435a528DD1790E93a',
+      clientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/emiswap/emiswap1',
+      blockClientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/kcc-blocks',
+      scanUrl: 'explorer.kcc.io',
+      scanName: 'Explorer',
+      priceText: 'KCS Price',
+    },
+  };
+
+  return data.kcc;
+};
+
+export const useIsKuCoinNetwork = () => {
+  const {networkName} = useNetworkData();
+
+  return networkName === 'KUCOIN';
+};
+
+export const useUrls = () => {
+  const {scanUrl} = useNetworkData();
+
+  return {
+    showTransaction: tx => `https://${scanUrl}/tx/${tx}/`,
+    showAddress: address => `https://${scanUrl}/address/${address}/`,
+    showToken: address => `https://${scanUrl}/token/${address}/`,
+    showBlock: block => `https://${scanUrl}/block/${block}/`
+  }
+}
+
+export function useLogoUrlList(address) {
+  // const {networkName} = useNetworkData();
+  const isKuCoinNetwork = useIsKuCoinNetwork();
+
+  if (!address) {
+    return ['https://etherscan.io/images/main/empty-token.png']
+  }
+
+  if (isKuCoinNetwork) {
+    return [
+      `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    ]
+  }
+
+  return [
+    `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
+    `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+  ]
+}

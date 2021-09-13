@@ -7,6 +7,7 @@ import { timeframeOptions } from '../constants'
 import { getPercentChange, getBlockFromTimestamp, getBlocksFromTimestamps, get2DayPercentChange } from '../helpers'
 import { GLOBAL_DATA, GLOBAL_TXNS, GLOBAL_CHART, ETH_PRICE, ALL_PAIRS, ALL_TOKENS } from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import {useNetworkData} from "../hooks";
 
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
@@ -169,7 +170,7 @@ export default function Provider({ children }) {
   )
 }
 
-async function getGlobalData(ethPrice, oldEthPrice) {
+async function getGlobalData(factoryAddress, ethPrice, oldEthPrice) {
   let data = {}
   let oneDayData = {}
   let twoDayData = {}
@@ -185,18 +186,18 @@ async function getGlobalData(ethPrice, oldEthPrice) {
       .unix()
     let [oneDayBlock, twoDayBlock] = await getBlocksFromTimestamps([utcOneDayBack, utcTwoDaysBack])
     let result = await client.query({
-      query: GLOBAL_DATA(),
+      query: GLOBAL_DATA(factoryAddress),
       fetchPolicy: 'cache-first'
     })
     data = result.data.emiswapFactories[0]
     let oneDayResult = await client.query({
-      query: GLOBAL_DATA(oneDayBlock?.number),
+      query: GLOBAL_DATA(factoryAddress, oneDayBlock?.number),
       fetchPolicy: 'cache-first'
     })
     oneDayData = oneDayResult.data.emiswapFactories[0]
 
     let twoDayResult = await client.query({
-      query: GLOBAL_DATA(twoDayBlock?.number),
+      query: GLOBAL_DATA(factoryAddress, twoDayBlock?.number),
       fetchPolicy: 'cache-first'
     })
     twoDayData = twoDayResult.data.emiswapFactories[0]
@@ -441,14 +442,17 @@ async function getAllTokensOnEmiswap() {
 }
 
 export function useGlobalData() {
+  const {factoryAddress} = useNetworkData();
   const [state, { update, updateAllPairsInEmiswap, updateAllTokensInEmiswap }] = useGlobalDataContext()
   const [ethPrice, oldEthPrice] = useEthPrice()
 
   const data = state?.globalData
 
+  // console.log(data);
+
   useEffect(() => {
     async function fetchData() {
-      let globalData = await getGlobalData(ethPrice, oldEthPrice)
+      let globalData = await getGlobalData(factoryAddress, ethPrice, oldEthPrice)
       globalData && update(globalData)
 
       let allPairs = await getAllPairsOnEmiswap()
@@ -460,7 +464,7 @@ export function useGlobalData() {
     if (!data && ethPrice && oldEthPrice) {
       fetchData()
     }
-  }, [ethPrice, oldEthPrice, update, data, updateAllPairsInEmiswap, updateAllTokensInEmiswap])
+  }, [factoryAddress, ethPrice, oldEthPrice, update, data, updateAllPairsInEmiswap, updateAllTokensInEmiswap])
 
   return data || {}
 }

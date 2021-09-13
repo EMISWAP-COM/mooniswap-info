@@ -9,7 +9,7 @@ import { AutoColumn } from '../Column'
 import { Hover } from '..'
 import Link from '../Link'
 import { useMedia } from 'react-use'
-import {SCAN_URL} from "../../constants";
+import {useNetworkData} from "../../hooks";
 
 const WarningWrapper = styled.div`
   border-radius: 20px;
@@ -31,6 +31,8 @@ const StyledWarningIcon = styled(AlertTriangle)`
 `
 
 export default function Warning({ type, show, setShow, address }) {
+  const {scanUrl, scanName} = useNetworkData();
+
   const below800 = useMedia('(max-width: 800px)')
 
   const textContent = below800 ? (
@@ -70,10 +72,10 @@ export default function Warning({ type, show, setShow, address }) {
                 fontWeight={500}
                 lineHeight={'145.23%'}
                 color={'#7A2DF4'}
-                href={`https://${SCAN_URL}/address/` + address}
+                href={`https://${scanUrl}/address/` + address}
                 target="_blank"
               >
-                View {type === 'token' ? 'token' : 'pair'} contract on Etherscan
+                View {type === 'token' ? 'token' : 'pair'} contract on {scanName}
               </Link>
             </Hover>
             <RowBetween style={{ marginTop: '20px' }}>
@@ -90,10 +92,10 @@ export default function Warning({ type, show, setShow, address }) {
                 fontWeight={500}
                 lineHeight={'145.23%'}
                 color={'#7A2DF4'}
-                href={`https://${SCAN_URL}/address/` + address}
+                href={`https://${scanUrl}/address/` + address}
                 target="_blank"
               >
-                View {type === 'token' ? 'token' : 'pair'} contract on Etherscan
+                View {type === 'token' ? 'token' : 'pair'} contract on {scanName}
               </Link>
             </Hover>
             <ButtonDark color={'#E85E59'} style={{ minWidth: '140px' }} onClick={() => setShow(false)}>

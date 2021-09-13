@@ -16,7 +16,7 @@ import Loader from '../components/Loader'
 import Question from '../components/Question'
 
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink } from '../helpers'
-import { useColor } from '../hooks'
+import {useColor, useNetworkData} from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { ThemedBackground, TYPE } from '../Theme'
 import CopyHelper from '../components/Copy'
@@ -30,7 +30,6 @@ import Warning from '../components/Warning'
 import { usePathDismissed } from '../contexts/LocalStorage'
 import { useVerifiedTokens } from '../contexts/TokenData'
 import { BackButton } from '../components/BackButton'
-import {SCAN_URL} from "../constants";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -129,6 +128,8 @@ const WarningGrouping = styled.div`
 `
 
 function PairPage({ pairAddress, history }) {
+  const {scanUrl, scanName} = useNetworkData();
+
   const {
     token0,
     token1,
@@ -439,8 +440,8 @@ function PairPage({ pairAddress, history }) {
                   </AutoRow>
                 </Column>
                 <ButtonLight>
-                  <Link color={backgroundColor} external href={`https://${SCAN_URL}/address/` + pairAddress}>
-                    View on Etherscan ↗
+                  <Link color={backgroundColor} external href={`https://${scanUrl}/address/` + pairAddress}>
+                    View on {scanName} ↗
                   </Link>
                 </ButtonLight>
               </TokenDetailsLayout>
