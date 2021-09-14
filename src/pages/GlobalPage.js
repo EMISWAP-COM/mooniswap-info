@@ -11,7 +11,7 @@ import TopTokenList from '../components/TokenList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
 import {Hover, TYPE} from '../Theme'
-import {ETH, formattedNum, formattedPercent} from '../helpers'
+import {ETH, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
 import {useEthPrice, useGlobalData, useGlobalTransactions} from '../contexts/GlobalData'
 import {useAllPairData} from '../contexts/PairData'
 import {Search} from '../components/Search'
@@ -139,8 +139,8 @@ function GlobalPage({ history }) {
     for (const prop in allPairs) {
       const pair = allPairs[prop];
       if (pair.reserveUSD === "0") {
-        const token0USD = parseFloat(pair.token0.derivedETH) * parseFloat(ethPrice);
-        const token1USD = parseFloat(pair.token1.derivedETH) * parseFloat(ethPrice);
+        const token0USD = getLiquidityFromToken(pair.token0, pair.reserve0, ethPrice);
+        const token1USD = getLiquidityFromToken(pair.token1, pair.reserve1, ethPrice);
         total += (token0USD + token1USD);
       } else {
         total += parseFloat(pair.reserveUSD);

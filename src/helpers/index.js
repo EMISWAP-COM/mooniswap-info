@@ -364,3 +364,11 @@ export function isEquivalent(a, b) {
 export const getIsValidNumber = number => !Number.isNaN(parseInt(number, 10))
 
 export const calcIndexMargin = index => `${30 - ((index.toString().length - 1) * 10)}`;
+
+export const getLiquidityFromToken = (token, reserve, ethPrice) => {
+  const priceUSD = token.derivedUSD !== '0'
+    ? parseFloat(token.derivedUSD)
+    : parseFloat(token.derivedETH) * parseFloat(ethPrice);
+
+  return priceUSD * reserve;
+}

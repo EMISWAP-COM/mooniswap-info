@@ -9,7 +9,14 @@ import styled from 'styled-components'
 import Link, { CustomLink } from '../Link'
 import { Divider } from '../../components'
 
-import { calcIndexMargin, formattedNum, getIsValidNumber, getPoolLink, getSwapLink } from '../../helpers'
+import {
+  calcIndexMargin,
+  formattedNum,
+  getIsValidNumber,
+  getLiquidityFromToken,
+  getPoolLink,
+  getSwapLink
+} from '../../helpers'
 import DoubleTokenLogo from '../DoubleLogo'
 import { ButtonLight, ButtonDark } from '../ButtonStyled'
 import { withRouter } from 'react-router-dom'
@@ -151,8 +158,8 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
 
     const getLiquidity = () => {
       if (pairData.reserveUSD === "0" && ethPrice) {
-        const token0USD = parseFloat(pairData.token0.derivedETH) * parseFloat(ethPrice);
-        const token1USD = parseFloat(pairData.token1.derivedETH) * parseFloat(ethPrice);
+        const token0USD = getLiquidityFromToken(pairData.token0, pairData.reserve0, ethPrice);
+        const token1USD = getLiquidityFromToken(pairData.token1, pairData.reserve1, ethPrice);
 
         return token0USD + token1USD;
       }

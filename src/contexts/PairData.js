@@ -15,7 +15,12 @@ import { useEthPrice } from './GlobalData'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { get2DayPercentChange, getBlockFromTimestamp, getPercentChange, isAddress } from '../helpers'
+import {
+  get2DayPercentChange,
+  getBlockFromTimestamp,
+  getPercentChange,
+  isAddress
+} from '../helpers'
 
 const UPDATE = 'UPDATE'
 const UPDATE_PAIR_TXNS = 'UPDATE_PAIR_TXNS'
@@ -192,6 +197,8 @@ async function getBulkPairData(pairList, ethPrice) {
       return { ...obj, [cur.id]: cur }
     }, {})
 
+    console.log(oneDayData, twoDayData, oneWeekData);
+
     let pairData = await Promise.all(
       current &&
       current.data.pairs.map(async pair => {
@@ -353,7 +360,7 @@ const getPairData = async (address, ethPrice) => {
     let volumeUsdTwoDay = twoDayData?.volumeUSD ? twoDayData?.volumeUSD : 0
     const [oneDayVolumeUSD, volumeChangeUSD] = get2DayPercentChange(volumeUsdNow, volumeUsdOneDay, volumeUsdTwoDay)
 
-    const oneWeekVolumeUSD = parseFloat(oneWeekData ? data?.volumeUSD - oneWeekData?.volumeUSD : data.volumeUSD)
+    const oneWeekVolumeUSD = parseFloat(oneWeekData ? data?.volumeUSD - oneWeekData?.volumeUSD : data?.volumeUSD)
 
     const [oneDayTxns, txnChange] = get2DayPercentChange(
       data.txCount,

@@ -15,7 +15,7 @@ import TxnList from '../components/TxnList'
 import Loader from '../components/Loader'
 import Question from '../components/Question'
 
-import { formattedNum, formattedPercent, getPoolLink, getSwapLink } from '../helpers'
+import {formattedNum, formattedPercent, getLiquidityFromToken, getPoolLink, getSwapLink} from '../helpers'
 import {useColor, useNetworkData} from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { ThemedBackground, TYPE } from '../Theme'
@@ -155,13 +155,24 @@ function PairPage({ pairAddress, history }) {
   const transactions = usePairTransactions(pairAddress)
   const backgroundColor = useColor(pairAddress)
 
-  // liquidity
-  const liquidity = reserveUSD
-    ? formattedNum(reserveUSD, true)
-    : (trackedReserveUSD
-      ? formattedNum(trackedReserveUSD, true)
-      : '-'
-    );
+  const getLiquidity = () => {
+    let liquidity = null;
+
+    if (reserveUSD) {
+      liquidity = reserveUSD;
+    } else if (trackedReserveUSD) {
+      liquidity = trackedReserveUSD;
+    }
+
+    if ((!liquidity || liquidity === "0") && token0 && token1 && ethPrice) {
+      const token0USD = getLiquidityFromToken(token0, reserve0, ethPrice);
+      const token1USD = getLiquidityFromToken(token1, reserve1, ethPrice);
+
+      liquidity = token0USD + token1USD;
+    }
+
+    return liquidity ? formattedNum(liquidity, true) : '-';
+  }
 
   const liquidityChange = formattedPercent(liquidityChangeUSD)
 
@@ -296,7 +307,7 @@ function PairPage({ pairAddress, history }) {
                   </RowBetween>
                   <RowBetween align="flex-end">
                     <TYPE.main fontSize={'2rem'} lineHeight={1} fontWeight={600}>
-                      {liquidity}
+                      {getLiquidity()}
                     </TYPE.main>
                     <TYPE.main>{liquidityChange}</TYPE.main>
                   </RowBetween>
