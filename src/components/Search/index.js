@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import Row from '../Row'
 import TokenLogo from '../TokenLogo'

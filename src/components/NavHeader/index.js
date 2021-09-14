@@ -1,11 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import Title from '../Title'
 import Search from '../Search'
 import { RowFixed, RowBetween } from '../Row'
 import { AutoColumn } from '../Column'
 import { useMedia } from 'react-use'
+import NetworkSwitch from "../NetworkSwitch";
 
 const Header = styled.div`
   display: flex;
@@ -58,6 +59,7 @@ export default function NavHeader({ token, pair, account }) {
     <Header>
       <AutoColumn gap="20px">
         <Title token={token} pair={pair} />
+        <NetworkSwitch/>
         {!isHome && <Search small={true} />}
       </AutoColumn>
     </Header>
@@ -91,6 +93,7 @@ export default function NavHeader({ token, pair, account }) {
           {/*    </Link>*/}
           {/*  </CombinedWrapper>*/}
           {/*)}*/}
+          <NetworkSwitch/>
         </RowFixed>
       </RowBetween>
     </Header>

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import { Flex, Text } from 'rebass'
 import Link from '../Link'
@@ -7,6 +7,7 @@ import Logo from '../../assets/logo_white_text.svg'
 import { useMedia } from 'react-use'
 
 const TitleWrapper = styled.div`
+  max-width: 180px;
   text-decoration: none;
 
   &:hover {

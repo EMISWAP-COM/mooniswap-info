@@ -2,6 +2,7 @@ import {useCallback, useEffect, useRef, useState} from 'react'
 import {getIsValidNumber} from '../helpers'
 import copy from 'copy-to-clipboard'
 import {PAGES} from '../constants'
+import {getNetworkData} from "../helpers/network";
 
 export function useColor(tokenAddress, token) {
   return '#37FFDB';
@@ -129,34 +130,13 @@ export const usePagination = (initPage, maxPage) => {
 };
 
 export const useNetworkData = () => {
-  const data = {
-    main: {
-      networkName: 'MAINNET',
-      factoryAddress: '0x1771dff85160768255F0a44D20965665806cBf48',
-      clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/emiswap8',
-      blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
-      scanUrl: 'etherscan.io',
-      scanName: 'Etherscan',
-      priceText: 'Emiswap ETH price',
-    },
-    kcc: {
-      networkName: 'KUCOIN',
-      factoryAddress: '0x945316F2964ef5C6C84921b435a528DD1790E93a',
-      clientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/emiswap/emiswap1',
-      blockClientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/kcc-blocks',
-      scanUrl: 'explorer.kcc.io',
-      scanName: 'Explorer',
-      priceText: 'KCS Price',
-    },
-  };
-
-  return data.kcc;
+  return getNetworkData();
 };
 
 export const useIsKuCoinNetwork = () => {
-  const {networkName} = useNetworkData();
+  const {alias} = useNetworkData();
 
-  return networkName === 'KUCOIN';
+  return alias === 'KUCOIN';
 };
 
 export const useUrls = () => {
@@ -171,7 +151,7 @@ export const useUrls = () => {
 }
 
 export function useLogoUrlList(address) {
-  // const {networkName} = useNetworkData();
+  // const {alias} = useNetworkData();
   const isKuCoinNetwork = useIsKuCoinNetwork();
 
   if (!address) {

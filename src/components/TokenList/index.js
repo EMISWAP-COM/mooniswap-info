@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 

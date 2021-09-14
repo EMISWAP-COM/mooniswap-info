@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import 'feather-icons'
 import {Box} from 'rebass'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import {AutoRow, RowBetween} from '../components/Row'
 import {AutoColumn} from '../components/Column'

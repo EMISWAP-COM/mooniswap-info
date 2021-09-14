@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import {isAddress} from '../../helpers'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'

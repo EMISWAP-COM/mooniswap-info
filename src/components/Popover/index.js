@@ -1,7 +1,7 @@
 import { transparentize } from 'polished'
 import React, { useState } from 'react'
 import { usePopper } from 'react-popper'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import useInterval from '../../hooks/index'
 import Portal from '@reach/portal'
 

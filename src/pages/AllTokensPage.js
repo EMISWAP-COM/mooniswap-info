@@ -1,6 +1,6 @@
 import React from 'react'
 import 'feather-icons'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import TopTokenList from '../components/TokenList'
 import { TYPE } from '../Theme'

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import 'feather-icons'
 import { withRouter } from 'react-router-dom'
 import { Text } from 'rebass'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import Link from '../components/Link'
 import Panel from '../components/Panel'
