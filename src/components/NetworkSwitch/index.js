@@ -10,7 +10,7 @@ const NetworkWrapper = styled.div`
   pointer-events: auto;
   
   @media (max-width: 600px) {
-    position: fixed;
+    position: absolute;
     right: 20px;
   }
 `;
