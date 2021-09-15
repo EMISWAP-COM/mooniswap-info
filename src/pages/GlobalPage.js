@@ -121,7 +121,7 @@ function GlobalPage({ history }) {
 
   const liquidityChange = liquidityChangeUSD ? formattedPercent(liquidityChangeUSD) : '-'
 
-  const volume = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD, true) : '-'
+  // const volume = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD, true) : '-'
 
   const volumeChange = volumeChangeUSD ? formattedPercent(volumeChangeUSD) : '-'
 
@@ -145,6 +145,15 @@ function GlobalPage({ history }) {
       } else {
         total += parseFloat(pair.reserveUSD);
       }
+    }
+    return formattedNum(total, true);
+  }
+
+  const getCalculatedVolume = () => {
+    let total = 0;
+    for (const prop in allPairs) {
+      const pair = allPairs[prop];
+      total += parseFloat(pair.oneDayVolumeUSD);
     }
     return formattedNum(total, true);
   }
@@ -183,7 +192,7 @@ function GlobalPage({ history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                        {volume}
+                        {getCalculatedVolume()}
                       </TYPE.main>
                       <TYPE.main fontSize={12}>{volumeChange}</TYPE.main>
                     </RowBetween>
@@ -280,7 +289,7 @@ function GlobalPage({ history }) {
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                  {volume}
+                  {getCalculatedVolume()}
                 </TYPE.main>
                 <TYPE.main fontSize={14}>{volumeChange}</TYPE.main>
               </RowBetween>

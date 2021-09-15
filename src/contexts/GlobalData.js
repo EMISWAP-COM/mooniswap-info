@@ -264,6 +264,8 @@ const getChartData = async oldestDateToFetch => {
     })
     data = [...result.data.emiswapDayDatas]
 
+    console.log(result);
+
     if (data) {
       let dayIndexSet = new Set()
       let dayIndexArray = []
