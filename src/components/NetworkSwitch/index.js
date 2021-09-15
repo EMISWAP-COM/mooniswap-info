@@ -70,7 +70,7 @@ const NetworkIcon = styled.div`
   background: white;
 `;
 
-const NetworkLabel = styled.div`
+/*const NetworkLabel = styled.div`
    display: flex;
    justify-content: center;
    align-items: center;
@@ -81,7 +81,7 @@ const NetworkLabel = styled.div`
    font-size: 8px;
    background: #E478FF;
    color: ${({theme}) => theme.dark2};
-`;
+`;*/
 
 export default function NetworkSwitch() {
   const {icon, name} = useNetworkData();
