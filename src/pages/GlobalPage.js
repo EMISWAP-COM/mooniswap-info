@@ -99,7 +99,7 @@ function GlobalPage({ history }) {
 
   const {
     // totalLiquidityUSD,
-    oneDayVolumeUSD,
+    // oneDayVolumeUSD,
     volumeChangeUSD,
     liquidityChangeUSD,
     oneDayTxns,
