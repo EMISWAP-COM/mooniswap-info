@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './apollo/client'
 import { Route, Switch, BrowserRouter, withRouter, Redirect } from 'react-router-dom'
@@ -33,13 +33,13 @@ function App() {
   const globalData = useGlobalData()
   const globalChartData = useGlobalChartData()
 
+  const isDataLoaded = globalData && Object.keys(globalData).length > 0
+    && globalChartData && Object.keys(globalChartData).length > 0;
+
   return (
     <ApolloProvider client={client}>
       <AppWrapper>
-        {globalData &&
-        Object.keys(globalData).length > 0 &&
-        globalChartData &&
-        Object.keys(globalChartData).length > 0 ? (
+        {isDataLoaded ? (
           <BrowserRouter basename="/analytics">
             <Switch>
               <Route

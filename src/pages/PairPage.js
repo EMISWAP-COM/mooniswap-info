@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import 'feather-icons'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import { Text } from 'rebass'
 import Panel from '../components/Panel'
@@ -15,8 +15,8 @@ import TxnList from '../components/TxnList'
 import Loader from '../components/Loader'
 import Question from '../components/Question'
 
-import { formattedNum, formattedPercent, getPoolLink, getSwapLink } from '../helpers'
-import { useColor } from '../hooks'
+import {formattedNum, formattedPercent, getLiquidityFromToken, getPoolLink, getSwapLink} from '../helpers'
+import {useColor, useNetworkData} from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { ThemedBackground, TYPE } from '../Theme'
 import CopyHelper from '../components/Copy'
@@ -128,6 +128,8 @@ const WarningGrouping = styled.div`
 `
 
 function PairPage({ pairAddress, history }) {
+  const {scanUrl, scanName} = useNetworkData();
+
   const {
     token0,
     token1,
@@ -153,13 +155,24 @@ function PairPage({ pairAddress, history }) {
   const transactions = usePairTransactions(pairAddress)
   const backgroundColor = useColor(pairAddress)
 
-  // liquidity
-  const liquidity = reserveUSD
-    ? formattedNum(reserveUSD, true)
-    : (trackedReserveUSD
-      ? formattedNum(trackedReserveUSD, true)
-      : '-'
-    );
+  const getLiquidity = () => {
+    let liquidity = null;
+
+    if (reserveUSD) {
+      liquidity = reserveUSD;
+    } else if (trackedReserveUSD) {
+      liquidity = trackedReserveUSD;
+    }
+
+    if ((!liquidity || liquidity === "0") && token0 && token1 && ethPrice) {
+      const token0USD = getLiquidityFromToken(token0, reserve0, ethPrice);
+      const token1USD = getLiquidityFromToken(token1, reserve1, ethPrice);
+
+      liquidity = token0USD + token1USD;
+    }
+
+    return liquidity ? formattedNum(liquidity, true) : '-';
+  }
 
   const liquidityChange = formattedPercent(liquidityChangeUSD)
 
@@ -294,7 +307,7 @@ function PairPage({ pairAddress, history }) {
                   </RowBetween>
                   <RowBetween align="flex-end">
                     <TYPE.main fontSize={'2rem'} lineHeight={1} fontWeight={600}>
-                      {liquidity}
+                      {getLiquidity()}
                     </TYPE.main>
                     <TYPE.main>{liquidityChange}</TYPE.main>
                   </RowBetween>
@@ -438,8 +451,8 @@ function PairPage({ pairAddress, history }) {
                   </AutoRow>
                 </Column>
                 <ButtonLight>
-                  <Link color={backgroundColor} external href={'https://etherscan.io/address/' + pairAddress}>
-                    View on Etherscan ↗
+                  <Link color={backgroundColor} external href={`https://${scanUrl}/address/` + pairAddress}>
+                    View on {scanName} ↗
                   </Link>
                 </ButtonLight>
               </TokenDetailsLayout>

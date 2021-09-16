@@ -188,13 +188,6 @@ export const setThemeColor = theme => document.documentElement.style.setProperty
 
 export const Big = number => new BigNumber(number)
 
-export const urls = {
-  showTransaction: tx => `https://etherscan.io/tx/${tx}/`,
-  showAddress: address => `https://www.etherscan.io/address/${address}/`,
-  showToken: address => `https://www.etherscan.io/token/${address}/`,
-  showBlock: block => `https://etherscan.io/block/${block}/`
-}
-
 export const formatTime = unix => {
   const now = dayjs()
   const timestamp = dayjs.unix(unix)
@@ -308,6 +301,14 @@ export function formattedPercent(percent, useBrackets = false) {
     )
   }
 
+  if (percent > 100000) {
+    return (
+      <Text fontWeight={500} color="#37FFDB">
+        {'> 100000%'}
+      </Text>
+    )
+  }
+
   let fixedPercent = percent.toFixed(2)
   if (fixedPercent === '0.00') {
     return '0%'
@@ -360,16 +361,14 @@ export function isEquivalent(a, b) {
   return true
 }
 
-export function getLogoUrlList(address) {
-  if (!address) {
-    return ['https://etherscan.io/images/main/empty-token.png']
-  }
-  return [
-    `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
-    `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
-  ]
-}
-
 export const getIsValidNumber = number => !Number.isNaN(parseInt(number, 10))
 
 export const calcIndexMargin = index => `${30 - ((index.toString().length - 1) * 10)}`;
+
+export const getLiquidityFromToken = (token, reserve, ethPrice) => {
+  const priceUSD = token.derivedUSD !== '0'
+    ? parseFloat(token.derivedUSD)
+    : parseFloat(token.derivedETH) * parseFloat(ethPrice);
+
+  return priceUSD * reserve;
+}

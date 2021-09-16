@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import backSvg from '../../assets/back.svg'
 
 export const CircleButton = styled.div`

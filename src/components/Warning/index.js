@@ -1,6 +1,6 @@
 import React from 'react'
 import 'feather-icons'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Text } from 'rebass'
 import { AlertTriangle } from 'react-feather'
 import { RowBetween, RowFixed } from '../Row'
@@ -9,6 +9,7 @@ import { AutoColumn } from '../Column'
 import { Hover } from '..'
 import Link from '../Link'
 import { useMedia } from 'react-use'
+import {useNetworkData} from "../../hooks";
 
 const WarningWrapper = styled.div`
   border-radius: 20px;
@@ -30,25 +31,27 @@ const StyledWarningIcon = styled(AlertTriangle)`
 `
 
 export default function Warning({ type, show, setShow, address }) {
+  const {scanUrl, scanName, name2, tokenTextName} = useNetworkData();
+
   const below800 = useMedia('(max-width: 800px)')
 
   const textContent = below800 ? (
     <div>
       <Text fontWeight={500} lineHeight={'145.23%'} mt={'10px'}>
-        Anyone can create and name any ERC20 token on Ethereum, including creating fake versions of existing tokens and
+        Anyone can create and name any {tokenTextName} token on {name2}, including creating fake versions of existing tokens and
         tokens that claim to represent projects that do not have a token.
       </Text>
       <Text fontWeight={500} lineHeight={'145.23%'} mt={'10px'}>
-        Similar to Etherscan, this site automatically tracks analytics for all ERC20 tokens independent of token
-        integrity. Please do your own research before interacting with any ERC20 token.
+        Similar to Etherscan, this site automatically tracks analytics for all {tokenTextName} tokens independent of token
+        integrity. Please do your own research before interacting with any {tokenTextName} token.
       </Text>
     </div>
   ) : (
     <Text fontWeight={500} lineHeight={'145.23%'} mt={'10px'}>
-      Anyone can create and name any ERC20 token on Ethereum, including creating fake versions of existing tokens and
+      Anyone can create and name any {tokenTextName} token on {name2}, including creating fake versions of existing tokens and
       tokens that claim to represent projects that do not have a token. Similar to Etherscan, this site automatically
-      tracks analytics for all ERC20 tokens independent of token integrity. Please do your own research before
-      interacting with any ERC20 token.
+      tracks analytics for all {tokenTextName} tokens independent of token integrity. Please do your own research before
+      interacting with any {tokenTextName} token.
     </Text>
   )
 
@@ -69,10 +72,10 @@ export default function Warning({ type, show, setShow, address }) {
                 fontWeight={500}
                 lineHeight={'145.23%'}
                 color={'#7A2DF4'}
-                href={'https://etherscan.io/address/' + address}
+                href={`https://${scanUrl}/address/` + address}
                 target="_blank"
               >
-                View {type === 'token' ? 'token' : 'pair'} contract on Etherscan
+                View {type === 'token' ? 'token' : 'pair'} contract on {scanName}
               </Link>
             </Hover>
             <RowBetween style={{ marginTop: '20px' }}>
@@ -89,10 +92,10 @@ export default function Warning({ type, show, setShow, address }) {
                 fontWeight={500}
                 lineHeight={'145.23%'}
                 color={'#7A2DF4'}
-                href={'https://etherscan.io/address/' + address}
+                href={`https://${scanUrl}/address/` + address}
                 target="_blank"
               >
-                View {type === 'token' ? 'token' : 'pair'} contract on Etherscan
+                View {type === 'token' ? 'token' : 'pair'} contract on {scanName}
               </Link>
             </Hover>
             <ButtonDark color={'#E85E59'} style={{ minWidth: '140px' }} onClick={() => setShow(false)}>

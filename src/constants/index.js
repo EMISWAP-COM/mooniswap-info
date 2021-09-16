@@ -1,7 +1,5 @@
 import { ETH } from '../helpers'
 
-export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || ''
-
 export const BUNDLE_ID = '1'
 
 export const timeframeOptions = {

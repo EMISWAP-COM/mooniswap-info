@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, {useState} from 'react'
+import {withRouter} from 'react-router-dom'
 import 'feather-icons'
-import { Box } from 'rebass'
-import styled from 'styled-components'
+import {Box} from 'rebass'
+import styled from 'styled-components/macro'
 
-import { AutoRow, RowBetween } from '../components/Row'
-import { AutoColumn } from '../components/Column'
+import {AutoRow, RowBetween} from '../components/Row'
+import {AutoColumn} from '../components/Column'
 import PairList from '../components/PairList'
 import TopTokenList from '../components/TokenList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
-import { Hover, TYPE } from '../Theme'
-import { ETH, formattedNum, formattedPercent } from '../helpers'
-import { useEthPrice, useGlobalData, useGlobalTransactions } from '../contexts/GlobalData'
-import { useAllPairData } from '../contexts/PairData'
-import { Search } from '../components/Search'
-import { useMedia } from 'react-use'
+import {Hover, TYPE} from '../Theme'
+import {ETH, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
+import {useEthPrice, useGlobalData, useGlobalTransactions} from '../contexts/GlobalData'
+import {useAllPairData} from '../contexts/PairData'
+import {Search} from '../components/Search'
+import {useMedia} from 'react-use'
 import TokenLogo from '../components/TokenLogo'
 import Panel from '../components/Panel'
-import { useAllTokenData } from '../contexts/TokenData'
+import {useAllTokenData} from '../contexts/TokenData'
 import UniPrice from '../components/UniPrice'
+import {useNetworkData} from "../hooks";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -97,8 +98,8 @@ function GlobalPage({ history }) {
   const [listView, setListView] = useState(LIST_VIEW.PAIRS)
 
   const {
-    totalLiquidityUSD,
-    oneDayVolumeUSD,
+    // totalLiquidityUSD,
+    // oneDayVolumeUSD,
     volumeChangeUSD,
     liquidityChangeUSD,
     oneDayTxns,
@@ -116,11 +117,11 @@ function GlobalPage({ history }) {
 
   const ethPriceChange = (parseFloat(ethPrice - ethPriceOld) / parseFloat(ethPriceOld)) * 100
 
-  const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : '-'
+  // const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : '-'
 
   const liquidityChange = liquidityChangeUSD ? formattedPercent(liquidityChangeUSD) : '-'
 
-  const volume = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD, true) : '-'
+  // const volume = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD, true) : '-'
 
   const volumeChange = volumeChangeUSD ? formattedPercent(volumeChangeUSD) : '-'
 
@@ -130,6 +131,32 @@ function GlobalPage({ history }) {
   const below600 = useMedia('(max-width: 600px)')
 
   const [showPriceCard, setShowPriceCard] = useState(false)
+
+  const {priceText} = useNetworkData();
+
+  const getCalculatedLiquidity = () => {
+    let total = 0;
+    for (const prop in allPairs) {
+      const pair = allPairs[prop];
+      if (pair.reserveUSD === "0") {
+        const token0USD = getLiquidityFromToken(pair.token0, pair.reserve0, ethPrice);
+        const token1USD = getLiquidityFromToken(pair.token1, pair.reserve1, ethPrice);
+        total += (token0USD + token1USD);
+      } else {
+        total += parseFloat(pair.reserveUSD);
+      }
+    }
+    return formattedNum(total, true);
+  }
+
+  const getCalculatedVolume = () => {
+    let total = 0;
+    for (const prop in allPairs) {
+      const pair = allPairs[prop];
+      total += parseFloat(pair.oneDayVolumeUSD);
+    }
+    return formattedNum(total, true);
+  }
 
   const getFormattedEthPrice = () => {
     // Подсчет курса из прямой пары
@@ -165,7 +192,7 @@ function GlobalPage({ history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                        {volume}
+                        {getCalculatedVolume()}
                       </TYPE.main>
                       <TYPE.main fontSize={12}>{volumeChange}</TYPE.main>
                     </RowBetween>
@@ -177,7 +204,8 @@ function GlobalPage({ history }) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                        {liquidity && liquidity}
+                        {/*{liquidity && liquidity}*/}
+                        {getCalculatedLiquidity()}
                       </TYPE.main>
                       <TYPE.main fontSize={12}>{liquidityChange && liquidityChange}</TYPE.main>
                     </RowBetween>
@@ -218,11 +246,15 @@ function GlobalPage({ history }) {
               setShowPriceCard(false)
             }}
           >
-            {showPriceCard && <UniPrice />}
+            {showPriceCard && (
+              <UniPrice />
+            )}
             <AutoColumn gap="20px">
               <RowBetween>
-                <TYPE.main color="#89919A">Emiswap ETH price</TYPE.main>
-                <TokenLogo address={ETH} />
+                <TYPE.main color="#89919A">{priceText}</TYPE.main>
+                {false && (
+                  <TokenLogo address={ETH} />
+                )}
               </RowBetween>
               <RowBetween align="flex-end">
                 {getFormattedEthPrice() && (
@@ -242,7 +274,8 @@ function GlobalPage({ history }) {
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                  {liquidity && liquidity}
+                  {/*{liquidity && liquidity}*/}
+                  {getCalculatedLiquidity()}
                 </TYPE.main>
                 <TYPE.main fontSize={14}>{liquidityChange && liquidityChange}</TYPE.main>
               </RowBetween>
@@ -256,7 +289,7 @@ function GlobalPage({ history }) {
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                  {volume}
+                  {getCalculatedVolume()}
                 </TYPE.main>
                 <TYPE.main fontSize={14}>{volumeChange}</TYPE.main>
               </RowBetween>

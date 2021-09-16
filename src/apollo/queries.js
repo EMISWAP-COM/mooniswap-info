@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { FACTORY_ADDRESS, BUNDLE_ID } from '../constants'
+import { BUNDLE_ID } from '../constants'
 
 export const V1_DATA_QUERY = gql`
   query emiswap($date: Int!, $date2: Int!) {
@@ -338,13 +338,13 @@ export const GLOBAL_CHART = gql`
   }
 `
 
-export const GLOBAL_DATA = block => {
-  // console.log(block, FACTORY_ADDRESS);
+export const GLOBAL_DATA = (factoryAddress, block) => {
+  // console.log(block, factoryAddress);
   const queryString = block
     ? ` query emiswapFactories {
       emiswapFactories(block:   
        {number: ${block}} 
-       where: { id: "${FACTORY_ADDRESS}" }) {
+       where: { id: "${factoryAddress}" }) {
         id
         totalVolumeUSD
         totalVolumeETH
@@ -355,7 +355,7 @@ export const GLOBAL_DATA = block => {
     }`
     : `query emiswapFactories {
       emiswapFactories(
-        where: { id: "${FACTORY_ADDRESS}" }) {
+        where: { id: "${factoryAddress}" }) {
         id
         totalVolumeUSD
         totalVolumeETH

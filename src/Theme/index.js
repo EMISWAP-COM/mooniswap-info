@@ -1,7 +1,7 @@
 import React from 'react'
 import { ThemeProvider as StyledComponentsThemeProvider, createGlobalStyle } from 'styled-components'
 import { useDarkModeManager } from '../contexts/LocalStorage'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Text } from 'rebass'
 
 export default function ThemeProvider({ children }) {
@@ -78,7 +78,24 @@ const theme = (darkMode, color) => {
     horse: darkMode ? '#ffffff' : '#FFD541',
     link: darkMode ? '#37FFDB' : '#11B382',
 
-    background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #376bad15 0%, #376bad00 100%)`
+    background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #376bad15 0%, #376bad00 100%)`,
+
+    purple: '#7A2DF4',
+    purpleBoxShadow: '0px 4px 8px rgba(169, 115, 255, 0.32)',
+    darkWhite: '#E8E7EF',
+    darkText: '#B7B7CA',
+    darkGrey: '#393946',
+    lightGrey: '#615C69',
+    red: '#E85E59',
+    green: '#54B489',
+    pink: '#E478FF',
+    blue: '#37FFDB',
+    border1Transparency: 'rgba(74, 71, 87, 0.32)',
+    dark1: '#272530',
+    dark2: '#0F0F13',
+    dark1BoxShadow: '0px 0px 10px rgba(169, 115, 255, 0.32)',
+    modalBoxShadow: '0px 0px 8px 4px #7a2df4',
+    green5: 'rgb(17, 179, 130)',
   }
 };
 

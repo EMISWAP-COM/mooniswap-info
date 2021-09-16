@@ -2,6 +2,7 @@ import {useCallback, useEffect, useRef, useState} from 'react'
 import {getIsValidNumber} from '../helpers'
 import copy from 'copy-to-clipboard'
 import {PAGES} from '../constants'
+import {getNetworkData} from "../helpers/network";
 
 export function useColor(tokenAddress, token) {
   return '#37FFDB';
@@ -127,3 +128,45 @@ export const usePagination = (initPage, maxPage) => {
 
   return [page, handlePageChange];
 };
+
+export const useNetworkData = () => {
+  return getNetworkData();
+};
+
+export const useIsKuCoinNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'KUCOIN';
+};
+
+export const useUrls = () => {
+  const {scanUrl} = useNetworkData();
+
+  return {
+    showTransaction: tx => `https://${scanUrl}/tx/${tx}/`,
+    showAddress: address => `https://${scanUrl}/address/${address}/`,
+    showToken: address => `https://${scanUrl}/token/${address}/`,
+    showBlock: block => `https://${scanUrl}/block/${block}/`
+  }
+}
+
+export function useLogoUrlList(address) {
+  // const {alias} = useNetworkData();
+  const isKuCoinNetwork = useIsKuCoinNetwork();
+
+  if (!address) {
+    return ['https://etherscan.io/images/main/empty-token.png']
+  }
+
+  if (isKuCoinNetwork) {
+    return [
+      `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    ]
+  }
+
+  return [
+    `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
+    `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+  ]
+}

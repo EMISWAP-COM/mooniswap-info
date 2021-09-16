@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Panel from '../Panel'
 import { AutoColumn } from '../Column'
 import { RowFixed } from '../Row'
@@ -52,6 +52,10 @@ export default function UniPrice() {
   useEffect(() => {
     usdtPair && setUSDTPerEth(parseFloat(usdtPair.token1Price).toFixed(2))
   }, [usdtPair])
+
+  if (true) {
+    return null;
+  }
 
   return (
     <PriceCard>

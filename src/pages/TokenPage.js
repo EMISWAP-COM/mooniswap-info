@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import 'feather-icons'
 import { withRouter } from 'react-router-dom'
 import { Text } from 'rebass'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import Link from '../components/Link'
 import Panel from '../components/Panel'
@@ -19,7 +19,7 @@ import { formattedNum, formattedPercent, getPoolLink, getSwapLink } from '../hel
 
 import { useTokenData, useTokenPairs, useTokenTransactions, useVerifiedTokens } from '../contexts/TokenData'
 import { ThemedBackground, TYPE } from '../Theme'
-import { useColor } from '../hooks'
+import {useColor, useNetworkData} from '../hooks'
 import CopyHelper from '../components/Copy'
 import { useMedia } from 'react-use'
 import { useDataForList } from '../contexts/PairData'
@@ -107,6 +107,8 @@ const WarningGrouping = styled.div`
 `
 
 function TokenPage({ address, history }) {
+  const {scanUrl, scanName} = useNetworkData();
+
   const {
     id,
     name,
@@ -354,8 +356,8 @@ function TokenPage({ address, history }) {
                   </AutoRow>
                 </Column>
                 <ButtonLight>
-                  <Link color={backgroundColor} external href={'https://etherscan.io/address/' + address}>
-                    View on Etherscan ↗
+                  <Link color={backgroundColor} external href={`https://${scanUrl}/address/` + address}>
+                    View on {scanName} ↗
                   </Link>
                 </ButtonLight>
               </TokenDetailsLayout>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar, CartesianGrid } from 'recharts'
 import { RowBetween, AutoRow } from '../Row'
 
