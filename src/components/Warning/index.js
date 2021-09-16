@@ -31,27 +31,27 @@ const StyledWarningIcon = styled(AlertTriangle)`
 `
 
 export default function Warning({ type, show, setShow, address }) {
-  const {scanUrl, scanName} = useNetworkData();
+  const {scanUrl, scanName, name2, tokenTextName} = useNetworkData();
 
   const below800 = useMedia('(max-width: 800px)')
 
   const textContent = below800 ? (
     <div>
       <Text fontWeight={500} lineHeight={'145.23%'} mt={'10px'}>
-        Anyone can create and name any ERC20 token on Ethereum, including creating fake versions of existing tokens and
+        Anyone can create and name any {tokenTextName} token on {name2}, including creating fake versions of existing tokens and
         tokens that claim to represent projects that do not have a token.
       </Text>
       <Text fontWeight={500} lineHeight={'145.23%'} mt={'10px'}>
-        Similar to Etherscan, this site automatically tracks analytics for all ERC20 tokens independent of token
-        integrity. Please do your own research before interacting with any ERC20 token.
+        Similar to Etherscan, this site automatically tracks analytics for all {tokenTextName} tokens independent of token
+        integrity. Please do your own research before interacting with any {tokenTextName} token.
       </Text>
     </div>
   ) : (
     <Text fontWeight={500} lineHeight={'145.23%'} mt={'10px'}>
-      Anyone can create and name any ERC20 token on Ethereum, including creating fake versions of existing tokens and
+      Anyone can create and name any {tokenTextName} token on {name2}, including creating fake versions of existing tokens and
       tokens that claim to represent projects that do not have a token. Similar to Etherscan, this site automatically
-      tracks analytics for all ERC20 tokens independent of token integrity. Please do your own research before
-      interacting with any ERC20 token.
+      tracks analytics for all {tokenTextName} tokens independent of token integrity. Please do your own research before
+      interacting with any {tokenTextName} token.
     </Text>
   )
 

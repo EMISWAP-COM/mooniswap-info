@@ -9,6 +9,7 @@ export const networksItems = [
     clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/emiswap8',
     blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
     name: 'Ethereum',
+    name2: 'Ethereum',
     icon: EthereumNetworkIcon,
     scanUrl: 'etherscan.io',
     scanName: 'Etherscan',
@@ -16,6 +17,7 @@ export const networksItems = [
     rpcUrls: [''],
     currencySymbol: 'ETH',
     blockExplorerUrls: '',
+    tokenTextName: 'ERC-20',
   },
   {
     network: 'kcc',
@@ -24,6 +26,7 @@ export const networksItems = [
     clientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/emiswap/emiswap1',
     blockClientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/kcc-blocks',
     name: 'KuCoin',
+    name2: 'KCC',
     icon: KuCoinNetworkIcon,
     scanUrl: 'explorer.kcc.io',
     scanName: 'Explorer',
@@ -31,6 +34,7 @@ export const networksItems = [
     rpcUrls: ['https://rpc-mainnet.kcc.network'],
     currencySymbol: 'KCS',
     blockExplorerUrls: 'https://explorer.kcc.io/en',
+    tokenTextName: 'KRC-20',
   },
 ];
 
