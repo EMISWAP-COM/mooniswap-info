@@ -1,5 +1,7 @@
 import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
+import PolygonNetworkIcon from '../assets/polygon-network.svg';
+import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
   {
@@ -16,7 +18,6 @@ export const networksItems = [
     priceText: 'Emiswap ETH price',
     rpcUrls: [''],
     currencySymbol: 'ETH',
-    blockExplorerUrls: '',
     tokenTextName: 'ERC-20',
   },
   {
@@ -33,8 +34,39 @@ export const networksItems = [
     priceText: 'KCS Price',
     rpcUrls: ['https://rpc-mainnet.kcc.network'],
     currencySymbol: 'KCS',
-    blockExplorerUrls: 'https://explorer.kcc.io/en',
     tokenTextName: 'KRC-20',
+  },
+  {
+    network: 'polygon',
+    alias: 'POLYGON',
+    factoryAddress: '0x23c1b313152e276e0CF61665dc3AC160b3c5aB19',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/emiswap8',
+    blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
+    name: 'Polygon',
+    name2: 'Polygon',
+    icon: PolygonNetworkIcon,
+    scanUrl: 'polygonscan.com',
+    scanName: 'Polygonscan',
+    priceText: 'MATIC Price',
+    rpcUrls: ['https://rpc-mumbai.matic.today',],
+    currencySymbol: 'MATIC',
+    tokenTextName: 'MRC-20',
+  },
+  {
+    network: 'avalanche',
+    alias: 'AVALANCHE',
+    factoryAddress: '0xaD6b9b31832A88Bb59dB4ACD820F8df2CfA84f0f',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/emiswap8',
+    blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
+    name: 'Avalanche',
+    name2: 'Avalanche',
+    icon: AvalancheNetworkIcon,
+    scanUrl: 'cchain.explorer.avax.network',
+    scanName: 'Avax Explorer',
+    priceText: 'AVAX Price',
+    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc',],
+    currencySymbol: 'AVAX',
+    tokenTextName: 'ARC-20',
   },
 ];
 

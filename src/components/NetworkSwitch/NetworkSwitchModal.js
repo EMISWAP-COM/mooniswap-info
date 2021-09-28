@@ -23,6 +23,7 @@ const NetworkItemsRow = styled.div`
 const NetworkItem = styled.div`
   position: relative;
   cursor: pointer;
+  min-width: 100px;
 `;
 
 const NetworkIcon = styled.div`
@@ -64,6 +65,10 @@ export default function NetworkSwitchModal({onClose}) {
     window.location.replace(window.location.origin + window.location.pathname + '?' + searchParams);
   };
 
+  const logosMaxWidths = {
+    ['AVALANCHE']: '80%',
+  };
+
   return (
     <div>
       <Modal
@@ -85,7 +90,11 @@ export default function NetworkSwitchModal({onClose}) {
                   {item.alias === alias && (
                     <CircleCheckImg src={CircleCheckIcon}/>
                   )}
-                  <img src={item.icon} alt={item.name}/>
+                  <img
+                    style={{ maxWidth: logosMaxWidths[item.alias] || '100%' }}
+                    src={item.icon}
+                    alt={item.name}
+                  />
                 </NetworkIcon>
                 <NetworkName active={item.alias === alias}>{item.name}</NetworkName>
               </NetworkItem>
