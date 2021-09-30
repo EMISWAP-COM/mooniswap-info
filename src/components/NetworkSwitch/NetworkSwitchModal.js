@@ -66,7 +66,7 @@ export default function NetworkSwitchModal({onClose}) {
   };
 
   const logosMaxWidths = {
-    ['AVALANCHE']: '80%',
+    AVALANCHE: '80%',
   };
 
   return (
