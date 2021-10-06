@@ -576,7 +576,7 @@ export function useEthPrice() {
         updateEthPrice(price, '0', '0')
       }
     }
-  }, [allPairs, isPolygonNetwork]);
+  }, [ethPrice, updateEthPrice, allPairs, isPolygonNetwork]);
 
   return [ethPrice, ethPriceOld]
 }
