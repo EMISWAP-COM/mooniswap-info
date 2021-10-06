@@ -11,7 +11,7 @@ import TopTokenList from '../components/TokenList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
 import {Hover, TYPE} from '../Theme'
-import {ETH, findTokenPriceInPairs, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
+import {ETH, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
 import {useEthPrice, useGlobalData, useGlobalTransactions} from '../contexts/GlobalData'
 import {useAllPairData} from '../contexts/PairData'
 import {Search} from '../components/Search'
@@ -20,7 +20,7 @@ import TokenLogo from '../components/TokenLogo'
 import Panel from '../components/Panel'
 import {useAllTokenData} from '../contexts/TokenData'
 import UniPrice from '../components/UniPrice'
-import {useIsPolygonNetwork, useNetworkData} from "../hooks";
+import {useNetworkData} from "../hooks";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -50,7 +50,7 @@ const ThemedBackground = styled.div`
   z-index: -1;
 
   transform: translateY(-70vh);
-  background: ${({ theme }) => theme.background};
+  background: ${({theme}) => theme.background};
 `
 
 const ListOptions = styled(AutoRow)`
@@ -94,7 +94,7 @@ const LIST_VIEW = {
   PAIRS: 'pairs'
 }
 
-function GlobalPage({ history }) {
+function GlobalPage({history}) {
   const [listView, setListView] = useState(LIST_VIEW.PAIRS)
 
   const {
@@ -114,8 +114,6 @@ function GlobalPage({ history }) {
   // console.log(allTokens);
 
   const [ethPrice, ethPriceOld] = useEthPrice()
-
-  const isPolygonNetwork = useIsPolygonNetwork();
 
   const ethPriceChange = (parseFloat(ethPrice - ethPriceOld) / parseFloat(ethPriceOld)) * 100
 
@@ -172,8 +170,8 @@ function GlobalPage({ history }) {
 
   return (
     <PageWrapper>
-      <ThemedBackground />
-      <Search small={!!below600} />
+      <ThemedBackground/>
+      <Search small={!!below600}/>
       {below1080 && ( // mobile card
         <Box mb={20}>
           <Box mb={20} mt={'1.5rem'}>
@@ -183,7 +181,7 @@ function GlobalPage({ history }) {
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main color="#89919A">Volume (24hrs)</TYPE.main>
-                      <div />
+                      <div/>
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
@@ -195,7 +193,7 @@ function GlobalPage({ history }) {
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main color="#89919A">Total Liquidity</TYPE.main>
-                      <div />
+                      <div/>
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
@@ -208,7 +206,7 @@ function GlobalPage({ history }) {
                   <AutoColumn gap="20px">
                     <RowBetween>
                       <TYPE.main color="#89919A">Transactions (24hrs)</TYPE.main>
-                      <div />
+                      <div/>
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
@@ -224,14 +222,14 @@ function GlobalPage({ history }) {
           <Box>
             <Panel>
               <ChartWrapper area="fill" rounded>
-                <GlobalChart />
+                <GlobalChart/>
               </ChartWrapper>
             </Panel>
           </Box>
         </Box>
       )}
       {!below1080 && ( // desktop
-        <TopGroup style={{ marginTop: '3.5rem' }}>
+        <TopGroup style={{marginTop: '3.5rem'}}>
           <TopPanel
             hover={true}
             onMouseEnter={() => {
@@ -242,13 +240,13 @@ function GlobalPage({ history }) {
             }}
           >
             {showPriceCard && (
-              <UniPrice />
+              <UniPrice/>
             )}
             <AutoColumn gap="20px">
               <RowBetween>
                 <TYPE.main color="#89919A">{priceText}</TYPE.main>
                 {false && (
-                  <TokenLogo address={ETH} />
+                  <TokenLogo address={ETH}/>
                 )}
               </RowBetween>
               <RowBetween align="flex-end">
@@ -263,7 +261,7 @@ function GlobalPage({ history }) {
             <AutoColumn gap="20px">
               <RowBetween>
                 <TYPE.main color="#89919A">Total Liquidity</TYPE.main>
-                <div />
+                <div/>
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
@@ -278,7 +276,7 @@ function GlobalPage({ history }) {
             <AutoColumn gap="20px">
               <RowBetween>
                 <TYPE.main color="#89919A">Volume (24hrs)</TYPE.main>
-                <div />
+                <div/>
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
@@ -292,7 +290,7 @@ function GlobalPage({ history }) {
             <AutoColumn gap="20px">
               <RowBetween>
                 <TYPE.main color="#89919A">Transactions (24hrs)</TYPE.main>
-                <div />
+                <div/>
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
@@ -306,22 +304,22 @@ function GlobalPage({ history }) {
       )}
 
       {!below1080 && (
-        <GridRow style={{ marginTop: '6px' }}>
-          <Panel style={{ height: '100%', minHeight: '300px' }}>
+        <GridRow style={{marginTop: '6px'}}>
+          <Panel style={{height: '100%', minHeight: '300px'}}>
             <ChartWrapper area="fill" rounded>
-              <GlobalChart display="liquidity" />
+              <GlobalChart display="liquidity"/>
             </ChartWrapper>
           </Panel>
-          <Panel style={{ height: '100%' }}>
+          <Panel style={{height: '100%'}}>
             <ChartWrapper area="fill" rounded>
-              <GlobalChart display="volume" />
+              <GlobalChart display="volume"/>
             </ChartWrapper>
           </Panel>
         </GridRow>
       )}
 
-      <Panel style={{ marginTop: '2rem' }}>
-        <ListOptions gap="10px" style={{ marginTop: '6px', marginBottom: '1rem' }}>
+      <Panel style={{marginTop: '2rem'}}>
+        <ListOptions gap="10px" style={{marginTop: '6px', marginBottom: '1rem'}}>
           <Hover>
             <TYPE.main
               onClick={() => {
@@ -347,16 +345,16 @@ function GlobalPage({ history }) {
         </ListOptions>
 
         {listView === LIST_VIEW.PAIRS
-          ? <PairList pairs={allPairs} />
-          : <TopTokenList tokens={allTokens} pairs={allPairs} />
+          ? <PairList pairs={allPairs}/>
+          : <TopTokenList tokens={allTokens} pairs={allPairs}/>
         }
       </Panel>
 
-      <Panel style={{ margin: '2rem 0' }}>
-        <TYPE.main fontSize={'1.125rem'} style={{ marginBottom: '1rem' }}>
+      <Panel style={{margin: '2rem 0'}}>
+        <TYPE.main fontSize={'1.125rem'} style={{marginBottom: '1rem'}}>
           Transactions
         </TYPE.main>
-        <TxnList transactions={transactions} />
+        <TxnList transactions={transactions}/>
       </Panel>
     </PageWrapper>
   )
