@@ -11,7 +11,7 @@ import TopTokenList from '../components/TokenList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
 import {Hover, TYPE} from '../Theme'
-import {ETH, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
+import {ETH, findTokenPriceInPairs, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
 import {useEthPrice, useGlobalData, useGlobalTransactions} from '../contexts/GlobalData'
 import {useAllPairData} from '../contexts/PairData'
 import {Search} from '../components/Search'
@@ -20,7 +20,7 @@ import TokenLogo from '../components/TokenLogo'
 import Panel from '../components/Panel'
 import {useAllTokenData} from '../contexts/TokenData'
 import UniPrice from '../components/UniPrice'
-import {useNetworkData} from "../hooks";
+import {useIsPolygonNetwork, useNetworkData} from "../hooks";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -115,6 +115,8 @@ function GlobalPage({ history }) {
 
   const [ethPrice, ethPriceOld] = useEthPrice()
 
+  const isPolygonNetwork = useIsPolygonNetwork();
+
   const ethPriceChange = (parseFloat(ethPrice - ethPriceOld) / parseFloat(ethPriceOld)) * 100
 
   // const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : '-'
@@ -159,19 +161,12 @@ function GlobalPage({ history }) {
   }
 
   const getFormattedEthPrice = () => {
-    // Подсчет курса из прямой пары
-    /*for (const prop in allPairs) {
-      if (allPairs[prop].token0.symbol === 'ESW' && allPairs[prop].token1.symbol === 'USDT') {
-        return formattedNum(allPairs[prop].token1Price, true);
-      } else if (allPairs[prop].token0.symbol === 'USDT' && allPairs[prop].token1.symbol === 'ESW') {
-        return formattedNum(allPairs[prop].token0Price, true);
-      }
-    }*/
-
     let price = '-';
+
     if (ethPrice) {
       price = formattedNum(ethPrice, true);
     }
+
     return !price || price === '$0' ? '-' : price;
   };
 
@@ -257,11 +252,9 @@ function GlobalPage({ history }) {
                 )}
               </RowBetween>
               <RowBetween align="flex-end">
-                {getFormattedEthPrice() && (
-                  <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                    {getFormattedEthPrice()}
-                  </TYPE.main>
-                )}
+                <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
+                  {getFormattedEthPrice()}
+                </TYPE.main>
                 {formattedPercent(ethPriceChange)}
               </RowBetween>
             </AutoColumn>

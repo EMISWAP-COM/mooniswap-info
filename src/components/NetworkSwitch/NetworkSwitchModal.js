@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
+
 import Modal from '../Modal';
 import {Text} from 'rebass';
 import styled from 'styled-components/macro';
@@ -52,6 +54,8 @@ const NetworkName = styled.div`
 
 export default function NetworkSwitchModal({onClose}) {
 
+  const history = useHistory();
+
   const {alias} = useNetworkData();
 
   const onClickItem = async (item) => {
@@ -62,11 +66,14 @@ export default function NetworkSwitchModal({onClose}) {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set('network', item.network);
 
-    window.location.replace(window.location.origin + window.location.pathname + '?' + searchParams);
+    history.push('/home');
+    setTimeout(() => {
+      window.location.replace(window.location.origin + window.location.pathname + '?' + searchParams);
+    }, 200);
   };
 
   const logosMaxWidths = {
-    AVALANCHE: '80%',
+    AVALANCHE: '70%',
   };
 
   return (

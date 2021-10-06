@@ -382,6 +382,16 @@ export const Search = ({ small = false }) => {
                   pair.token1.symbol = 'KCS'
                 }
 
+                if (pair?.token0?.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+                  pair.token0.name = 'MATIC (Wrapped)'
+                  pair.token0.symbol = 'MATIC'
+                }
+
+                if (pair?.token1.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+                  pair.token1.name = 'MATIC (Wrapped)'
+                  pair.token1.symbol = 'MATIC'
+                }
+
                 return (
                   <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
                     <MenuItem>

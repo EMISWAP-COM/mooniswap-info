@@ -58,7 +58,8 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
 
   if ([
     '0x5a75A093747b72a0e14056352751eDF03518031d'.toLowerCase(),
-    '0x8933a6e58eeee063b5fd3221f2e1d17821dc1031'.toLowerCase()
+    '0x8933a6e58eeee063b5fd3221f2e1d17821dc1031'.toLowerCase(),
+    '0xd2a2a353d28e4833faffc882f6649c9c884a7d8f'.toLowerCase(),
   ].includes(address?.toLowerCase())) {
     return (
       <Inline>

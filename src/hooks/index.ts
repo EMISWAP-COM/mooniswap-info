@@ -133,10 +133,28 @@ export const useNetworkData = () => {
   return getNetworkData();
 };
 
+export const useIsMainNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'MAINNET';
+};
+
 export const useIsKuCoinNetwork = () => {
   const {alias} = useNetworkData();
 
   return alias === 'KUCOIN';
+};
+
+export const useIsPolygonNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'POLYGON';
+};
+
+export const useIsAvalancheNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'AVALANCHE';
 };
 
 export const useUrls = () => {
@@ -152,7 +170,10 @@ export const useUrls = () => {
 
 export function useLogoUrlList(address) {
   // const {alias} = useNetworkData();
+
   const isKuCoinNetwork = useIsKuCoinNetwork();
+  const isPolygonNetwork = useIsPolygonNetwork();
+  const isAvalancheNetwork = useIsAvalancheNetwork()
 
   if (!address) {
     return ['https://etherscan.io/images/main/empty-token.png']
@@ -161,6 +182,20 @@ export function useLogoUrlList(address) {
   if (isKuCoinNetwork) {
     return [
       `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    ]
+  }
+
+  if (isPolygonNetwork) {
+    return [
+      `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${address}/logo.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    ]
+  }
+
+  if (isAvalancheNetwork) {
+    return [
+      `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/avalanchec/assets/${address}/logo.png`,
       `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
     ]
   }
