@@ -168,6 +168,10 @@ function GlobalPage({history}) {
     return !price || price === '$0' ? '-' : price;
   };
 
+  if (!ethPrice || ethPrice === '0' || ethPrice === '-') {
+    return null;
+  }
+
   return (
     <PageWrapper>
       <ThemedBackground/>

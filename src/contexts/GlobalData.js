@@ -1,17 +1,17 @@
-import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect, useState } from 'react'
-import { client } from '../apollo/client'
+import React, {createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState} from 'react'
+import {client} from '../apollo/client'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { useTimeframe } from './Application'
-import { timeframeOptions } from '../constants'
+import {useTimeframe} from './Application'
+import {timeframeOptions} from '../constants'
 import {
-  getPercentChange,
+  findTokenPriceInPairs,
+  get2DayPercentChange,
   getBlockFromTimestamp,
   getBlocksFromTimestamps,
-  get2DayPercentChange,
-  findTokenPriceInPairs
+  getPercentChange
 } from '../helpers'
-import { GLOBAL_DATA, GLOBAL_TXNS, GLOBAL_CHART, ETH_PRICE, ALL_PAIRS, ALL_TOKENS } from '../apollo/queries'
+import {ALL_PAIRS, ALL_TOKENS, ETH_PRICE, GLOBAL_CHART, GLOBAL_DATA, GLOBAL_TXNS} from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import {useIsPolygonNetwork, useNetworkData} from "../hooks";
 import {useAllPairData} from "./PairData";
@@ -33,24 +33,24 @@ function useGlobalDataContext() {
   return useContext(GlobalDataContext)
 }
 
-function reducer(state, { type, payload }) {
+function reducer(state, {type, payload}) {
   switch (type) {
     case UPDATE: {
-      const { data } = payload
+      const {data} = payload
       return {
         ...state,
         globalData: data
       }
     }
     case UPDATE_TXNS: {
-      const { transactions } = payload
+      const {transactions} = payload
       return {
         ...state,
         transactions
       }
     }
     case UPDATE_CHART: {
-      const { daily, weekly } = payload
+      const {daily, weekly} = payload
       return {
         ...state,
         chartData: {
@@ -60,7 +60,7 @@ function reducer(state, { type, payload }) {
       }
     }
     case UPDATE_ETH_PRICE: {
-      const { ethPrice, oneDayPrice, ethPriceChange } = payload
+      const {ethPrice, oneDayPrice, ethPriceChange} = payload
       return {
         [ETH_PRICE_KEY]: ethPrice,
         oneDayPrice,
@@ -69,7 +69,7 @@ function reducer(state, { type, payload }) {
     }
 
     case UPDATE_ALL_PAIRS_IN_EMISWAP: {
-      const { allPairs } = payload
+      const {allPairs} = payload
       return {
         ...state,
         allPairs
@@ -77,7 +77,7 @@ function reducer(state, { type, payload }) {
     }
 
     case UPDATE_ALL_TOKENS_IN_EMISWAP: {
-      const { allTokens } = payload
+      const {allTokens} = payload
       return {
         ...state,
         allTokens
@@ -89,7 +89,7 @@ function reducer(state, { type, payload }) {
   }
 }
 
-export default function Provider({ children }) {
+export default function Provider({children}) {
   const [state, dispatch] = useReducer(reducer, {})
   const update = useCallback(data => {
     dispatch({
@@ -452,7 +452,7 @@ async function getAllTokensOnEmiswap() {
 
 export function useGlobalData() {
   const {factoryAddress} = useNetworkData();
-  const [state, { update, updateAllPairsInEmiswap, updateAllTokensInEmiswap }] = useGlobalDataContext()
+  const [state, {update, updateAllPairsInEmiswap, updateAllTokensInEmiswap}] = useGlobalDataContext()
   const [ethPrice, oldEthPrice] = useEthPrice()
 
   const data = state?.globalData
@@ -470,6 +470,7 @@ export function useGlobalData() {
       let allTokens = await getAllTokensOnEmiswap()
       updateAllTokensInEmiswap(allTokens)
     }
+
     if (!data && ethPrice && oldEthPrice) {
       fetchData()
     }
@@ -479,7 +480,7 @@ export function useGlobalData() {
 }
 
 export function useGlobalChartData() {
-  const [state, { updateChart }] = useGlobalDataContext()
+  const [state, {updateChart}] = useGlobalDataContext()
   const [oldestDateFetch, setOldestDateFetched] = useState()
   const [activeWindow] = useTimeframe()
 
@@ -515,6 +516,7 @@ export function useGlobalChartData() {
       let [newChartData, newWeeklyData] = await getChartData(oldestDateFetch)
       updateChart(newChartData, newWeeklyData)
     }
+
     if (oldestDateFetch && !(chartDataDaily && chartDataWeekly)) {
       fetchData()
     }
@@ -524,7 +526,7 @@ export function useGlobalChartData() {
 }
 
 export function useGlobalTransactions() {
-  const [state, { updateTransactions }] = useGlobalDataContext()
+  const [state, {updateTransactions}] = useGlobalDataContext()
   const transactions = state?.transactions
   useEffect(() => {
     async function fetchData() {
@@ -533,6 +535,7 @@ export function useGlobalTransactions() {
         updateTransactions(txns)
       }
     }
+
     fetchData()
   }, [updateTransactions, transactions])
   return transactions
@@ -540,34 +543,40 @@ export function useGlobalTransactions() {
 
 
 export function useEthPrice() {
-  const [state, { updateEthPrice }] = useGlobalDataContext()
+  const [state, {updateEthPrice}] = useGlobalDataContext()
 
   const allPairs = useAllPairData();
   const isPolygonNetwork = useIsPolygonNetwork();
 
-  const calcEthPrice = () => {
-    let price;
-
-    // Подсчет курса из прямой пары
-    if (isPolygonNetwork) {
-      price = findTokenPriceInPairs(allPairs, 'USDT', 'MATIC');
-    }
-
-    return price || state?.[ETH_PRICE_KEY];
-  };
-
-  const ethPrice = calcEthPrice();
+  const ethPrice = state?.[ETH_PRICE_KEY];
   const ethPriceOld = state?.['oneDayPrice']
 
   useEffect(() => {
     async function checkForEthPrice() {
       if (!ethPrice) {
-        let [newPrice, oneDayPrice, priceChange] = await getEthPrice()
+        let [newPrice, oneDayPrice, priceChange] = await getEthPrice();
         updateEthPrice(newPrice, oneDayPrice, priceChange)
       }
     }
-    checkForEthPrice()
+
+    checkForEthPrice();
   }, [ethPrice, updateEthPrice])
+
+  useEffect(() => {
+    if (!ethPrice || !parseInt(ethPrice)) {
+      let price;
+      if (isPolygonNetwork) {
+        price = findTokenPriceInPairs(allPairs, 'USDT', 'WMATIC');
+        if (!price) {
+          findTokenPriceInPairs(allPairs, 'USDT', 'MATIC');
+        }
+      }
+
+      if (price) {
+        updateEthPrice(price, '0', '0')
+      }
+    }
+  }, [allPairs, isPolygonNetwork]);
 
   return [ethPrice, ethPriceOld]
 }
