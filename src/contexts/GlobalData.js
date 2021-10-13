@@ -4,17 +4,10 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import {useTimeframe} from './Application'
 import {timeframeOptions} from '../constants'
-import {
-  findTokenPriceInPairs,
-  get2DayPercentChange,
-  getBlockFromTimestamp,
-  getBlocksFromTimestamps,
-  getPercentChange
-} from '../helpers'
+import {get2DayPercentChange, getBlockFromTimestamp, getBlocksFromTimestamps, getPercentChange} from '../helpers'
 import {ALL_PAIRS, ALL_TOKENS, ETH_PRICE, GLOBAL_CHART, GLOBAL_DATA, GLOBAL_TXNS} from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-import {useIsPolygonNetwork, useNetworkData} from "../hooks";
-import {useAllPairData} from "./PairData";
+import {useNetworkData} from "../hooks";
 
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
@@ -545,8 +538,8 @@ export function useGlobalTransactions() {
 export function useEthPrice() {
   const [state, {updateEthPrice}] = useGlobalDataContext()
 
-  const allPairs = useAllPairData();
-  const isPolygonNetwork = useIsPolygonNetwork();
+  /*const allPairs = useAllPairData();
+  const isPolygonNetwork = useIsPolygonNetwork();*/
 
   const ethPrice = state?.[ETH_PRICE_KEY];
   const ethPriceOld = state?.['oneDayPrice']
@@ -562,7 +555,7 @@ export function useEthPrice() {
     checkForEthPrice();
   }, [ethPrice, updateEthPrice])
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!ethPrice || !parseInt(ethPrice)) {
       let price;
       if (isPolygonNetwork) {
@@ -576,7 +569,7 @@ export function useEthPrice() {
         updateEthPrice(price, '0', '0')
       }
     }
-  }, [ethPrice, updateEthPrice, allPairs, isPolygonNetwork]);
+  }, [ethPrice, updateEthPrice, allPairs, isPolygonNetwork]);*/
 
   return [ethPrice, ethPriceOld]
 }

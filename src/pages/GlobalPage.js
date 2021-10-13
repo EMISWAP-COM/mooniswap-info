@@ -11,7 +11,7 @@ import TopTokenList from '../components/TokenList'
 import TxnList from '../components/TxnList'
 import GlobalChart from '../components/GlobalChart'
 import {Hover, TYPE} from '../Theme'
-import {ETH, formattedNum, formattedPercent, getLiquidityFromToken} from '../helpers'
+import {ETH, formattedNum, formattedPercent} from '../helpers'
 import {useEthPrice, useGlobalData, useGlobalTransactions} from '../contexts/GlobalData'
 import {useAllPairData} from '../contexts/PairData'
 import {Search} from '../components/Search'
@@ -98,8 +98,8 @@ function GlobalPage({history}) {
   const [listView, setListView] = useState(LIST_VIEW.PAIRS)
 
   const {
-    // totalLiquidityUSD,
-    // oneDayVolumeUSD,
+    totalLiquidityUSD,
+    oneDayVolumeUSD,
     volumeChangeUSD,
     liquidityChangeUSD,
     oneDayTxns,
@@ -117,11 +117,11 @@ function GlobalPage({history}) {
 
   const ethPriceChange = (parseFloat(ethPrice - ethPriceOld) / parseFloat(ethPriceOld)) * 100
 
-  // const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : '-'
+  const liquidity = totalLiquidityUSD ? formattedNum(totalLiquidityUSD, true) : '-'
 
   const liquidityChange = liquidityChangeUSD ? formattedPercent(liquidityChangeUSD) : '-'
 
-  // const volume = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD, true) : '-'
+  const volume = oneDayVolumeUSD ? formattedNum(oneDayVolumeUSD, true) : '-'
 
   const volumeChange = volumeChangeUSD ? formattedPercent(volumeChangeUSD) : '-'
 
@@ -134,7 +134,7 @@ function GlobalPage({history}) {
 
   const {priceText} = useNetworkData();
 
-  const getCalculatedLiquidity = () => {
+  /*const getCalculatedLiquidity = () => {
     let total = 0;
     for (const prop in allPairs) {
       const pair = allPairs[prop];
@@ -147,16 +147,16 @@ function GlobalPage({history}) {
       }
     }
     return formattedNum(total, true);
-  }
+  }*/
 
-  const getCalculatedVolume = () => {
+  /*const getCalculatedVolume = () => {
     let total = 0;
     for (const prop in allPairs) {
       const pair = allPairs[prop];
       total += parseFloat(pair.oneDayVolumeUSD);
     }
     return formattedNum(total, true);
-  }
+  }*/
 
   const getFormattedEthPrice = () => {
     let price = '-';
@@ -189,7 +189,8 @@ function GlobalPage({history}) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                        {getCalculatedVolume()}
+                        {volume}
+                        {/*{getCalculatedVolume()}*/}
                       </TYPE.main>
                       <TYPE.main fontSize={12}>{volumeChange}</TYPE.main>
                     </RowBetween>
@@ -201,8 +202,8 @@ function GlobalPage({history}) {
                     </RowBetween>
                     <RowBetween align="flex-end">
                       <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                        {/*{liquidity && liquidity}*/}
-                        {getCalculatedLiquidity()}
+                        {liquidity && liquidity}
+                        {/*{getCalculatedLiquidity()}*/}
                       </TYPE.main>
                       <TYPE.main fontSize={12}>{liquidityChange && liquidityChange}</TYPE.main>
                     </RowBetween>
@@ -269,8 +270,8 @@ function GlobalPage({history}) {
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                  {/*{liquidity && liquidity}*/}
-                  {getCalculatedLiquidity()}
+                  {liquidity && liquidity}
+                  {/*{getCalculatedLiquidity()}*/}
                 </TYPE.main>
                 <TYPE.main fontSize={14}>{liquidityChange && liquidityChange}</TYPE.main>
               </RowBetween>
@@ -284,7 +285,8 @@ function GlobalPage({history}) {
               </RowBetween>
               <RowBetween align="flex-end">
                 <TYPE.main fontSize={'1.5rem'} lineHeight={1} fontWeight={600}>
-                  {getCalculatedVolume()}
+                  {volume}
+                  {/*{getCalculatedVolume()}*/}
                 </TYPE.main>
                 <TYPE.main fontSize={14}>{volumeChange}</TYPE.main>
               </RowBetween>
