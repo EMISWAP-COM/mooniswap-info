@@ -1,7 +1,7 @@
 import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
-import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
+// import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
   {
@@ -52,7 +52,7 @@ export const networksItems = [
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
   },
-  {
+  /*{
     network: 'avalanche',
     alias: 'AVALANCHE',
     factoryAddress: '0x7B4b70c61a8fDE4E8c03f99adC567C1762d9d247',
@@ -67,7 +67,7 @@ export const networksItems = [
     rpcUrls: ['https://api.avax.network/ext/bc/C/rpc',],
     currencySymbol: 'AVAX',
     tokenTextName: 'ARC-20',
-  },
+  },*/
 ];
 
 export function getNetworkData() {
