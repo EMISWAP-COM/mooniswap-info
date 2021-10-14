@@ -52,7 +52,7 @@ export const networksItems = [
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
   },
-  {
+  /*{
     network: 'avalanche',
     alias: 'AVALANCHE',
     factoryAddress: '0x7B4b70c61a8fDE4E8c03f99adC567C1762d9d247',
@@ -67,7 +67,7 @@ export const networksItems = [
     rpcUrls: ['https://api.avax.network/ext/bc/C/rpc',],
     currencySymbol: 'AVAX',
     tokenTextName: 'ARC-20',
-  },
+  },*/
 ];
 
 export function getNetworkData() {
