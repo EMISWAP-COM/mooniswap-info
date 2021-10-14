@@ -196,6 +196,16 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
         pairData.token1.symbol = 'KCS'
       }
 
+      if (pairData.token0.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+        pairData.token0.name = 'MATIC (Wrapped)'
+        pairData.token0.symbol = 'MATIC'
+      }
+
+      if (pairData.token1.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+        pairData.token1.name = 'MATIC (Wrapped)'
+        pairData.token1.symbol = 'MATIC'
+      }
+
       if (pairData.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
         pairData.token1.symbol = 'yCRV'
       }

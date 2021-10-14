@@ -372,3 +372,17 @@ export const getLiquidityFromToken = (token, reserve, ethPrice) => {
 
   return priceUSD * reserve;
 }
+
+export function findTokenPriceInPairs(pairs, symbolPrice, symbolAlt) {
+  for (const prop in pairs) {
+    if (!pairs[prop] || !pairs[prop].token0) {
+      continue;
+    }
+
+    if (true) {
+      return pairs[prop].token1.derivedUSD;
+    } else if (pairs[prop].token0.symbol === symbolPrice && pairs[prop].token1.symbol === symbolAlt) {
+      return pairs[prop].token0.derivedUSD;
+    }
+  }
+}

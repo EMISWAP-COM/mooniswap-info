@@ -233,13 +233,13 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           )
 
           const priceUSD = data.derivedETH && ethPrice ? (data.derivedETH * ethPrice) : data.derivedUSD
-          const oneDayPriceUSD = oneDayHistory.derivedETH && ethPrice ? (oneDayHistory.derivedETH * ethPrice) : oneDayHistory.derivedUSD
+          const oneDayPriceUSD = oneDayHistory?.derivedETH && ethPrice ? (oneDayHistory?.derivedETH * ethPrice) : oneDayHistory?.derivedUSD
           const priceChangeUSD = getPercentChange(priceUSD, oneDayPriceUSD ?? 0)
 
           const totalLiquidityUSD = data.totalLiquidityUSD
             ? data.totalLiquidityUSD
             : (data?.totalLiquidity * ethPrice * data?.derivedETH)
-          const oneDayHistoryLiquidityUSD = oneDayHistory.totalLiquidityUSD
+          const oneDayHistoryLiquidityUSD = oneDayHistory?.totalLiquidityUSD
             ? oneDayHistory.totalLiquidityUSD
             : (oneDayHistory?.totalLiquidity * ethPrice * oneDayHistory?.derivedETH)
           const liquidityChangeUSD = getPercentChange(totalLiquidityUSD, oneDayHistoryLiquidityUSD ?? 0)
@@ -269,6 +269,11 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           if (data.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
             data.name = 'KuCoin (Wrapped)'
             data.symbol = 'KCS'
+          }
+
+          if (data.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+            data.name = 'Matic (Wrapped)'
+            data.symbol = 'MATIC'
           }
 
           return data
