@@ -3,6 +3,7 @@ import {getIsValidNumber} from '../helpers'
 import copy from 'copy-to-clipboard'
 import {PAGES} from '../constants'
 import {getNetworkData} from "../helpers/network";
+import dayjs, {OpUnitType} from "dayjs";
 
 export function useColor(tokenAddress, token) {
   return '#37FFDB';
@@ -204,4 +205,18 @@ export function useLogoUrlList(address) {
     `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
     `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
   ]
+}
+
+
+export function useAllTimeDate(value: number = 1, unit: OpUnitType = 'year') {
+  const isPolygonNetwork = useIsPolygonNetwork();
+
+  const utcEndTime = dayjs.utc();
+  let utcStartTime = utcEndTime.subtract(value, unit);
+
+  if (isPolygonNetwork) {
+    utcStartTime = dayjs.utc(new Date('10-15-2021'));
+  }
+
+  return utcStartTime;
 }

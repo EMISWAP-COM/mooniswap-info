@@ -11,6 +11,7 @@ import { timeframeOptions } from '../../constants'
 import dayjs from 'dayjs'
 import DropdownSelect from '../DropdownSelect'
 import { useUserLiquidityHistory } from '../../contexts/User'
+import {useAllTimeDate} from "../../hooks";
 
 const ChartWrapper = styled.div`
   height: 100%;
@@ -32,6 +33,8 @@ const UserChart = ({ account, setAnimatedVal, animatedVal, positionValue }) => {
 
   const [timeWindow, setTimeWindow] = useState(timeframeOptions.ALL_TIME)
 
+  const allTimeDate = useAllTimeDate(1, 'year');
+
   const below1080 = useMedia('(max-width: 1080px)')
   const below600 = useMedia('(max-width: 600px)')
 
@@ -48,14 +51,10 @@ const UserChart = ({ account, setAnimatedVal, animatedVal, positionValue }) => {
           .unix() - 1
       break
     case timeframeOptions.ALL_TIME:
-      utcStartTime = utcEndTime.subtract(1, 'year').unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
     default:
-      utcStartTime =
-        utcEndTime
-          .subtract(1, 'year')
-          .startOf('year')
-          .unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
   }
   const domain = [dataMin => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax']

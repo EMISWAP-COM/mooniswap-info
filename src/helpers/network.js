@@ -40,7 +40,7 @@ export const networksItems = [
     network: 'polygon',
     alias: 'POLYGON',
     factoryAddress: '0x23c1b313152e276e0CF61665dc3AC160b3c5aB19',
-    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/polygon',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/polygon2',
     blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/matthewlilley/polygon-blocks',
     name: 'Polygon',
     name2: 'Polygon',

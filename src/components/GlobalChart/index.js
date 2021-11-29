@@ -10,6 +10,7 @@ import { timeframeOptions } from '../../constants'
 import { TYPE } from '../../Theme'
 import { useGlobalChartData } from '../../contexts/GlobalData'
 import dayjs from 'dayjs'
+import {useAllTimeDate} from "../../hooks";
 
 const CHART_VIEW = {
   VOLUME: 'Volume',
@@ -33,6 +34,8 @@ const GlobalChart = ({ display }) => {
 
   // global historical data
   const [chartData, weeklyData] = useGlobalChartData()
+
+  const allTimeDate = useAllTimeDate(1, 'year');
 
   // switch between voluem and liquidity on larger screens
   function toggleView() {
@@ -58,14 +61,10 @@ const GlobalChart = ({ display }) => {
           .unix() - 1
       break
     case timeframeOptions.ALL_TIME:
-      utcStartTime = utcEndTime?.subtract(1, 'year').unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
     default:
-      utcStartTime =
-        utcEndTime
-          ?.subtract(1, 'year')
-          .startOf('year')
-          .unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
   }
 
