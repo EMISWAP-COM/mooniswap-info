@@ -59,9 +59,12 @@ const PairChart = ({ address, color }) => {
       utcStartTime = utcStartTime = allTimeDate.unix() - 1;
       break
   }
-  const domain = [dataMin => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax']
+  const domain = [dataMin => utcStartTime, 'dataMax']
+  const rangeData = (chartData && utcStartTime)
+    ? chartData.filter(item => item.date > utcStartTime)
+    : [];
 
-  if (chartData && chartData.length === 0) {
+  if (rangeData && rangeData.length === 0) {
     return (
       <ChartWrapper>
         <EmptyCard height="300px">No historical data yet.</EmptyCard>{' '}
@@ -116,7 +119,7 @@ const PairChart = ({ address, color }) => {
       )}
       {chartFilter === CHART_VIEW.LIQUIDITY && (
         <ResponsiveContainer aspect={aspect}>
-          <AreaChart margin={{ top: 0, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+          <AreaChart margin={{ top: 0, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={rangeData}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={color} stopOpacity={0.35} />
@@ -183,7 +186,7 @@ const PairChart = ({ address, color }) => {
           <BarChart
             margin={{ top: 0, right: 0, bottom: 6, left: below1080 ? 0 : 10 }}
             barCategoryGap={1}
-            data={chartData}
+            data={rangeData}
           >
             <XAxis
               tickLine={false}
