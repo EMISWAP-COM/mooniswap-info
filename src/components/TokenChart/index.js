@@ -60,7 +60,13 @@ const TokenChart = ({ address, color }) => {
       utcStartTime = allTimeDate.unix() - 1
       break
   }
-  const domain = [dataMin => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax'];
+  const domain = [
+    dataMin => {
+      const date = (dataMin > utcStartTime ? dataMin : utcStartTime);
+      return chartFilter === CHART_VIEW.VOLUME ? date - (3600 * 12) : date;
+    },
+    'dataMax'
+  ];
   const rangeData = (chartData && utcStartTime)
     ? chartData.filter(item => item.date > utcStartTime)
     : [];

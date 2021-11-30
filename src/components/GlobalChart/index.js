@@ -68,7 +68,7 @@ const GlobalChart = ({ display }) => {
       break
   }
 
-  const domain = chartData && [dataMin => (parseFloat(dataMin) > utcStartTime ? dataMin : utcStartTime), 'dataMax']
+  const domain = chartData && [dataMin => (parseFloat(dataMin) > utcStartTime ? dataMin : utcStartTime), 'dataMax'];
 
   const below1080 = useMedia('(max-width: 1080px)')
   const below600 = useMedia('(max-width: 600px)')
@@ -91,7 +91,7 @@ const GlobalChart = ({ display }) => {
     )
   }, [chartData, utcStartTime])
 
-  return chartData ? (
+  return chartDataFiltered ? (
     <>
       {below600 ? (
         <RowBetween mb={40}>
@@ -154,9 +154,9 @@ const GlobalChart = ({ display }) => {
         </RowBetween>
       )}
 
-      {chartData && chartView === CHART_VIEW.LIQUIDITY && (
+      {chartDataFiltered && chartView === CHART_VIEW.LIQUIDITY && (
         <ResponsiveContainer aspect={below1080 ? 60 / 28 : 60 / 28}>
-          <AreaChart margin={{ top: 20, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+          <AreaChart margin={{ top: 20, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartDataFiltered}>
             <defs>
               <linearGradient id="Gradient" x1="0" x2="0" y1="1" y2="0">
                 <stop offset="0%" stopColor="rgba(93, 9, 225, 0)" />
@@ -228,7 +228,7 @@ const GlobalChart = ({ display }) => {
           </AreaChart>
         </ResponsiveContainer>
       )}
-      {chartData && chartView === CHART_VIEW.VOLUME && (
+      {chartDataFiltered && chartView === CHART_VIEW.VOLUME && (
         <ResponsiveContainer aspect={60 / 28}>
           <BarChart
             margin={{ top: 20, right: 0, bottom: 6, left: 0 }}

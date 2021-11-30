@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components/macro'
-import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar, CartesianGrid } from 'recharts'
-import { RowBetween, AutoRow } from '../Row'
+import {Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts'
+import {AutoRow, RowBetween} from '../Row'
 
-import { toK, toNiceDate, toNiceDateYear, formattedNum } from '../../helpers'
-import { OptionButton } from '../ButtonStyled'
-import { darken } from 'polished'
-import { usePairChartData } from '../../contexts/PairData'
-import { timeframeOptions } from '../../constants'
+import {formattedNum, toK, toNiceDate, toNiceDateYear} from '../../helpers'
+import {OptionButton} from '../ButtonStyled'
+import {darken} from 'polished'
+import {usePairChartData} from '../../contexts/PairData'
+import {timeframeOptions} from '../../constants'
 import dayjs from 'dayjs'
-import { useMedia } from 'react-use'
-import { EmptyCard } from '..'
+import {useMedia} from 'react-use'
+import {EmptyCard} from '..'
 import DropdownSelect from '../DropdownSelect'
 import {useAllTimeDate} from "../../hooks";
 
@@ -59,7 +59,13 @@ const PairChart = ({ address, color }) => {
       utcStartTime = utcStartTime = allTimeDate.unix() - 1;
       break
   }
-  const domain = [dataMin => utcStartTime, 'dataMax']
+  const domain = [
+    dataMin => {
+      const date = (dataMin > utcStartTime ? dataMin : utcStartTime);
+      return chartFilter === CHART_VIEW.VOLUME ? date - (3600 * 12) : date;
+    },
+    'dataMax'
+  ];
   const rangeData = (chartData && utcStartTime)
     ? chartData.filter(item => item.date > utcStartTime)
     : [];
