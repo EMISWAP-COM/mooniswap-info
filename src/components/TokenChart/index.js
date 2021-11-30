@@ -11,6 +11,7 @@ import { timeframeOptions } from '../../constants'
 import dayjs from 'dayjs'
 import { useTokenChartData } from '../../contexts/TokenData'
 import DropdownSelect from '../DropdownSelect'
+import {useAllTimeDate} from "../../hooks";
 
 const ChartWrapper = styled.div`
   height: 100%;
@@ -30,9 +31,12 @@ const CHART_VIEW = {
 const TokenChart = ({ address, color }) => {
   const [chartFilter, setChartFilter] = useState(CHART_VIEW.LIQUIDITY)
 
-  const chartData = useTokenChartData(address)
+  const chartData = useTokenChartData(address);
+  //console.log(chartData?.filter);
 
   const [timeWindow, setTimeWindow] = useState(timeframeOptions.ALL_TIME)
+
+  const allTimeDate = useAllTimeDate(1, 'year');
 
   const below1080 = useMedia('(max-width: 1080px)')
   const below600 = useMedia('(max-width: 600px)')
@@ -50,17 +54,24 @@ const TokenChart = ({ address, color }) => {
           .unix() - 1
       break
     case timeframeOptions.ALL_TIME:
-      utcStartTime = utcEndTime.subtract(1, 'year').unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
     default:
-      utcStartTime =
-        utcEndTime
-          .subtract(1, 'year')
-          .startOf('year')
-          .unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
   }
-  const domain = [dataMin => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax']
+  const domain = [
+    dataMin => {
+      const date = (dataMin > utcStartTime ? dataMin : utcStartTime);
+      return chartFilter === CHART_VIEW.VOLUME ? date - (3600 * 12) : date;
+    },
+    'dataMax'
+  ];
+  const rangeData = (chartData && utcStartTime)
+    ? chartData.filter(item => item.date > utcStartTime)
+    : [];
+
+  console.log(rangeData);
 
   return (
     <ChartWrapper>
@@ -112,9 +123,9 @@ const TokenChart = ({ address, color }) => {
           </AutoRow>
         </RowBetween>
       )}
-      {chartFilter === CHART_VIEW.LIQUIDITY && chartData && (
+      {chartFilter === CHART_VIEW.LIQUIDITY && rangeData && (
         <ResponsiveContainer aspect={below1080 ? 60 / 32 : below600 ? 60 / 42 : 60 / 16}>
-          <AreaChart margin={{ top: 0, right: 10, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+          <AreaChart margin={{ top: 0, right: 10, bottom: 6, left: 0 }} barCategoryGap={1} data={rangeData}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={color} stopOpacity={0.35} />
@@ -176,9 +187,9 @@ const TokenChart = ({ address, color }) => {
           </AreaChart>
         </ResponsiveContainer>
       )}
-      {chartFilter === CHART_VIEW.PRICE && chartData && (
+      {chartFilter === CHART_VIEW.PRICE && rangeData && (
         <ResponsiveContainer aspect={below1080 ? 60 / 32 : 60 / 16}>
-          <AreaChart margin={{ top: 0, right: 10, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+          <AreaChart margin={{ top: 0, right: 10, bottom: 6, left: 0 }} barCategoryGap={1} data={rangeData}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={color} stopOpacity={0.35} />
@@ -240,7 +251,7 @@ const TokenChart = ({ address, color }) => {
       )}
       {chartFilter === CHART_VIEW.VOLUME && (
         <ResponsiveContainer aspect={below1080 ? 60 / 32 : 60 / 16}>
-          <BarChart margin={{ top: 0, right: 10, bottom: 6, left: 10 }} barCategoryGap={1} data={chartData}>
+          <BarChart margin={{ top: 0, right: 10, bottom: 6, left: 10 }} barCategoryGap={1} data={rangeData}>
             <XAxis
               tickLine={false}
               axisLine={false}

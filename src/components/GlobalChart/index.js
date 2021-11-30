@@ -10,6 +10,7 @@ import { timeframeOptions } from '../../constants'
 import { TYPE } from '../../Theme'
 import { useGlobalChartData } from '../../contexts/GlobalData'
 import dayjs from 'dayjs'
+import {useAllTimeDate} from "../../hooks";
 
 const CHART_VIEW = {
   VOLUME: 'Volume',
@@ -33,6 +34,8 @@ const GlobalChart = ({ display }) => {
 
   // global historical data
   const [chartData, weeklyData] = useGlobalChartData()
+
+  const allTimeDate = useAllTimeDate(1, 'year');
 
   // switch between voluem and liquidity on larger screens
   function toggleView() {
@@ -58,18 +61,14 @@ const GlobalChart = ({ display }) => {
           .unix() - 1
       break
     case timeframeOptions.ALL_TIME:
-      utcStartTime = utcEndTime?.subtract(1, 'year').unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
     default:
-      utcStartTime =
-        utcEndTime
-          ?.subtract(1, 'year')
-          .startOf('year')
-          .unix() - 1
+      utcStartTime = allTimeDate.unix() - 1
       break
   }
 
-  const domain = chartData && [dataMin => (parseFloat(dataMin) > utcStartTime ? dataMin : utcStartTime), 'dataMax']
+  const domain = chartData && [dataMin => (parseFloat(dataMin) > utcStartTime ? dataMin : utcStartTime), 'dataMax'];
 
   const below1080 = useMedia('(max-width: 1080px)')
   const below600 = useMedia('(max-width: 600px)')
@@ -92,7 +91,7 @@ const GlobalChart = ({ display }) => {
     )
   }, [chartData, utcStartTime])
 
-  return chartData ? (
+  return chartDataFiltered ? (
     <>
       {below600 ? (
         <RowBetween mb={40}>
@@ -155,9 +154,9 @@ const GlobalChart = ({ display }) => {
         </RowBetween>
       )}
 
-      {chartData && chartView === CHART_VIEW.LIQUIDITY && (
+      {chartDataFiltered && chartView === CHART_VIEW.LIQUIDITY && (
         <ResponsiveContainer aspect={below1080 ? 60 / 28 : 60 / 28}>
-          <AreaChart margin={{ top: 20, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+          <AreaChart margin={{ top: 20, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartDataFiltered}>
             <defs>
               <linearGradient id="Gradient" x1="0" x2="0" y1="1" y2="0">
                 <stop offset="0%" stopColor="rgba(93, 9, 225, 0)" />
@@ -229,7 +228,7 @@ const GlobalChart = ({ display }) => {
           </AreaChart>
         </ResponsiveContainer>
       )}
-      {chartData && chartView === CHART_VIEW.VOLUME && (
+      {chartDataFiltered && chartView === CHART_VIEW.VOLUME && (
         <ResponsiveContainer aspect={60 / 28}>
           <BarChart
             margin={{ top: 20, right: 0, bottom: 6, left: 0 }}

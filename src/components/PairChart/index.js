@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components/macro'
-import { Area, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, BarChart, Bar, CartesianGrid } from 'recharts'
-import { RowBetween, AutoRow } from '../Row'
+import {Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts'
+import {AutoRow, RowBetween} from '../Row'
 
-import { toK, toNiceDate, toNiceDateYear, formattedNum } from '../../helpers'
-import { OptionButton } from '../ButtonStyled'
-import { darken } from 'polished'
-import { usePairChartData } from '../../contexts/PairData'
-import { timeframeOptions } from '../../constants'
+import {formattedNum, toK, toNiceDate, toNiceDateYear} from '../../helpers'
+import {OptionButton} from '../ButtonStyled'
+import {darken} from 'polished'
+import {usePairChartData} from '../../contexts/PairData'
+import {timeframeOptions} from '../../constants'
 import dayjs from 'dayjs'
-import { useMedia } from 'react-use'
-import { EmptyCard } from '..'
+import {useMedia} from 'react-use'
+import {EmptyCard} from '..'
 import DropdownSelect from '../DropdownSelect'
+import {useAllTimeDate} from "../../hooks";
 
 const ChartWrapper = styled.div`
   height: 100%;
@@ -37,6 +38,8 @@ const PairChart = ({ address, color }) => {
   const below1080 = useMedia('(max-width: 1080px)')
   const below600 = useMedia('(max-width: 600px)')
 
+  const allTimeDate = useAllTimeDate(1, 'year');
+
   // find start time based on required time window, update domain
   const utcEndTime = dayjs.utc()
   // based on window, get starttime
@@ -50,19 +53,24 @@ const PairChart = ({ address, color }) => {
           .unix() - 1
       break
     case timeframeOptions.ALL_TIME:
-      utcStartTime = utcEndTime.subtract(1, 'year').unix() - 1
+      utcStartTime = allTimeDate.unix() - 1;
       break
     default:
-      utcStartTime =
-        utcEndTime
-          .subtract(1, 'year')
-          .startOf('year')
-          .unix() - 1
+      utcStartTime = utcStartTime = allTimeDate.unix() - 1;
       break
   }
-  const domain = [dataMin => (dataMin > utcStartTime ? dataMin : utcStartTime), 'dataMax']
+  const domain = [
+    dataMin => {
+      const date = (dataMin > utcStartTime ? dataMin : utcStartTime);
+      return chartFilter === CHART_VIEW.VOLUME ? date - (3600 * 12) : date;
+    },
+    'dataMax'
+  ];
+  const rangeData = (chartData && utcStartTime)
+    ? chartData.filter(item => item.date > utcStartTime)
+    : [];
 
-  if (chartData && chartData.length === 0) {
+  if (rangeData && rangeData.length === 0) {
     return (
       <ChartWrapper>
         <EmptyCard height="300px">No historical data yet.</EmptyCard>{' '}
@@ -117,7 +125,7 @@ const PairChart = ({ address, color }) => {
       )}
       {chartFilter === CHART_VIEW.LIQUIDITY && (
         <ResponsiveContainer aspect={aspect}>
-          <AreaChart margin={{ top: 0, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={chartData}>
+          <AreaChart margin={{ top: 0, right: 0, bottom: 6, left: 0 }} barCategoryGap={1} data={rangeData}>
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={color} stopOpacity={0.35} />
@@ -184,7 +192,7 @@ const PairChart = ({ address, color }) => {
           <BarChart
             margin={{ top: 0, right: 0, bottom: 6, left: below1080 ? 0 : 10 }}
             barCategoryGap={1}
-            data={chartData}
+            data={rangeData}
           >
             <XAxis
               tickLine={false}

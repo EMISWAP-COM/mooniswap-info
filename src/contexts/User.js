@@ -14,6 +14,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { useEthPrice } from './GlobalData'
 import { ETH, getShareValueOverTime } from '../helpers'
+import {useAllTimeDate} from "../hooks";
 
 dayjs.extend(utc)
 
@@ -185,6 +186,8 @@ export function useReturnsPerPairHistory(position, account) {
   const [startDateTimestamp, setStartDateTimestamp] = useState()
   const [activeWindow] = useTimeframe()
 
+  const allTimeDate = useAllTimeDate(1, 'year');
+
   const pairAddress = position?.pair?.id
 
   const currentPairData = usePairData(pairAddress)
@@ -200,17 +203,17 @@ export function useReturnsPerPairHistory(position, account) {
         utcStartTime = utcEndTime.subtract(1, 'week').startOf('day')
         break
       case timeframeOptions.ALL_TIME:
-        utcStartTime = utcEndTime.subtract(1, 'year')
+        utcStartTime = allTimeDate;
         break
       default:
-        utcStartTime = utcEndTime.subtract(1, 'year').startOf('year')
+        utcStartTime = allTimeDate;
         break
     }
     let startTime = utcStartTime.unix() - 1
     if ((activeWindow && startTime < startDateTimestamp) || !startDateTimestamp) {
       setStartDateTimestamp(startTime)
     }
-  }, [activeWindow, startDateTimestamp])
+  }, [allTimeDate, activeWindow, startDateTimestamp])
 
   useEffect(() => {
     async function fetchData() {
@@ -397,6 +400,8 @@ export function useUserLiquidityHistory(account) {
   const [startDateTimestamp, setStartDateTimestamp] = useState()
   const [activeWindow] = useTimeframe()
 
+  const allTimeDate = useAllTimeDate(1, 'year');
+
   // monitor the old date fetched
   useEffect(() => {
     const utcEndTime = dayjs.utc()
@@ -407,17 +412,17 @@ export function useUserLiquidityHistory(account) {
         utcStartTime = utcEndTime.subtract(1, 'week').startOf('day')
         break
       case timeframeOptions.ALL_TIME:
-        utcStartTime = utcEndTime.subtract(1, 'year')
+        utcStartTime = allTimeDate
         break
       default:
-        utcStartTime = utcEndTime.subtract(1, 'year').startOf('year')
+        utcStartTime = allTimeDate
         break
     }
     let startTime = utcStartTime.unix() - 1
     if ((activeWindow && startTime < startDateTimestamp) || !startDateTimestamp) {
       setStartDateTimestamp(startTime)
     }
-  }, [activeWindow, startDateTimestamp])
+  }, [allTimeDate, activeWindow, startDateTimestamp])
 
   useEffect(() => {
     async function fetchData() {

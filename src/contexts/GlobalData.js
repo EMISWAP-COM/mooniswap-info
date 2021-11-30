@@ -7,7 +7,7 @@ import {timeframeOptions} from '../constants'
 import {get2DayPercentChange, getBlockFromTimestamp, getBlocksFromTimestamps, getPercentChange} from '../helpers'
 import {ALL_PAIRS, ALL_TOKENS, ETH_PRICE, GLOBAL_CHART, GLOBAL_DATA, GLOBAL_TXNS} from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-import {useNetworkData} from "../hooks";
+import {useAllTimeDate, useNetworkData} from "../hooks";
 
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
@@ -477,6 +477,8 @@ export function useGlobalChartData() {
   const [oldestDateFetch, setOldestDateFetched] = useState()
   const [activeWindow] = useTimeframe()
 
+  const allTimeDate = useAllTimeDate(3, 'month');
+
   const chartDataDaily = state?.chartData?.daily
   const chartDataWeekly = state?.chartData?.weekly
 
@@ -490,10 +492,10 @@ export function useGlobalChartData() {
         utcStartTime = utcEndTime.subtract(1, 'week').startOf('day')
         break
       case timeframeOptions.ALL_TIME:
-        utcStartTime = utcEndTime.subtract(3, 'month')
+        utcStartTime = allTimeDate;
         break
       default:
-        utcStartTime = utcEndTime.subtract(3, 'month')
+        utcStartTime = allTimeDate;
         break
     }
     let startTime = utcStartTime.startOf('hour').unix() - 1
@@ -501,7 +503,7 @@ export function useGlobalChartData() {
     if ((activeWindow && startTime < oldestDateFetch) || !oldestDateFetch) {
       setOldestDateFetched(startTime)
     }
-  }, [activeWindow, oldestDateFetch])
+  }, [allTimeDate, activeWindow, oldestDateFetch])
 
   useEffect(() => {
     async function fetchData() {
