@@ -220,9 +220,9 @@ async function getGlobalData(factoryAddress, ethPrice, oldEthPrice) {
       )
 
       const [oneDayTxns, txnChange] = get2DayPercentChange(
-        data.txCount,
-        oneDayData.txCount ? oneDayData.txCount : 0,
-        twoDayData.txCount ? twoDayData.txCount : 0
+        data?.txCount || 0,
+        oneDayData?.txCount ? oneDayData.txCount : 0,
+        twoDayData?.txCount ? twoDayData.txCount : 0
       )
 
       if (!data.totalLiquidityUSD) {

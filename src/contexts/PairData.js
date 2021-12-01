@@ -202,7 +202,7 @@ async function getBulkPairData(pairList, ethPrice) {
     let pairData = await Promise.all(
       current &&
       current.data.pairs.map(async pair => {
-        let data = pair
+        let data = pair || {};
         let oneDayHistory = oneDayData?.[pair.id]
         let twoDayHistory = twoDayData?.[pair.id]
         let oneWeekHistory = oneWeekData?.[pair.id]
@@ -335,7 +335,7 @@ const getPairData = async (address, ethPrice) => {
       query: PAIR_DATA(address),
       fetchPolicy: 'cache-first'
     })
-    data = result.data && result.data.pairs && result.data.pairs[0]
+    data = result?.data?.pairs?.[0] || {};
 
     let oneDayResult = await client.query({
       query: PAIR_DATA(address, oneDayBlock),
@@ -363,7 +363,7 @@ const getPairData = async (address, ethPrice) => {
     const oneWeekVolumeUSD = parseFloat(oneWeekData ? data?.volumeUSD - oneWeekData?.volumeUSD : data?.volumeUSD)
 
     const [oneDayTxns, txnChange] = get2DayPercentChange(
-      data.txCount,
+      data?.txCount || 0,
       oneDayData?.txCount ? oneDayData?.txCount : 0,
       twoDayData?.txCount ? twoDayData?.txCount : 0
     )
