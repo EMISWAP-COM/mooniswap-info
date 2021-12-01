@@ -215,7 +215,7 @@ export function useAllTimeDate(value: number = 1, unit: OpUnitType = 'year') {
   let utcStartTime = utcEndTime.subtract(value, unit);
 
   if (isPolygonNetwork) {
-    utcStartTime = dayjs.utc(new Date('10-15-2021'));
+    utcStartTime = dayjs.utc(Date.parse('2021-10-15T01:00:00'));
   }
 
   return utcStartTime;
