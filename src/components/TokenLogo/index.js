@@ -4,6 +4,7 @@ import {isAddress} from '../../helpers'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'
 import KuCoinLogo from '../../assets/kcs.png'
+import AuroraLogo from '../../assets/aurora.png'
 import BerezkaLogo from '../../assets/berezka.png'
 import NoLogoCoin from '../../assets/no_logo_coin.svg'
 import {ETH} from '../../helpers'
@@ -72,6 +73,14 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
     return (
       <Inline>
         <Image {...rest} alt={''} src={KuCoinLogo} size={size}/>
+      </Inline>
+    )
+  }
+
+  if (address?.toLowerCase() === '0xb361DAD0Cc1a03404b650A69d9a5ADB5aF8A531F') {
+    return (
+      <Inline>
+        <Image {...rest} alt={''} src={AuroraLogo} size={size}/>
       </Inline>
     )
   }

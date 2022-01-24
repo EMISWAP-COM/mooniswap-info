@@ -1,6 +1,8 @@
 import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
+import AuroraNetworkIcon from '../assets/aurora-network.svg';
+
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
@@ -51,6 +53,24 @@ export const networksItems = [
     rpcUrls: ['https://rpc-mumbai.matic.today',],
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
+  },
+  {
+    network: 'aurora',
+    alias: 'AURORA',
+    factoryAddress: '0x945316F2964ef5C6C84921b435a528DD1790E93a',
+    // factoryAddress: '0xADf0f1937ca030e13255cBD8d59b0B5BEcDDf31f',
+    // clientTheGraph: 'https://api.thegraph.com/subgraphs/name/tusiby/subgraph',
+    clientTheGraph: 'https://thegraph.com/hosted-service/subgraph/tusiby/aurora',
+    blockClientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/kcc-blocks',
+    name: 'Aurora',
+    name2: 'Aurora',
+    icon: AuroraNetworkIcon,
+    scanUrl: 'browser.aurorachain.io',
+    scanName: 'Aurora Block Explorer',
+    priceText: 'ETH Price',
+    rpcUrls: ['https://rpc.mainnet.near.org',],
+    currencySymbol: 'ETH',
+    tokenTextName: 'ERC-20',
   },
   /*{
     network: 'avalanche',
