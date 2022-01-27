@@ -1,6 +1,7 @@
 import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
+import ShidenNetworkIcon from '../assets/shiden-network.png';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
@@ -51,6 +52,22 @@ export const networksItems = [
     rpcUrls: ['https://rpc-mumbai.matic.today',],
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
+  },
+  {
+    network: 'shiden',
+    alias: 'SHIDEN',
+    factoryAddress: '0x7449314B698f918E98c76279B5570613b243eECf',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/shiden',
+    blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
+    name: 'Shiden',
+    name2: 'Shiden',
+    icon: ShidenNetworkIcon,
+    scanUrl: 'https://blockscout.com/shiden',
+    scanName: 'Shiden Blockscout',
+    priceText: 'SDN Price',
+    rpcUrls: ['https://rpc.shiden.astar.network:8545',],
+    currencySymbol: 'SDN',
+    tokenTextName: 'SDN-20',
   },
   /*{
     network: 'avalanche',
