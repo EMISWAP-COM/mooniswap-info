@@ -244,16 +244,16 @@ export const formattedNum = (number, usd = false, acceptNegatives = false) => {
   if (num < 0.0001) {
     if (acceptNegatives) {
       return usd
-        ? '$' + Number(parseFloat(num).toFixed(4)).toLocaleString('ru-Ru')
-        : '' + Number(parseFloat(num).toFixed(4)).toLocaleString('ru-Ru')
+        ? '$' + toNumberString(Number(parseFloat(num).toFixed(4)))
+        : '' + toNumberString(Number(parseFloat(num).toFixed(4)))
     }
     return usd ? '< $0.0001' : '< 0.0001'
   }
 
   if (num > 1000) {
     return usd
-      ? '$' + Number(parseFloat(num).toFixed(0)).toLocaleString('ru-Ru')
-      : '' + Number(parseFloat(num).toFixed(0)).toLocaleString('ru-Ru')
+      ? '$' + toNumberString(Number(parseFloat(num).toFixed(2)))
+      : '' + toNumberString(Number(parseFloat(num).toFixed(2)))
   }
 
   if (usd) {
@@ -266,6 +266,10 @@ export const formattedNum = (number, usd = false, acceptNegatives = false) => {
   }
 
   return Number(parseFloat(num).toFixed(5))
+}
+
+export function toNumberString(number) {
+  return number.toLocaleString('ru-Ru').replace(',', '.');
 }
 
 export function rawPercent(percentRaw) {
