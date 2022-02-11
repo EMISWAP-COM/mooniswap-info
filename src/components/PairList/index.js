@@ -226,7 +226,9 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
             <DoubleTokenLogo
               size={below600 ? 16 : 20}
               a0={pairData.token0.id}
+              s0={pairData.token1.symbol}
               a1={pairData.token1.id}
+              s1={pairData.token0.symbol}
               margin={!below740}
             />
             <div style={{ display: 'flex', flexDirection: 'column' }}>

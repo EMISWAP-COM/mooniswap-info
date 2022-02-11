@@ -184,7 +184,9 @@ function PositionList({ positions, transactions }) {
               <DoubleTokenLogo
                 size={below600 ? 16 : 20}
                 a0={position.pair.token0.id}
+                s0={position?.token0.symbol}
                 a1={position.pair.token1.id}
+                s1={position?.token1.symbol}
                 margin={!below740}
               />
 
@@ -238,13 +240,13 @@ function PositionList({ positions, transactions }) {
                         Token Supplied
                       </Text>
                       <RowFixed gap="10px">
-                        <TokenLogo address={position.pair.token0.id} />
+                        <TokenLogo address={position.pair.token0.id} symbol={position.pair.token0.symbol} />
                         <Text fontWeight={500} ml={'6px'}>
                           {formattedNum(poolOwnership * position.pair.reserve0)} {position.pair.token0.symbol}
                         </Text>
                       </RowFixed>
                       <RowFixed gap="10px">
-                        <TokenLogo address={position.pair.token1.id} />
+                        <TokenLogo address={position.pair.token1.id} symbol={position.pair.token1.symbol} />
                         <Text fontWeight={500} ml={'6px'}>
                           {formattedNum(poolOwnership * position.pair.reserve1)} {position.pair.token1.symbol}
                         </Text>

@@ -40,7 +40,7 @@ const StyledLogo = styled.div`
   }
 `
 
-export default function TokenLogo({ address, header = false, size = '18px', ...rest }) {
+export default function TokenLogo({ address, symbol, header = false, size = '18px', ...rest }) {
   const [error, setError] = useState(false)
 
   const urlList = useLogoUrlList(isAddress(address))
@@ -116,6 +116,21 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
         />
       </StyledLogo>
     )
+  }
+
+  if (symbol) {
+    const png = require(`../../assets/currencies/${symbol}.png`);
+    if (png) {
+      return (
+        <StyledLogo size={size} {...rest}>
+          <img
+            src={png}
+            style={{boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px'}}
+            alt=""
+          />
+        </StyledLogo>
+      )
+    }
   }
 
   let uri

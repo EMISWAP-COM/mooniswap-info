@@ -152,6 +152,12 @@ export const useIsPolygonNetwork = () => {
   return alias === 'POLYGON';
 };
 
+export const useIsAuroraNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'AURORA';
+};
+
 export const useIsAvalancheNetwork = () => {
   const {alias} = useNetworkData();
 
@@ -159,13 +165,22 @@ export const useIsAvalancheNetwork = () => {
 };
 
 export const useUrls = () => {
-  const {scanUrl} = useNetworkData();
+  const {alias, scanUrl} = useNetworkData();
+
+  if (alias === 'AURORA') {
+    return {
+      showTransaction: tx => `https://${scanUrl}/block.html#/tradeInfo/${tx}`,
+      showAddress: address => `https://${scanUrl}/block.html#/searchResult?fromAddress=${address}`,
+      showToken: address => `https://${scanUrl}/token/${address}`,
+      showBlock: block => `https://${scanUrl}/block/${block}`
+    }
+  }
 
   return {
-    showTransaction: tx => `https://${scanUrl}/tx/${tx}/`,
-    showAddress: address => `https://${scanUrl}/address/${address}/`,
-    showToken: address => `https://${scanUrl}/token/${address}/`,
-    showBlock: block => `https://${scanUrl}/block/${block}/`
+    showTransaction: tx => `https://${scanUrl}/tx/${tx}`,
+    showAddress: address => `https://${scanUrl}/address/${address}`,
+    showToken: address => `https://${scanUrl}/token/${address}`,
+    showBlock: block => `https://${scanUrl}/block/${block}`
   }
 }
 
@@ -174,7 +189,8 @@ export function useLogoUrlList(address) {
 
   const isKuCoinNetwork = useIsKuCoinNetwork();
   const isPolygonNetwork = useIsPolygonNetwork();
-  const isAvalancheNetwork = useIsAvalancheNetwork()
+  const isAuroraNetwork = useIsAuroraNetwork();
+  const isAvalancheNetwork = useIsAvalancheNetwork();
 
   if (!address) {
     return ['https://etherscan.io/images/main/empty-token.png']
@@ -190,6 +206,14 @@ export function useLogoUrlList(address) {
   if (isPolygonNetwork) {
     return [
       `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${address}/logo.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    ]
+  }
+
+  if (isAuroraNetwork) {
+    return [
+      // TODO: Эти урлы не работают, найти другие
+      `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/aurora/assets/${address}/logo.png`,
       `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
     ]
   }
