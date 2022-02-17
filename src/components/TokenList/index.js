@@ -181,7 +181,7 @@ function TopTokenList({ tokens, pairs, history, itemMax = 10 }) {
         <DataText area="name" fontWeight="500">
           <Row>
             {!below680 && <div style={{ marginRight: '1rem' }}>{index}</div>}
-            <TokenLogo address={item.id} />
+            <TokenLogo address={item.id} symbol={item.symbol} />
             <CustomLink style={{ marginLeft: '16px', whiteSpace: 'nowrap' }} to={'/token/' + item.id}>
               {below680 ? item.symbol : item.name}
             </CustomLink>

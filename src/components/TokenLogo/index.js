@@ -4,6 +4,7 @@ import {isAddress} from '../../helpers'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'
 import KuCoinLogo from '../../assets/kcs.png'
+import AuroraLogo from '../../assets/aurora.png'
 import BerezkaLogo from '../../assets/berezka.png'
 import NoLogoCoin from '../../assets/no_logo_coin.svg'
 import {ETH} from '../../helpers'
@@ -39,7 +40,7 @@ const StyledLogo = styled.div`
   }
 `
 
-export default function TokenLogo({ address, header = false, size = '18px', ...rest }) {
+export default function TokenLogo({ address, symbol, header = false, size = '18px', ...rest }) {
   const [error, setError] = useState(false)
 
   const urlList = useLogoUrlList(isAddress(address))
@@ -76,6 +77,14 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
     )
   }
 
+  if (address?.toLowerCase() === '0xb361DAD0Cc1a03404b650A69d9a5ADB5aF8A531F') {
+    return (
+      <Inline>
+        <Image {...rest} alt={''} src={AuroraLogo} size={size}/>
+      </Inline>
+    )
+  }
+
   // hard coded fixes for trust wallet api issues
   if (address?.toLowerCase() === '0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb') {
     address = '0x42456d7084eacf4083f1140d3229471bba2949a8'
@@ -107,6 +116,21 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
         />
       </StyledLogo>
     )
+  }
+
+  if (symbol) {
+    const png = require(`../../assets/currencies/${symbol}.png`);
+    if (png) {
+      return (
+        <StyledLogo size={size} {...rest}>
+          <img
+            src={png}
+            style={{boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px'}}
+            alt=""
+          />
+        </StyledLogo>
+      )
+    }
   }
 
   let uri

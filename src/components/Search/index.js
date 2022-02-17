@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 import styled from 'styled-components/macro'
 
 import Row from '../Row'
 import TokenLogo from '../TokenLogo'
-import { Search as SearchIcon } from 'react-feather'
-import { BasicLink } from '../Link'
+import {Search as SearchIcon} from 'react-feather'
+import {BasicLink} from '../Link'
 
-import { useAllTokenData, useTokenData } from '../../contexts/TokenData'
-import { useAllPairData, usePairData } from '../../contexts/PairData'
+import {useAllTokenData, useTokenData} from '../../contexts/TokenData'
+import {useAllPairData, usePairData} from '../../contexts/PairData'
 import DoubleTokenLogo from '../DoubleLogo'
-import { useMedia } from 'react-use'
-import { useAllPairsInEmiswap, useAllTokensInEmiswap } from '../../contexts/GlobalData'
-import { OVERVIEW_TOKEN_BLACKLIST, OVERVIEW_PAIR_BLACKLIST } from '../../constants'
+import {useMedia} from 'react-use'
+import {useAllPairsInEmiswap, useAllTokensInEmiswap} from '../../contexts/GlobalData'
+import {OVERVIEW_PAIR_BLACKLIST, OVERVIEW_TOKEN_BLACKLIST} from '../../constants'
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,15 +19,15 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  padding: ${({ small }) => (!small ? '12px' : '8px 16px')};
-  border: 1px solid ${({ theme }) => theme.border1};
+  padding: ${({small}) => (!small ? '12px' : '8px 16px')};
+  border: 1px solid ${({theme}) => theme.border1};
   border-radius: 12px;
-  background: ${({ theme }) => theme.bg1};
-  border-bottom-right-radius: ${({ open }) => (open ? '0px' : '12px')};
-  border-bottom-left-radius: ${({ open }) => (open ? '0px' : '12px')};
-  ${({ small }) =>
-    !small &&
-    ` box-shadow: 0 2.8px 2.8px -9px rgba(0, 0, 0, 0.008), 0 6.7px 6.7px -9px rgba(0, 0, 0, 0.012),
+  background: ${({theme}) => theme.bg1};
+  border-bottom-right-radius: ${({open}) => (open ? '0px' : '12px')};
+  border-bottom-left-radius: ${({open}) => (open ? '0px' : '12px')};
+  ${({small}) =>
+  !small &&
+  ` box-shadow: 0 2.8px 2.8px -9px rgba(0, 0, 0, 0.008), 0 6.7px 6.7px -9px rgba(0, 0, 0, 0.012),
     0 12.5px 12.6px -9px rgba(0, 0, 0, 0.015), 0 22.3px 22.6px -9px rgba(0, 0, 0, 0.018),
     0 41.8px 42.2px -9px rgba(0, 0, 0, 0.022), 0 100px 101px -9px rgba(0, 0, 0, 0.03);`};
 `
@@ -37,11 +37,11 @@ const Input = styled.input`
   align-items: center;
   width: 100%;
   white-space: nowrap;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({theme}) => theme.bg1};
   border: none;
   outline: none;
-  color: ${({ theme }) => theme.textColor};
-  font-size: ${({ large }) => (large ? '20px' : '16px')};
+  color: ${({theme}) => theme.textColor};
+  font-size: ${({large}) => (large ? '20px' : '16px')};
 
   ::placeholder {
     color: #bfc1c3;
@@ -59,11 +59,11 @@ const SearchIconLarge = styled(SearchIcon)`
   height: 20px;
   width: 20px;
   margin-right: 0.5rem;
-  color: ${({ theme }) => theme.textColor};
+  color: ${({theme}) => theme.textColor};
 `
 
 const Menu = styled.div`
-  display: ${({ hide }) => hide && 'none'};
+  display: ${({hide}) => hide && 'none'};
   flex-direction: column;
   z-index: 10;
   width: 100%;
@@ -72,7 +72,7 @@ const Menu = styled.div`
   overflow: scroll;
   left: 0;
   padding-bottom: 20px;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({theme}) => theme.bg1};
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
@@ -87,18 +87,18 @@ const MenuItem = styled(Row)`
   }
   :hover {
     cursor: pointer;
-    background-color: ${({ theme }) => theme.focus};
+    background-color: ${({theme}) => theme.focus};
   }
 `
 
 const Heading = styled(Row)`
   padding: 1rem;
-  display: ${({ hide = false }) => hide && 'none'};
+  display: ${({hide = false}) => hide && 'none'};
 `
 
 const FilterSection = styled(Heading)`
   z-index: 32;
-  background: ${({ theme }) => theme.bg2};
+  background: ${({theme}) => theme.bg2};
 `
 
 const Gray = styled.span`
@@ -113,7 +113,7 @@ const Green = styled.span`
 `
 const eeeeeAddress = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-export const Search = ({ small = false }) => {
+export const Search = ({small = false}) => {
   const allTokens = useAllTokensInEmiswap()
   const allTokenData = useAllTokenData()
 
@@ -317,7 +317,7 @@ export const Search = ({ small = false }) => {
       }}
     >
       <Wrapper open={showMenu} shadow={true} small={small}>
-        <SearchIconLarge />
+        <SearchIconLarge/>
         <Input
           large={!small}
           type={'text'}
@@ -326,12 +326,12 @@ export const Search = ({ small = false }) => {
             below410
               ? 'Search...'
               : below470
-                ? 'Search Emiswap...'
-                : below700
+              ? 'Search Emiswap...'
+              : below700
+                ? 'Search pairs and tokens...'
+                : small
                   ? 'Search pairs and tokens...'
-                  : small
-                    ? 'Search pairs and tokens...'
-                    : 'Search or paste address to find Emiswap pairs and tokens...'
+                  : 'Search or paste address to find Emiswap pairs and tokens...'
           }
           value={value}
           onChange={e => {
@@ -353,54 +353,60 @@ export const Search = ({ small = false }) => {
         <div>
           {filteredPairList && Object.keys(filteredPairList).length === 0 && <MenuItem>No results</MenuItem>}
           {filteredPairList &&
-            filteredPairList
-              .slice(0, pairsShown)
-              .filter(pair => {
-                // we had some pool that use this '0xeeee...' instead of '0x00000'
-                return (
-                  pair?.token0?.id?.toLowerCase() !== eeeeeAddress && pair?.token1?.id?.toLowerCase() !== eeeeeAddress
-                )
-              })
-              .map(pair => {
-                if (pair?.token0?.id === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
-                  pair.token0.name = 'ETH (Wrapped)'
-                  pair.token0.symbol = 'ETH'
-                }
+          filteredPairList
+            .slice(0, pairsShown)
+            .filter(pair => {
+              // we had some pool that use this '0xeeee...' instead of '0x00000'
+              return (
+                pair?.token0?.id?.toLowerCase() !== eeeeeAddress && pair?.token1?.id?.toLowerCase() !== eeeeeAddress
+              )
+            })
+            .map(pair => {
+              if (pair?.token0?.id === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
+                pair.token0.name = 'ETH (Wrapped)'
+                pair.token0.symbol = 'ETH'
+              }
 
-                if (pair?.token1.id === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
-                  pair.token1.name = 'ETH (Wrapped)'
-                  pair.token1.symbol = 'ETH'
-                }
+              if (pair?.token1.id === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
+                pair.token1.name = 'ETH (Wrapped)'
+                pair.token1.symbol = 'ETH'
+              }
 
-                if (pair?.token0?.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-                  pair.token0.name = 'KCS (Wrapped)'
-                  pair.token0.symbol = 'KCS'
-                }
+              if (pair?.token0?.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+                pair.token0.name = 'KCS (Wrapped)'
+                pair.token0.symbol = 'KCS'
+              }
 
-                if (pair?.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-                  pair.token1.name = 'KCS (Wrapped)'
-                  pair.token1.symbol = 'KCS'
-                }
+              if (pair?.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
+                pair.token1.name = 'KCS (Wrapped)'
+                pair.token1.symbol = 'KCS'
+              }
 
-                if (pair?.token0?.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
-                  pair.token0.name = 'MATIC (Wrapped)'
-                  pair.token0.symbol = 'MATIC'
-                }
+              if (pair?.token0?.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+                pair.token0.name = 'MATIC (Wrapped)'
+                pair.token0.symbol = 'MATIC'
+              }
 
-                if (pair?.token1.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
-                  pair.token1.name = 'MATIC (Wrapped)'
-                  pair.token1.symbol = 'MATIC'
-                }
+              if (pair?.token1.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
+                pair.token1.name = 'MATIC (Wrapped)'
+                pair.token1.symbol = 'MATIC'
+              }
 
-                return (
-                  <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
-                    <MenuItem>
-                      <DoubleTokenLogo a0={pair?.token0?.id} a1={pair?.token1?.id} margin={true} />
-                      <span style={{ marginLeft: '10px' }}>{pair.token0.symbol + '-' + pair.token1.symbol} Pair</span>
-                    </MenuItem>
-                  </BasicLink>
-                )
-              })}
+              return (
+                <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
+                  <MenuItem>
+                    <DoubleTokenLogo
+                      a0={pair?.token0?.id}
+                      s0={pair?.token0.symbol}
+                      a1={pair?.token1?.id}
+                      s1={pair?.token1.symbol}
+                      margin={true}
+                    />
+                    <span style={{marginLeft: '10px'}}>{pair.token0.symbol + '-' + pair.token1.symbol} Pair</span>
+                  </MenuItem>
+                </BasicLink>
+              )
+            })}
           <Heading
             hide={!(Object.keys(filteredPairList).length > 3 && Object.keys(filteredPairList).length >= pairsShown)}
           >
@@ -422,7 +428,7 @@ export const Search = ({ small = false }) => {
             return (
               <BasicLink to={'/token/' + token.id} key={token.id} onClick={onDismiss}>
                 <MenuItem>
-                  <TokenLogo address={token.id} style={{ marginRight: '10px' }} />
+                  <TokenLogo style={{marginRight: '10px'}} address={token.id} symbol={token.symbol}/>
                   <span>{token.name}</span>
                   <span>({token.symbol})</span>
                 </MenuItem>
