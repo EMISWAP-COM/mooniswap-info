@@ -2,8 +2,7 @@ import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
 import ShidenNetworkIcon from '../assets/shiden-network.png';
-import AuroraNetworkIcon from '../assets/aurora-network.svg';
-
+// import AuroraNetworkIcon from '../assets/aurora-network.svg';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [

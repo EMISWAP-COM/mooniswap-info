@@ -392,6 +392,16 @@ export const Search = ({small = false}) => {
                 pair.token1.symbol = 'MATIC'
               }
 
+              if (pair?.token0.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
+                pair.token0.name = 'Shiden (Wrapped)'
+                pair.token0.symbol = 'SDN'
+              }
+
+              if (pair?.token1.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
+                pair.token1.name = 'Shiden (Wrapped)'
+                pair.token1.symbol = 'SDN'
+              }
+
               return (
                 <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
                   <MenuItem>
