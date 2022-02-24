@@ -63,7 +63,7 @@ export const networksItems = [
     name: 'Shiden',
     name2: 'Shiden',
     icon: ShidenNetworkIcon,
-    scanUrl: 'https://blockscout.com/shiden',
+    scanUrl: 'blockscout.com/shiden',
     scanName: 'Shiden Blockscout',
     priceText: 'SDN Price',
     rpcUrls: ['https://rpc.shiden.astar.network:8545',],
