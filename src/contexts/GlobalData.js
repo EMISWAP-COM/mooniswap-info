@@ -7,7 +7,7 @@ import {timeframeOptions} from '../constants'
 import {get2DayPercentChange, getBlockFromTimestamp, getBlocksFromTimestamps, getPercentChange} from '../helpers'
 import {ALL_PAIRS, ALL_TOKENS, ETH_PRICE, GLOBAL_CHART, GLOBAL_DATA, GLOBAL_TXNS} from '../apollo/queries'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-import {useAllTimeDate, useNetworkData} from "../hooks";
+import {useAllTimeDate, useIsAuroraNetwork, useNetworkData} from "../hooks";
 
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
@@ -543,8 +543,16 @@ export function useEthPrice() {
   /*const allPairs = useAllPairData();
   const isPolygonNetwork = useIsPolygonNetwork();*/
 
-  const ethPrice = state?.[ETH_PRICE_KEY];
-  const ethPriceOld = state?.['oneDayPrice']
+  const isAuroraNetwork = useIsAuroraNetwork();
+
+  let ethPrice = state?.[ETH_PRICE_KEY];
+  let ethPriceOld = state?.['oneDayPrice'];
+
+  // TODO: Временное решение
+  if (isAuroraNetwork) {
+    ethPrice = 2628;
+    ethPriceOld = 2621;
+  }
 
   useEffect(() => {
     async function checkForEthPrice() {

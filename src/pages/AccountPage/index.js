@@ -218,7 +218,12 @@ function AccountPage({ account }) {
               )}
               {activePosition && (
                 <RowFixed>
-                  <DoubleTokenLogo a0={activePosition.pair.token0.id} a1={activePosition.pair.token1.id} />
+                  <DoubleTokenLogo
+                    a0={activePosition.pair.token0.id}
+                    s0={activePosition.pair.token0.symbol}
+                    a1={activePosition.pair.token1.id}
+                    s1={activePosition.pair.token1.symbol}
+                  />
                   <Text fontWeight={500} color="white" ml={'16px'}>
                     {activePosition.pair.token0.symbol}-{activePosition.pair.token1.symbol} Pair Data
                   </Text>
@@ -239,7 +244,12 @@ function AccountPage({ account }) {
                               setShowDropdown(false)
                             }}
                           >
-                            <DoubleTokenLogo a0={p.pair.token0.id} a1={p.pair.token1.id} />
+                            <DoubleTokenLogo
+                              a0={p.pair.token0.id}
+                              s0={p.pair.token0.symbol}
+                              a1={p.pair.token1.id}
+                              s1={p.pair.token1.symbol}
+                            />
                             <Text fontWeight={500} color="white" ml={'16px'}>
                               {p.pair.token0.symbol}-{p.pair.token1.symbol}
                             </Text>

@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { useMedia } from 'react-use'
+import React, {useEffect, useState} from 'react'
+import {useMedia} from 'react-use'
 import dayjs from 'dayjs'
 import LocalLoader from '../LocalLoader'
 import utc from 'dayjs/plugin/utc'
-import { Box, Flex, Text } from 'rebass'
+import {Box, Flex, Text} from 'rebass'
 import styled from 'styled-components/macro'
 import Link from '../Link'
-import { Divider } from '../../components'
+import {Divider} from '../../components'
 import DoubleTokenLogo from '../DoubleLogo'
-import { withRouter } from 'react-router-dom'
-import { formattedNum, rawPercent, formattedPercent } from '../../helpers'
-import { AutoColumn } from '../Column'
-import { useEthPrice } from '../../contexts/GlobalData'
-import { RowFixed } from '../Row'
+import {withRouter} from 'react-router-dom'
+import {formattedNum, formattedPercent, rawPercent} from '../../helpers'
+import {AutoColumn} from '../Column'
+import {useEthPrice} from '../../contexts/GlobalData'
+import {RowFixed} from '../Row'
 
 dayjs.extend(utc)
 
@@ -25,7 +25,7 @@ const PageButtons = styled.div`
 `
 
 const Arrow = styled.div`
-  color: ${({ theme }) => theme.shadow1};
+  color: ${({theme}) => theme.shadow1};
   opacity: ${props => (props.faded ? 0.3 : 1)};
   padding: 0 20px;
   user-select: none;
@@ -96,7 +96,7 @@ const SORT_FIELD = {
 //   [SORT_FIELD.LIQ]: 'trackedReserveETH' // sort with tracked volume only
 // }
 
-function PositionList({ positions }) {
+function PositionList({positions}) {
   const below740 = useMedia('(max-width: 740px)')
   const below1080 = useMedia('(max-width: 1080px)')
 
@@ -126,7 +126,7 @@ function PositionList({ positions }) {
 
   const [ethPrice] = useEthPrice()
 
-  const ListItem = ({ position, index }) => {
+  const ListItem = ({position, index}) => {
     if (position) {
       const poolOwnership = position.liquidityTokenBalance / position.pair.totalSupply
       const valueUSD = poolOwnership * position.pair.reserveUSD
@@ -135,10 +135,17 @@ function PositionList({ positions }) {
           <DataText area="number">{index}</DataText>
           <DataText area="name" fontWeight="500" justifyContent="flex-start" alignItems="flex-start">
             <AutoColumn gap="8px" justify="flex-start" align="flex-start">
-              <DoubleTokenLogo size={16} a0={position.pair.token0.id} a1={position.pair.token1.id} margin={!below740} />
+              <DoubleTokenLogo
+                size={16}
+                a0={position.pair.token0.id}
+                s0={position.pair.token0.symbol}
+                a1={position.pair.token1.id}
+                s1={position.pair.token1.symbol}
+                margin={!below740}
+              />
             </AutoColumn>
-            <AutoColumn gap="8px" justify="flex-start" style={{ marginLeft: '20px' }}>
-              <Text style={{ whiteSpace: 'nowrap' }} to={'/pair/'}>
+            <AutoColumn gap="8px" justify="flex-start" style={{marginLeft: '20px'}}>
+              <Text style={{whiteSpace: 'nowrap'}} to={'/pair/'}>
                 {position.pair.token0.symbol + '-' + position.pair.token1.symbol}
               </Text>
               <AutoColumn gap="8px" justify="flex-start">
@@ -272,15 +279,15 @@ function PositionList({ positions }) {
       .map((id, index) => {
         return (
           <div key={index}>
-            <ListItem key={index} index={(page - 1) * 10 + index + 1} position={positions[id]} />
-            <Divider />
+            <ListItem key={index} index={(page - 1) * 10 + index + 1} position={positions[id]}/>
+            <Divider/>
           </div>
         )
       })
 
   return (
     <ListWrapper>
-      <DashGrid center={true} style={{ height: 'fit-content', padding: 0 }}>
+      <DashGrid center={true} style={{height: 'fit-content', padding: 0}}>
         <Flex alignItems="flex-start" justifyContent="flexStart">
           <Text area="number" fontWeight="500">
             #
@@ -355,8 +362,8 @@ function PositionList({ positions }) {
         )}
         <ClickableText area="manage" color="#FF007A"></ClickableText>
       </DashGrid>
-      <Divider />
-      <List p={0}>{!positionsSorted ? <LocalLoader /> : positionsSorted}</List>
+      <Divider/>
+      <List p={0}>{!positionsSorted ? <LocalLoader/> : positionsSorted}</List>
       <PageButtons>
         <div
           onClick={e => {
