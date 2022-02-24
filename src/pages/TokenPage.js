@@ -185,7 +185,7 @@ function TokenPage({ address, history }) {
           <RowFixed style={{ flexWrap: 'wrap' }}>
             <BackButton onClick={() => history.push(`/`)}/>
             <RowFixed mb={20} style={{ alignItems: 'baseline' }}>
-              <TokenLogo address={address} size="32px" style={{ alignSelf: 'center' }} />
+              <TokenLogo address={address} symbol={symbol} size="32px" style={{ alignSelf: 'center' }} />
               <Text fontSize={'2rem'} fontWeight={600} style={{ margin: '0 1rem' }}>
                 {name ? name + ' ' : ''} {symbol ? '(' + symbol + ')' : ''}
               </Text>{' '}

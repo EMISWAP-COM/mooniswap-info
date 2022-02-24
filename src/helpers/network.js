@@ -1,6 +1,8 @@
 import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
+import ShidenNetworkIcon from '../assets/shiden-network.png';
+// import AuroraNetworkIcon from '../assets/aurora-network.svg';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
@@ -48,10 +50,42 @@ export const networksItems = [
     scanUrl: 'polygonscan.com',
     scanName: 'Polygonscan',
     priceText: 'MATIC Price',
-    rpcUrls: ['https://rpc-mumbai.matic.today',],
+    rpcUrls: ['https://rpc-mumbai.matic.today'],
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
   },
+  {
+    network: 'shiden',
+    alias: 'SHIDEN',
+    factoryAddress: '0x7449314B698f918E98c76279B5570613b243eECf',
+    clientTheGraph: 'https://shiden-graph.emiswap.com/subgraphs/name/shiden',
+    blockClientTheGraph: 'https://shiden-graph.emiswap.com/subgraphs/name/shiden-blocks',
+    name: 'Shiden',
+    name2: 'Shiden',
+    icon: ShidenNetworkIcon,
+    scanUrl: 'blockscout.com/shiden',
+    scanName: 'Shiden Blockscout',
+    priceText: 'SDN Price',
+    rpcUrls: ['https://rpc.shiden.astar.network:8545',],
+    currencySymbol: 'SDN',
+    tokenTextName: 'SDN-20',
+  },
+  /*{
+    network: 'aurora',
+    alias: 'AURORA',
+    factoryAddress: '0x979e5d41595263f6Dfec4F4D48419C555B80D95c',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/denislukin/aurora2',
+    blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/wannaswap/blocks',
+    name: 'Aurora',
+    name2: 'Aurora',
+    icon: AuroraNetworkIcon,
+    scanUrl: 'browser.aurorachain.io',
+    scanName: 'Aurora Block Explorer',
+    priceText: 'ETH Price',
+    rpcUrls: ['https://rpc.mainnet.near.org'],
+    currencySymbol: 'ETH',
+    tokenTextName: 'ERC-20',
+  },*/
   /*{
     network: 'avalanche',
     alias: 'AVALANCHE',

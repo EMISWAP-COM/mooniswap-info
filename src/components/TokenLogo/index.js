@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components/macro'
-import {isAddress} from '../../helpers'
+import {ETH, isAddress} from '../../helpers'
 import EmiswapLogo from '../../assets/esw_light.svg'
 import EthereumLogo from '../../assets/eth.png'
 import KuCoinLogo from '../../assets/kcs.png'
+import AuroraLogo from '../../assets/aurora.png'
 import BerezkaLogo from '../../assets/berezka.png'
 import NoLogoCoin from '../../assets/no_logo_coin.svg'
-import {ETH} from '../../helpers'
 import {useLogoUrlList} from "../../hooks";
 
 const BAD_IMAGES = {}
@@ -22,8 +22,8 @@ const Inline = styled.div`
 `
 
 const Image = styled.img`
-  width: ${({ size }) => size};
-  height: ${({ size }) => size};
+  width: ${({size}) => size};
+  height: ${({size}) => size};
   border-radius: 1rem;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
 `
@@ -34,12 +34,12 @@ const StyledLogo = styled.div`
   justify-content: center;
 
   > img {
-    width: ${({ size }) => size};
-    height: ${({ size }) => size};
+    width: ${({size}) => size};
+    height: ${({size}) => size};
   }
 `
 
-export default function TokenLogo({ address, header = false, size = '18px', ...rest }) {
+export default function TokenLogo({address, symbol, header = false, size = '18px', ...rest}) {
   const [error, setError] = useState(false)
 
   const urlList = useLogoUrlList(isAddress(address))
@@ -51,7 +51,7 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
   if (error) {
     return (
       <Inline>
-        <Image {...rest} alt={''} src={NoLogoCoin} size={size} />
+        <Image {...rest} alt={''} src={NoLogoCoin} size={size}/>
       </Inline>
     )
   }
@@ -63,7 +63,7 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
   ].includes(address?.toLowerCase())) {
     return (
       <Inline>
-        <Image {...rest} alt={''} src={EmiswapLogo} size={size} />
+        <Image {...rest} alt={''} src={EmiswapLogo} size={size}/>
       </Inline>
     )
   }
@@ -72,6 +72,14 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
     return (
       <Inline>
         <Image {...rest} alt={''} src={KuCoinLogo} size={size}/>
+      </Inline>
+    )
+  }
+
+  if (address?.toLowerCase() === '0xb361DAD0Cc1a03404b650A69d9a5ADB5aF8A531F') {
+    return (
+      <Inline>
+        <Image {...rest} alt={''} src={AuroraLogo} size={size}/>
       </Inline>
     )
   }
@@ -90,7 +98,7 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
       <StyledLogo size={size} {...rest}>
         <img
           src={EthereumLogo}
-          style={{ boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px' }}
+          style={{boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px'}}
           alt=""
         />
       </StyledLogo>
@@ -102,11 +110,29 @@ export default function TokenLogo({ address, header = false, size = '18px', ...r
       <StyledLogo size={size} {...rest}>
         <img
           src={BerezkaLogo}
-          style={{ boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px' }}
+          style={{boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px'}}
           alt=""
         />
       </StyledLogo>
     )
+  }
+
+  if (symbol) {
+    try {
+      const png = require(`../../assets/currencies/${symbol}.png`);
+      if (png) {
+        return (
+          <StyledLogo size={size} {...rest}>
+            <img
+              src={png}
+              style={{boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px'}}
+              alt=""
+            />
+          </StyledLogo>
+        )
+      }
+    } catch (e) {
+    }
   }
 
   let uri
