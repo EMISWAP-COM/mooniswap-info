@@ -182,7 +182,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     }
 
     return amountUSD;
-  }, [ethPrice, allTokens])
+  }, [ethPrice, allTokens, isShidenNetwork])
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular

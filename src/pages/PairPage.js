@@ -201,7 +201,7 @@ function PairPage({pairAddress, history}) {
       return token0Rate;
     }
     return token0?.derivedETH && ethPrice ? formattedNum(parseFloat(token0.derivedETH) * parseFloat(ethPrice), true) : ''
-  }, [ethPrice, token0, token1, token1Rate]);
+  }, [ethPrice, token0, token1, token0Rate]);
 
   const token1USD = useMemo(() => {
     if (token0?.symbol?.includes('USD')) {
