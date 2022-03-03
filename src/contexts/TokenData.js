@@ -276,6 +276,11 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             data.symbol = 'MATIC'
           }
 
+          if (data.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
+            data.name = 'Shiden (Wrapped)'
+            data.symbol = 'SDN'
+          }
+
           return data
         })
     )

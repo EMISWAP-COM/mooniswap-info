@@ -206,6 +206,16 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
         pairData.token1.symbol = 'MATIC'
       }
 
+      if (pairData.token0.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
+        pairData.token0.name = 'Shiden (Wrapped)'
+        pairData.token0.symbol = 'SDN'
+      }
+
+      if (pairData.token1.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
+        pairData.token1.name = 'Shiden (Wrapped)'
+        pairData.token1.symbol = 'SDN'
+      }
+
       if (pairData.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
         pairData.token1.symbol = 'yCRV'
       }
@@ -226,9 +236,9 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
             <DoubleTokenLogo
               size={below600 ? 16 : 20}
               a0={pairData.token0.id}
-              s0={pairData.token1.symbol}
+              s0={pairData.token0.symbol}
               a1={pairData.token1.id}
-              s1={pairData.token0.symbol}
+              s1={pairData.token1.symbol}
               margin={!below740}
             />
             <div style={{ display: 'flex', flexDirection: 'column' }}>

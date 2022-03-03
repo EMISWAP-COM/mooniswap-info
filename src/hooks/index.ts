@@ -158,6 +158,12 @@ export const useIsAuroraNetwork = () => {
   return alias === 'AURORA';
 };
 
+export const useIsShidenNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'SHIDEN';
+};
+
 export const useIsAvalancheNetwork = () => {
   const {alias} = useNetworkData();
 
