@@ -118,21 +118,6 @@ export default function TokenLogo({address, symbol, header = false, size = '18px
   }
 
   if (symbol) {
-    const png = require(`../../assets/currencies/${symbol}.png`);
-    if (png) {
-      return (
-        <StyledLogo size={size} {...rest}>
-          <img
-            src={png}
-            style={{boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.075)', borderRadius: '24px'}}
-            alt=""
-          />
-        </StyledLogo>
-      )
-    }
-  }
-
-  if (symbol) {
     try {
       const png = require(`../../assets/currencies/${symbol}.png`);
       if (png) {

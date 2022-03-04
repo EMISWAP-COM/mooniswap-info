@@ -54,7 +54,7 @@ export const networksItems = [
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
   },
-  {
+  /*{
     network: 'shiden',
     alias: 'SHIDEN',
     factoryAddress: '0x7449314B698f918E98c76279B5570613b243eECf',
@@ -69,7 +69,7 @@ export const networksItems = [
     rpcUrls: ['https://rpc.shiden.astar.network:8545',],
     currencySymbol: 'SDN',
     tokenTextName: 'SDN-20',
-  },
+  },*/
   {
     network: 'aurora',
     alias: 'AURORA',
