@@ -231,7 +231,6 @@ const GlobalChart = ({ display }) => {
           </AreaChart>
         </ResponsiveContainer>
       )}
-      Тест
       {chartDataFiltered && chartView === CHART_VIEW.VOLUME && (
         <ResponsiveContainer aspect={60 / 28}>
           <BarChart
