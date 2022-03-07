@@ -80,6 +80,7 @@ const GlobalChart = ({ display }) => {
         ?.map(key => {
           let item = chartData[key]
           if (item.date > utcStartTime) {
+            console.log(item);
             return item
           } else {
             return null
@@ -90,6 +91,8 @@ const GlobalChart = ({ display }) => {
         })
     )
   }, [chartData, utcStartTime])
+
+  // console.log(chartDataFiltered);
 
   return chartDataFiltered ? (
     <>
@@ -228,6 +231,7 @@ const GlobalChart = ({ display }) => {
           </AreaChart>
         </ResponsiveContainer>
       )}
+      Тест
       {chartDataFiltered && chartView === CHART_VIEW.VOLUME && (
         <ResponsiveContainer aspect={60 / 28}>
           <BarChart
