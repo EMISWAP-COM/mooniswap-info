@@ -73,6 +73,7 @@ push:tagged:
 deploy:review:
   extends: .deploy:review
   stage: deploy:review
+  when: manual
   except:
     refs:
     - production
@@ -80,9 +81,11 @@ deploy:review:
 deploy:uat:
   extends: .deploy:uat
   stage: deploy:uat
+  when: manual
   only:
     refs:
     - production
+    - /^release-.*$/
 
 deploy:prod:
   extends: .deploy:prod
