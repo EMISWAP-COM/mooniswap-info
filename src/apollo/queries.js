@@ -317,7 +317,7 @@ export const PAIR_DAY_DATA_BULK = (pairs, startTimestamp) => {
 
 export const GLOBAL_CHART = gql`
   query emiswapDayDatas($startTime: Int!) {
-    emiswapDayDatas(where: { date_gt: $startTime }, orderBy: date, orderDirection: asc) {
+    emiswapDayDatas(where: { date_gt: $startTime }, first: 200,  orderBy: date, orderDirection: asc) {
       id
       date
       totalVolumeUSD
