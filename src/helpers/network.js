@@ -74,7 +74,7 @@ export const networksItems = [
     network: 'aurora',
     alias: 'AURORA',
     factoryAddress: '0x979e5d41595263f6Dfec4F4D48419C555B80D95c',
-    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/denislukin/aurora2',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/aurora',
     blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/wannaswap/blocks',
     name: 'Aurora',
     name2: 'Aurora',
