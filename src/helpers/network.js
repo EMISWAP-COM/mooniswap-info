@@ -79,7 +79,7 @@ export const networksItems = [
     name: 'Aurora',
     name2: 'Aurora',
     icon: AuroraNetworkIcon,
-    scanUrl: 'browser.aurorachain.io',
+    scanUrl: 'aurorascan.dev',
     scanName: 'Aurora Block Explorer',
     priceText: 'ETH Price',
     rpcUrls: ['https://rpc.mainnet.near.org'],

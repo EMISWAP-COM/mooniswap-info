@@ -175,8 +175,8 @@ export const useUrls = () => {
 
   if (alias === 'AURORA') {
     return {
-      showTransaction: tx => `https://${scanUrl}/block.html#/tradeInfo/${tx}`,
-      showAddress: address => `https://${scanUrl}/block.html#/searchResult?fromAddress=${address}`,
+      showTransaction: tx => `https://${scanUrl}/tx/${tx}`,
+      showAddress: address => `https://${scanUrl}/address/${address}`,
       showToken: address => `https://${scanUrl}/token/${address}`,
       showBlock: block => `https://${scanUrl}/block/${block}`
     }
