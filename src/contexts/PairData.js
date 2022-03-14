@@ -197,8 +197,6 @@ async function getBulkPairData(pairList, ethPrice) {
       return { ...obj, [cur.id]: cur }
     }, {})
 
-    console.log(oneDayData, twoDayData, oneWeekData);
-
     let pairData = await Promise.all(
       current &&
       current.data.pairs.map(async pair => {

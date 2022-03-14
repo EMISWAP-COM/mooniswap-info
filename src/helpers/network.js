@@ -1,8 +1,8 @@
 import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
-import ShidenNetworkIcon from '../assets/shiden-network.png';
-// import AuroraNetworkIcon from '../assets/aurora-network.svg';
+import AuroraNetworkIcon from '../assets/aurora-network.svg';
+// import ShidenNetworkIcon from '../assets/shiden-network.png';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
@@ -54,7 +54,7 @@ export const networksItems = [
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
   },
-  {
+  /*{
     network: 'shiden',
     alias: 'SHIDEN',
     factoryAddress: '0x7449314B698f918E98c76279B5570613b243eECf',
@@ -69,12 +69,12 @@ export const networksItems = [
     rpcUrls: ['https://rpc.shiden.astar.network:8545',],
     currencySymbol: 'SDN',
     tokenTextName: 'SDN-20',
-  },
-  /*{
+  },*/
+  {
     network: 'aurora',
     alias: 'AURORA',
     factoryAddress: '0x979e5d41595263f6Dfec4F4D48419C555B80D95c',
-    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/denislukin/aurora2',
+    clientTheGraph: 'https://api.thegraph.com/subgraphs/name/lombardi22/aurora',
     blockClientTheGraph: 'https://api.thegraph.com/subgraphs/name/wannaswap/blocks',
     name: 'Aurora',
     name2: 'Aurora',
@@ -85,7 +85,7 @@ export const networksItems = [
     rpcUrls: ['https://rpc.mainnet.near.org'],
     currencySymbol: 'ETH',
     tokenTextName: 'ERC-20',
-  },*/
+  },
   /*{
     network: 'avalanche',
     alias: 'AVALANCHE',
