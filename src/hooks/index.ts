@@ -158,6 +158,12 @@ export const useIsAuroraNetwork = () => {
   return alias === 'AURORA';
 };
 
+export const useIsShidenNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'SHIDEN';
+};
+
 export const useIsAvalancheNetwork = () => {
   const {alias} = useNetworkData();
 
@@ -169,8 +175,8 @@ export const useUrls = () => {
 
   if (alias === 'AURORA') {
     return {
-      showTransaction: tx => `https://${scanUrl}/block.html#/tradeInfo/${tx}`,
-      showAddress: address => `https://${scanUrl}/block.html#/searchResult?fromAddress=${address}`,
+      showTransaction: tx => `https://${scanUrl}/tx/${tx}`,
+      showAddress: address => `https://${scanUrl}/address/${address}`,
       showToken: address => `https://${scanUrl}/token/${address}`,
       showBlock: block => `https://${scanUrl}/block/${block}`
     }

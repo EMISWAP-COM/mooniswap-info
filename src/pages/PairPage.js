@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import 'feather-icons'
 import styled from 'styled-components/macro'
@@ -191,15 +191,24 @@ function PairPage({pairAddress, history}) {
 
   // token data for usd
   const [ethPrice] = useEthPrice()
-  const token0USD =
-    token0?.derivedETH && ethPrice ? formattedNum(parseFloat(token0.derivedETH) * parseFloat(ethPrice), true) : ''
-
-  const token1USD =
-    token1?.derivedETH && ethPrice ? formattedNum(parseFloat(token1.derivedETH) * parseFloat(ethPrice), true) : ''
 
   // rates
   const token0Rate = reserve0 && reserve1 ? formattedNum(reserve1 / reserve0) : '-'
   const token1Rate = reserve0 && reserve1 ? formattedNum(reserve0 / reserve1) : '-'
+
+  const token0USD = useMemo(() => {
+    if (token1?.symbol?.includes('USD')) {
+      return token0Rate;
+    }
+    return token0?.derivedETH && ethPrice ? formattedNum(parseFloat(token0.derivedETH) * parseFloat(ethPrice), true) : ''
+  }, [ethPrice, token0, token1, token0Rate]);
+
+  const token1USD = useMemo(() => {
+    if (token0?.symbol?.includes('USD')) {
+      return token1Rate;
+    }
+    return token1?.derivedETH && ethPrice ? formattedNum(parseFloat(token1.derivedETH) * parseFloat(ethPrice), true) : ''
+  }, [ethPrice, token0, token1, token1Rate]);
 
   // txn percentage change
   const txnChangeFormatted = formattedPercent(txnChange)
