@@ -71,8 +71,6 @@ const TokenChart = ({ address, color }) => {
     ? chartData.filter(item => item.date > utcStartTime)
     : [];
 
-  console.log(rangeData);
-
   return (
     <ChartWrapper>
       {below600 ? (
