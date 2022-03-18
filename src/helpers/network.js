@@ -2,7 +2,7 @@ import EthereumNetworkIcon from '../assets/ethereum-network.svg';
 import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
 import AuroraNetworkIcon from '../assets/aurora-network.svg';
-// import ShidenNetworkIcon from '../assets/shiden-network.png';
+import ShidenNetworkIcon from '../assets/shiden-network.png';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
@@ -54,7 +54,7 @@ export const networksItems = [
     currencySymbol: 'MATIC',
     tokenTextName: 'MRC-20',
   },
-  /*{
+  {
     network: 'shiden',
     alias: 'SHIDEN',
     factoryAddress: '0x7449314B698f918E98c76279B5570613b243eECf',
@@ -69,7 +69,7 @@ export const networksItems = [
     rpcUrls: ['https://rpc.shiden.astar.network:8545',],
     currencySymbol: 'SDN',
     tokenTextName: 'SDN-20',
-  },*/
+  },
   {
     network: 'aurora',
     alias: 'AURORA',
