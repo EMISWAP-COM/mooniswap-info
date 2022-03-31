@@ -81,10 +81,12 @@ export async function getBlocksFromTimestamps(timestamps) {
   let blocks = []
   if (result.data) {
     for (var t in result.data) {
-      blocks.push({
-        timestamp: t.split('t')[1],
-        number: result.data[t][0]['number']
-      })
+      if (result.data[t] && result.data[t][0]) {
+        blocks.push({
+          timestamp: t.split('t')[1],
+          number: result.data[t][0]['number']
+        })
+      }
     }
   }
   return blocks
