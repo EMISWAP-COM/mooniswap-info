@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 import Modal from '../Modal';
 import {Text} from 'rebass';
@@ -13,19 +13,21 @@ const NetworkSwitchWrapped = styled.div`
   padding: 32px 24px 32px 28px;
 `;
 
-const NetworkItemsRow = styled.div`
+const NetworkItemsWrap = styled.div`
   display: flex;
-  // justify-content: space-between;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  // align-items: center;
   width: 70%;
   margin: 24px auto 0 auto;
 `;
 
 const NetworkItem = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 90px;
+  margin-bottom: 30px;
   cursor: pointer;
-  min-width: 100px;
 `;
 
 const NetworkIcon = styled.div`
@@ -34,20 +36,20 @@ const NetworkIcon = styled.div`
   align-items: center;
   width: 48px;
   height: 48px;
-  margin: 0 auto 12px auto;
+  margin-right: 15px;
   border: 3px solid ${({theme, active}) => active ? theme.green5 : 'white'};
   border-radius: 4px;
   background: white;
 `;
 const CircleCheckImg = styled.img`
   position: absolute;
-  top: -12px;
-  right: 2px;
+  top: -10px;
+  left: 38px;
 `;
 
 const NetworkName = styled.div`
-  font-size: 16px; 
-  font-weight: 500; 
+  font-size: 16px;
+  font-weight: 700;
   text-align: center;
   color: ${({theme, active}) => active ? theme.green5 : 'white'};
 `;
@@ -90,7 +92,7 @@ export default function NetworkSwitchModal({onClose}) {
             <Text textAlign="center" fontWeight={500} fontSize={20} color="white">Choose Network</Text>
           </div>
 
-          <NetworkItemsRow>
+          <NetworkItemsWrap>
             {networksItems.map((item, index) => (
               <NetworkItem key={item.alias} onClick={() => onClickItem(item)}>
                 <NetworkIcon active={item.alias === alias}>
@@ -98,7 +100,7 @@ export default function NetworkSwitchModal({onClose}) {
                     <CircleCheckImg src={CircleCheckIcon}/>
                   )}
                   <img
-                    style={{ maxWidth: logosMaxWidths[item.alias] || '100%' }}
+                    style={{maxWidth: logosMaxWidths[item.alias] || '100%'}}
                     src={item.icon}
                     alt={item.name}
                   />
@@ -106,7 +108,7 @@ export default function NetworkSwitchModal({onClose}) {
                 <NetworkName active={item.alias === alias}>{item.name}</NetworkName>
               </NetworkItem>
             ))}
-          </NetworkItemsRow>
+          </NetworkItemsWrap>
 
         </NetworkSwitchWrapped>
       </Modal>
