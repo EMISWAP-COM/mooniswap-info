@@ -80,7 +80,6 @@ const GlobalChart = ({ display }) => {
         ?.map(key => {
           let item = chartData[key]
           if (item.date > utcStartTime) {
-            console.log(item);
             return item
           } else {
             return null
