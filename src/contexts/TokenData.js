@@ -281,6 +281,11 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             data.symbol = 'SDN'
           }
 
+          if (data.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+            data.name = 'Astar (Wrapped)'
+            data.symbol = 'ASTR'
+          }
+
           return data
         })
     )

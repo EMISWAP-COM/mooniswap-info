@@ -216,6 +216,16 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
         pairData.token1.symbol = 'SDN'
       }
 
+      if (pairData.token0.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+        pairData.token0.name = 'Astar (Wrapped)'
+        pairData.token0.symbol = 'ASTR'
+      }
+
+      if (pairData.token1.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+        pairData.token1.name = 'Astar (Wrapped)'
+        pairData.token1.symbol = 'ASTR'
+      }
+
       if (pairData.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
         pairData.token1.symbol = 'yCRV'
       }

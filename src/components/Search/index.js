@@ -402,6 +402,16 @@ export const Search = ({small = false}) => {
                 pair.token1.symbol = 'SDN'
               }
 
+              if (pair?.token0.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+                pair.token0.name = 'Astar (Wrapped)'
+                pair.token0.symbol = 'ASTR'
+              }
+
+              if (pair?.token1.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+                pair.token1.name = 'Astar (Wrapped)'
+                pair.token1.symbol = 'ASTR'
+              }
+
               return (
                 <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
                   <MenuItem>

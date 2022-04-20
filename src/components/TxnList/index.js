@@ -15,7 +15,7 @@ import DropdownSelect from '../DropdownSelect'
 import {PAGES} from '../../constants'
 import Pagination from '../Pagination'
 import {useEthPrice} from "../../contexts/GlobalData";
-import {useIsShidenNetwork, useNetworkData, useUrls} from "../../hooks";
+import {useIsAstarNetwork, useIsShidenNetwork, useNetworkData, useUrls} from "../../hooks";
 import {useAllTokenData} from "../../contexts/TokenData";
 
 dayjs.extend(utc)
@@ -154,6 +154,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
   const {scanUrl} = useNetworkData();
   const isShidenNetwork = useIsShidenNetwork();
+  const isAstarNetwork = useIsAstarNetwork();
   const urls = useUrls();
   const [ethPrice] = useEthPrice();
 
@@ -176,13 +177,17 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       const token0Data = allTokens[transaction.pair.token0.id];
       const token1Data = allTokens[transaction.pair.token1.id];
 
-      if ((amountUSD === "0" || isShidenNetwork) && ethPrice && token0Data && token1Data) {
+      if (token0Data) {
+        console.log(token0Data.derivedETH, token1Data.derivedETH);
+      }
+
+      if ((amountUSD === "0" || isShidenNetwork || isAstarNetwork) && ethPrice && token0Data && token1Data) {
         return (token0Data.priceUSD * txn.token0Amount) + (token1Data.priceUSD * txn.token1Amount);
       }
     }
 
     return amountUSD;
-  }, [ethPrice, allTokens, isShidenNetwork])
+  }, [ethPrice, allTokens, isShidenNetwork, isAstarNetwork])
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
