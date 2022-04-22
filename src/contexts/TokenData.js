@@ -281,6 +281,11 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             data.symbol = 'SDN'
           }
 
+          if (data.id === '0x672f30407A71fa8737A3A14474ff37E09c7Fc44a') {
+            data.name = 'GateChain (Wrapped)'
+            data.symbol = 'GT'
+          }
+
           return data
         })
     )

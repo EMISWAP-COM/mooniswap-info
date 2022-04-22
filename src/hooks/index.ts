@@ -1,12 +1,12 @@
-import {useCallback, useEffect, useRef, useState} from 'react'
-import {getIsValidNumber} from '../helpers'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { getIsValidNumber } from '../helpers'
 import copy from 'copy-to-clipboard'
-import {PAGES} from '../constants'
-import {getNetworkData} from "../helpers/network";
-import dayjs, {OpUnitType} from "dayjs";
+import { PAGES } from '../constants'
+import { getNetworkData } from '../helpers/network'
+import dayjs, { OpUnitType } from 'dayjs'
 
 export function useColor(tokenAddress, token) {
-  return '#37FFDB';
+  return '#37FFDB'
 
   /*const [color, setColor] = useState('#37FFDB')
   if (tokenAddress) {
@@ -100,78 +100,84 @@ export default function useInterval(callback: () => void, delay: null | number) 
 }
 
 export const usePagination = (initPage, maxPage) => {
-  const [page, setPage] = useState(initPage);
+  const [page, setPage] = useState(initPage)
 
   const handlePageChange = ({ target }) => {
-    const btnType = target.getAttribute('data-name');
+    const btnType = target.getAttribute('data-name')
 
-    getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType);
-  };
+    getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType)
+  }
 
   const handleSpecificBtnType = btnType => {
     switch (btnType) {
       case PAGES.PREV:
-        setPage(page - 1);
-        break;
+        setPage(page - 1)
+        break
       case PAGES.NEXT:
-        setPage(page + 1);
-        break;
+        setPage(page + 1)
+        break
       case PAGES.FIRST:
-        setPage(1);
-        break;
+        setPage(1)
+        break
       case PAGES.LAST:
-        setPage(maxPage);
-        break;
+        setPage(maxPage)
+        break
       default:
-        break;
+        break
     }
-  };
+  }
 
-  return [page, handlePageChange];
-};
+  return [page, handlePageChange]
+}
 
 export const useNetworkData = () => {
-  return getNetworkData();
-};
+  return getNetworkData()
+}
 
 export const useIsMainNetwork = () => {
-  const {alias} = useNetworkData();
+  const { alias } = useNetworkData()
 
-  return alias === 'MAINNET';
-};
+  return alias === 'MAINNET'
+}
 
 export const useIsKuCoinNetwork = () => {
-  const {alias} = useNetworkData();
+  const { alias } = useNetworkData()
 
-  return alias === 'KUCOIN';
-};
+  return alias === 'KUCOIN'
+}
 
 export const useIsPolygonNetwork = () => {
-  const {alias} = useNetworkData();
+  const { alias } = useNetworkData()
 
-  return alias === 'POLYGON';
-};
+  return alias === 'POLYGON'
+}
 
 export const useIsAuroraNetwork = () => {
-  const {alias} = useNetworkData();
+  const { alias } = useNetworkData()
 
-  return alias === 'AURORA';
-};
+  return alias === 'AURORA'
+}
 
 export const useIsShidenNetwork = () => {
-  const {alias} = useNetworkData();
+  const { alias } = useNetworkData()
 
-  return alias === 'SHIDEN';
-};
+  return alias === 'SHIDEN'
+}
+
+export const useIsGateChainNetwork = () => {
+  const { alias } = useNetworkData()
+
+  return alias === 'GATECHAIN'
+}
 
 export const useIsAvalancheNetwork = () => {
-  const {alias} = useNetworkData();
+  const { alias } = useNetworkData()
 
-  return alias === 'AVALANCHE';
-};
+  return alias === 'AVALANCHE'
+}
 
 export const useUrls = () => {
-  const {alias, scanUrl} = useNetworkData();
+  const { alias, scanUrl } = useNetworkData()
 
   if (alias === 'AURORA') {
     return {
@@ -193,10 +199,10 @@ export const useUrls = () => {
 export function useLogoUrlList(address) {
   // const {alias} = useNetworkData();
 
-  const isKuCoinNetwork = useIsKuCoinNetwork();
-  const isPolygonNetwork = useIsPolygonNetwork();
-  const isAuroraNetwork = useIsAuroraNetwork();
-  const isAvalancheNetwork = useIsAvalancheNetwork();
+  const isKuCoinNetwork = useIsKuCoinNetwork()
+  const isPolygonNetwork = useIsPolygonNetwork()
+  const isAuroraNetwork = useIsAuroraNetwork()
+  const isAvalancheNetwork = useIsAvalancheNetwork()
 
   if (!address) {
     return ['https://etherscan.io/images/main/empty-token.png']
@@ -205,14 +211,14 @@ export function useLogoUrlList(address) {
   if (isKuCoinNetwork) {
     return [
       `https://raw.githubusercontent.com/KoffeeSwap/kcc-assets/main/mainnet/tokens/${address}/logo.png`,
-      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`
     ]
   }
 
   if (isPolygonNetwork) {
     return [
       `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/assets/${address}/logo.png`,
-      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`
     ]
   }
 
@@ -220,33 +226,32 @@ export function useLogoUrlList(address) {
     return [
       // TODO: Эти урлы не работают, найти другие
       `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/aurora/assets/${address}/logo.png`,
-      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`
     ]
   }
 
   if (isAvalancheNetwork) {
     return [
       `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/avalanchec/assets/${address}/logo.png`,
-      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+      `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`
     ]
   }
 
   return [
     `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`,
-    `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`,
+    `https://1inch.exchange/assets/tokens/${address.toLowerCase()}.png`
   ]
 }
 
-
 export function useAllTimeDate(value: number = 1, unit: OpUnitType = 'year') {
-  const isPolygonNetwork = useIsPolygonNetwork();
+  const isPolygonNetwork = useIsPolygonNetwork()
 
-  const utcEndTime = dayjs.utc();
-  let utcStartTime = utcEndTime.subtract(value, unit);
+  const utcEndTime = dayjs.utc()
+  let utcStartTime = utcEndTime.subtract(value, unit)
 
   if (isPolygonNetwork) {
-    utcStartTime = dayjs.utc(Date.parse('2021-10-15T01:00:00'));
+    utcStartTime = dayjs.utc(Date.parse('2021-10-15T01:00:00'))
   }
 
-  return utcStartTime;
+  return utcStartTime
 }

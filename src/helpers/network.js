@@ -3,6 +3,7 @@ import KuCoinNetworkIcon from '../assets/kucoin-network.svg';
 import PolygonNetworkIcon from '../assets/polygon-network.svg';
 import AuroraNetworkIcon from '../assets/aurora-network.svg';
 import ShidenNetworkIcon from '../assets/shiden-network.png';
+import GatechainNetworkIcon from '../assets/gatechain-network.svg';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
 
 export const networksItems = [
@@ -84,6 +85,22 @@ export const networksItems = [
     priceText: 'ETH Price',
     rpcUrls: ['https://rpc.mainnet.near.org'],
     currencySymbol: 'ETH',
+    tokenTextName: 'ERC-20',
+  },
+  {
+    network: 'gatechain',
+    alias: 'GATECHAIN',
+    factoryAddress: '0xb4BcA5955F26d2fA6B57842655d7aCf2380Ac854',
+    clientTheGraph: 'https://10.165.101.51/subgraphs/name/gatechain',
+    blockClientTheGraph: 'https://10.165.101.51/subgraphs/name/gatechain-blocks',
+    name: 'GateChain',
+    name2: 'GateChain',
+    icon: GatechainNetworkIcon,
+    scanUrl: 'https://gatescan.org',
+    scanName: 'GateChain Block Explorer',
+    priceText: 'GT Price',
+    rpcUrls: ['https://evm.gatenode.cc'],
+    currencySymbol: 'GT',
     tokenTextName: 'ERC-20',
   },
   /*{

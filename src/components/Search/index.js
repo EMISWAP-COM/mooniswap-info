@@ -402,6 +402,16 @@ export const Search = ({small = false}) => {
                 pair.token1.symbol = 'SDN'
               }
 
+              if (pair?.token0.id === '0x672f30407A71fa8737A3A14474ff37E09c7Fc44a') {
+                pair.token0.name = 'GateChain (Wrapped)'
+                pair.token0.symbol = 'GT'
+              }
+
+              if (pair?.token1.id === '0x672f30407A71fa8737A3A14474ff37E09c7Fc44a') {
+                pair.token1.name = 'GateChain (Wrapped)'
+                pair.token1.symbol = 'GT'
+              }
+
               return (
                 <BasicLink to={'/pair/' + pair.id} key={pair.id} onClick={onDismiss}>
                   <MenuItem>

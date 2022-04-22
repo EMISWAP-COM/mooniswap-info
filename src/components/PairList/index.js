@@ -216,6 +216,16 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
         pairData.token1.symbol = 'SDN'
       }
 
+      if (pairData.token0.id === '0x672f30407A71fa8737A3A14474ff37E09c7Fc44a') {
+        pairData.token0.name = 'GateChain (Wrapped)'
+        pairData.token0.symbol = 'GT'
+      }
+
+      if (pairData.token1.id === '0x672f30407A71fa8737A3A14474ff37E09c7Fc44a') {
+        pairData.token1.name = 'GateChain (Wrapped)'
+        pairData.token1.symbol = 'GT'
+      }
+
       if (pairData.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
         pairData.token1.symbol = 'yCRV'
       }
