@@ -1,16 +1,16 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components/macro'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { formatTime, formattedNum, getIsValidNumber } from '../../helpers'
-import { useMedia } from 'react-use'
-import { RowFixed, RowBetween } from '../Row'
+import {formattedNum, formatTime, getIsValidNumber} from '../../helpers'
+import {useMedia} from 'react-use'
+import {RowBetween, RowFixed} from '../Row'
 
 import LocalLoader from '../LocalLoader'
-import { Box, Flex, Text } from 'rebass'
+import {Box, Flex, Text} from 'rebass'
 import Link from '../Link'
-import { Divider, EmptyCard } from '..'
+import {Divider, EmptyCard} from '..'
 import DropdownSelect from '../DropdownSelect'
 import {PAGES} from '../../constants'
 import Pagination from '../Pagination'
@@ -178,7 +178,16 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       const token1Data = allTokens[transaction.pair.token1.id];
 
       if (token0Data) {
-        console.log(token0Data.derivedETH, token1Data.derivedETH);
+        // console.log(token0Data.derivedETH, token1Data.derivedETH);
+        console.log(token0Data.symbol, token0Data.priceUSD, token1Data.symbol, token1Data.priceUSD);
+      }
+
+      if (token0Data.symbol === 'USDT' || token1Data.symbol === 'USDT') {
+        token0Data.priceUSD = 1;
+      }
+
+      if (token0Data.symbol === 'USDC' || token1Data.symbol === 'USDC') {
+        token0Data.priceUSD = 1;
       }
 
       if ((amountUSD === "0" || isShidenNetwork || isAstarNetwork) && ethPrice && token0Data && token1Data) {
