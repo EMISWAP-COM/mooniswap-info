@@ -34,9 +34,9 @@ export const networksItems = [
     icon: KuCoinNetworkIcon,
     scanUrl: 'explorer.kcc.io',
     scanName: 'Explorer',
-    priceText: 'KCS Price',
+    priceText: 'KCC Price',
     rpcUrls: ['https://rpc-mainnet.kcc.network'],
-    currencySymbol: 'KCS',
+    currencySymbol: 'KCC',
     tokenTextName: 'KRC-20',
   },
   {

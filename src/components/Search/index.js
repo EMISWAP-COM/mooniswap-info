@@ -373,13 +373,13 @@ export const Search = ({small = false}) => {
               }
 
               if (pair?.token0?.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-                pair.token0.name = 'KCS (Wrapped)'
-                pair.token0.symbol = 'KCS'
+                pair.token0.name = 'KCC (Wrapped)'
+                pair.token0.symbol = 'KCC'
               }
 
               if (pair?.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-                pair.token1.name = 'KCS (Wrapped)'
-                pair.token1.symbol = 'KCS'
+                pair.token1.name = 'KCC (Wrapped)'
+                pair.token1.symbol = 'KCC'
               }
 
               if (pair?.token0?.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {

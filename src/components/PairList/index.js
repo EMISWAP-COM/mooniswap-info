@@ -187,13 +187,13 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
       }
 
       if (pairData.token0.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-        pairData.token0.name = 'KCS (Wrapped)'
-        pairData.token0.symbol = 'KCS'
+        pairData.token0.name = 'KCC (Wrapped)'
+        pairData.token0.symbol = 'KCC'
       }
 
       if (pairData.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-        pairData.token1.name = 'KCS (Wrapped)'
-        pairData.token1.symbol = 'KCS'
+        pairData.token1.name = 'KCC (Wrapped)'
+        pairData.token1.symbol = 'KCC'
       }
 
       if (pairData.token0.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
