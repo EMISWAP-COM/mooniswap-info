@@ -267,7 +267,7 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           }
 
           if (data.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-            data.name = 'KuCoin (Wrapped)'
+            data.name = 'KCC (Wrapped)'
             data.symbol = 'KCS'
           }
 

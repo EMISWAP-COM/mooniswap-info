@@ -29,7 +29,7 @@ export const networksItems = [
     factoryAddress: '0x945316F2964ef5C6C84921b435a528DD1790E93a',
     clientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/emiswap/emiswap1',
     blockClientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/kcc-blocks',
-    name: 'KuCoin',
+    name: 'KCC',
     name2: 'KCC',
     icon: KuCoinNetworkIcon,
     scanUrl: 'explorer.kcc.io',
