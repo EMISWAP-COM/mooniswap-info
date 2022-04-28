@@ -75,6 +75,7 @@ export default function NetworkSwitchModal({onClose}) {
   };
 
   const logosMaxWidths = {
+    KUCOIN: '70%',
     AVALANCHE: '70%',
   };
 
