@@ -180,14 +180,14 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
       if (token0Data) {
         // console.log(token0Data.derivedETH, token1Data.derivedETH);
         // console.log(token0Data.symbol, token0Data.priceUSD, token1Data.symbol, token1Data.priceUSD);
-        // console.log(transaction);
+        console.log(transaction, txn);
 
-        if (token0Data.symbol === 'USDT' || token0Data.symbol === 'USDC') {
-          // token0Data.priceUSD = 1;
+        if (txn.token0Symbol === 'USDT' || txn.token0Symbol === 'USDC') {
+          return txn.token0Amount * 2;
         }
 
-        if (token1Data.symbol === 'USDT' || token1Data.symbol === 'USDC') {
-          // token1Data.priceUSD = 1;
+        if (txn.token1Symbol === 'USDT' || txn.token1Symbol === 'USDC') {
+          return txn.token1Amount * 2;
         }
       }
 
