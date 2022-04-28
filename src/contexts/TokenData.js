@@ -267,8 +267,8 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           }
 
           if (data.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-            data.name = 'KuCoin (Wrapped)'
-            data.symbol = 'KCS'
+            data.name = 'KCC (Wrapped)'
+            data.symbol = 'KCC'
           }
 
           if (data.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
@@ -279,6 +279,11 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
           if (data.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
             data.name = 'Shiden (Wrapped)'
             data.symbol = 'SDN'
+          }
+
+          if (data.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+            data.name = 'Astar (Wrapped)'
+            data.symbol = 'ASTR'
           }
 
           return data

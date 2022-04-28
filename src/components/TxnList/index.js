@@ -1,21 +1,21 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components/macro'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { formatTime, formattedNum, getIsValidNumber } from '../../helpers'
-import { useMedia } from 'react-use'
-import { RowFixed, RowBetween } from '../Row'
+import {formattedNum, formatTime, getIsValidNumber} from '../../helpers'
+import {useMedia} from 'react-use'
+import {RowBetween, RowFixed} from '../Row'
 
 import LocalLoader from '../LocalLoader'
-import { Box, Flex, Text } from 'rebass'
+import {Box, Flex, Text} from 'rebass'
 import Link from '../Link'
-import { Divider, EmptyCard } from '..'
+import {Divider, EmptyCard} from '..'
 import DropdownSelect from '../DropdownSelect'
 import {PAGES} from '../../constants'
 import Pagination from '../Pagination'
 import {useEthPrice} from "../../contexts/GlobalData";
-import {useIsShidenNetwork, useNetworkData, useUrls} from "../../hooks";
+import {useNetworkData, useUrls} from "../../hooks";
 import {useAllTokenData} from "../../contexts/TokenData";
 
 dayjs.extend(utc)
@@ -105,13 +105,13 @@ const DataText = styled(Flex)`
 
 const SortText = styled.button`
   cursor: pointer;
-  font-weight: ${({ active, }) => (active ? 500 : 400)};
+  font-weight: ${({active,}) => (active ? 500 : 400)};
   margin-right: 0.5rem !important;
   border: none;
-  background-color: ${({ theme, active }) => (active ? theme.active : theme.btn1)};
+  background-color: ${({theme, active}) => (active ? theme.active : theme.btn1)};
   border-radius: 6px;
   font-size: 1rem;
-  color: ${({ theme, active }) => (active ? 'white' : 'white')};
+  color: ${({theme, active}) => (active ? 'white' : 'white')};
   outline: none;
   padding: 6px 12px;
 
@@ -150,10 +150,11 @@ function getTransactionType(event, symbol0, symbol1) {
 }
 
 // @TODO rework into virtualized list
-function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
+function TxnList({transactions, symbol0Override, symbol1Override, color}) {
 
   const {scanUrl} = useNetworkData();
-  const isShidenNetwork = useIsShidenNetwork();
+  // const isShidenNetwork = useIsShidenNetwork();
+  // const isAstarNetwork = useIsAstarNetwork();
   const urls = useUrls();
   const [ethPrice] = useEthPrice();
 
@@ -176,13 +177,28 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       const token0Data = allTokens[transaction.pair.token0.id];
       const token1Data = allTokens[transaction.pair.token1.id];
 
-      if ((amountUSD === "0" || isShidenNetwork) && ethPrice && token0Data && token1Data) {
+      if (token0Data) {
+        // console.log(token0Data.derivedETH, token1Data.derivedETH);
+        // console.log(token0Data.symbol, token0Data.priceUSD, token1Data.symbol, token1Data.priceUSD);
+        console.log(transaction, txn);
+
+        if (txn.token0Symbol === 'USDT' || txn.token0Symbol === 'USDC') {
+          return txn.token0Amount * 2;
+        }
+
+        if (txn.token1Symbol === 'USDT' || txn.token1Symbol === 'USDC') {
+          return txn.token1Amount * 2;
+        }
+      }
+
+      if ((amountUSD === "0") && ethPrice && token0Data && token1Data) {
+        console.log(token0Data.priceUSD, txn.token0Amount, token1Data.priceUSD, txn.token1Amount);
         return (token0Data.priceUSD * txn.token0Amount) + (token1Data.priceUSD * txn.token1Amount);
       }
     }
 
     return amountUSD;
-  }, [ethPrice, allTokens, isShidenNetwork])
+  }, [ethPrice, allTokens])
 
   useEffect(() => {
     setMaxPage(1) // edit this to do modular
@@ -310,11 +326,11 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   const below1080 = useMedia('(max-width: 1080px)')
   const below780 = useMedia('(max-width: 780px)')
 
-  const ListItem = ({ item }) => {
+  const ListItem = ({item}) => {
     // console.log(item);
 
     return (
-      <DashGrid style={{ height: '60px' }}>
+      <DashGrid style={{height: '60px'}}>
         <DataText area="txn" fontWeight="500">
           <Link color={color} external href={urls.showTransaction(item.hash)}>
             {getTransactionType(item.type, item.token0Symbol, item.token1Symbol)}
@@ -341,7 +357,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
     )
   }
 
-  const handlePageChange = ({ target }) => {
+  const handlePageChange = ({target}) => {
     const btnType = target.getAttribute('data-name')
 
     getIsValidNumber(btnType) ? setPage(+btnType) : handleSpecificBtnType(btnType)
@@ -368,10 +384,10 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
 
   return (
     <>
-      <DashGrid center={true} style={{ height: 'fit-content', padding: '0 0 1rem 0' }}>
+      <DashGrid center={true} style={{height: 'fit-content', padding: '0 0 1rem 0'}}>
         {below780 ? (
           <RowBetween area="txn">
-            <DropdownSelect options={TXN_TYPE} active={txFilter} setActive={setTxFilter} color={color} />
+            <DropdownSelect options={TXN_TYPE} active={txFilter} setActive={setTxFilter} color={color}/>
           </RowBetween>
         ) : (
           <RowFixed area="txn" gap="10px" pl={4}>
@@ -474,18 +490,18 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           </Flex>
         </>
       </DashGrid>
-      <Divider />
+      <Divider/>
       <List p={0}>
         {!filteredList ? (
-          <LocalLoader />
+          <LocalLoader/>
         ) : filteredList.length === 0 ? (
           <EmptyCard>No recent transactions found.</EmptyCard>
         ) : (
           filteredList.map((item, index) => {
             return (
               <div key={index}>
-                <ListItem key={index} index={index + 1} item={item} />
-                <Divider />
+                <ListItem key={index} index={index + 1} item={item}/>
+                <Divider/>
               </div>
             )
           })
@@ -493,7 +509,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       </List>
       {filteredList?.length > 0 && (
         <PageButtons>
-          <Pagination page={page} lastPage={maxPage} onClick={handlePageChange} />
+          <Pagination page={page} lastPage={maxPage} onClick={handlePageChange}/>
         </PageButtons>
       )}
     </>

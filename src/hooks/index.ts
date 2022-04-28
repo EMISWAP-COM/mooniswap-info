@@ -170,6 +170,12 @@ export const useIsAvalancheNetwork = () => {
   return alias === 'AVALANCHE';
 };
 
+export const  useIsAstarNetwork = () => {
+  const {alias} = useNetworkData();
+
+  return alias === 'ASTAR';
+};
+
 export const useUrls = () => {
   const {alias, scanUrl} = useNetworkData();
 

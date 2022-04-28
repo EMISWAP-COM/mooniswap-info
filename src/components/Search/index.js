@@ -373,13 +373,13 @@ export const Search = ({small = false}) => {
               }
 
               if (pair?.token0?.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-                pair.token0.name = 'KCS (Wrapped)'
-                pair.token0.symbol = 'KCS'
+                pair.token0.name = 'KCC (Wrapped)'
+                pair.token0.symbol = 'KCC'
               }
 
               if (pair?.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-                pair.token1.name = 'KCS (Wrapped)'
-                pair.token1.symbol = 'KCS'
+                pair.token1.name = 'KCC (Wrapped)'
+                pair.token1.symbol = 'KCC'
               }
 
               if (pair?.token0?.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
@@ -400,6 +400,16 @@ export const Search = ({small = false}) => {
               if (pair?.token1.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
                 pair.token1.name = 'Shiden (Wrapped)'
                 pair.token1.symbol = 'SDN'
+              }
+
+              if (pair?.token0.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+                pair.token0.name = 'Astar (Wrapped)'
+                pair.token0.symbol = 'ASTR'
+              }
+
+              if (pair?.token1.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+                pair.token1.name = 'Astar (Wrapped)'
+                pair.token1.symbol = 'ASTR'
               }
 
               return (

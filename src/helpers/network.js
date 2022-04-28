@@ -4,6 +4,7 @@ import PolygonNetworkIcon from '../assets/polygon-network.svg';
 import AuroraNetworkIcon from '../assets/aurora-network.svg';
 import ShidenNetworkIcon from '../assets/shiden-network.png';
 // import AvalancheNetworkIcon from '../assets/avalanche-network.svg';
+import AstarNetworkIcon from '../assets/astar-network.png';
 
 export const networksItems = [
   {
@@ -28,14 +29,14 @@ export const networksItems = [
     factoryAddress: '0x945316F2964ef5C6C84921b435a528DD1790E93a',
     clientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/emiswap/emiswap1',
     blockClientTheGraph: 'https://thegraph.kcc.network/subgraphs/name/kcc-blocks',
-    name: 'KuCoin',
+    name: 'KCC',
     name2: 'KCC',
     icon: KuCoinNetworkIcon,
     scanUrl: 'explorer.kcc.io',
     scanName: 'Explorer',
-    priceText: 'KCS Price',
+    priceText: 'KCC Price',
     rpcUrls: ['https://rpc-mainnet.kcc.network'],
-    currencySymbol: 'KCS',
+    currencySymbol: 'KCC',
     tokenTextName: 'KRC-20',
   },
   {
@@ -85,6 +86,22 @@ export const networksItems = [
     rpcUrls: ['https://rpc.mainnet.near.org'],
     currencySymbol: 'ETH',
     tokenTextName: 'ERC-20',
+  },
+  {
+    network: 'astar',
+    alias: 'ASTAR',
+    factoryAddress: '0xb4BcA5955F26d2fA6B57842655d7aCf2380Ac854',
+    clientTheGraph: 'https://astar-graph.emiswap.com/subgraphs/name/astar',
+    blockClientTheGraph: 'https://astar-graph.emiswap.com/subgraphs/name/astar-blocks',
+    name: 'Astar',
+    name2: 'Astar',
+    icon: AstarNetworkIcon,
+    scanUrl: 'blockscout.com/astar',
+    scanName: 'Astar Blockscout',
+    priceText: 'ASTR Price',
+    rpcUrls: ['https://rpc.shiden.astar.network:8545',],
+    currencySymbol: 'ASTR',
+    tokenTextName: 'ASTR-20',
   },
   /*{
     network: 'avalanche',

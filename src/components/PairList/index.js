@@ -187,13 +187,13 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
       }
 
       if (pairData.token0.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-        pairData.token0.name = 'KCS (Wrapped)'
-        pairData.token0.symbol = 'KCS'
+        pairData.token0.name = 'KCC (Wrapped)'
+        pairData.token0.symbol = 'KCC'
       }
 
       if (pairData.token1.id === '0x4446fc4eb47f2f6586f9faab68b3498f86c07521') {
-        pairData.token1.name = 'KCS (Wrapped)'
-        pairData.token1.symbol = 'KCS'
+        pairData.token1.name = 'KCC (Wrapped)'
+        pairData.token1.symbol = 'KCC'
       }
 
       if (pairData.token0.id === '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270') {
@@ -214,6 +214,16 @@ function PairList({ pairs, color, history, disbaleLinks, maxItems = 10 }) {
       if (pairData.token1.id === '0x0f933dc137d21ca519ae4c7e93f87a4c8ef365ef') {
         pairData.token1.name = 'Shiden (Wrapped)'
         pairData.token1.symbol = 'SDN'
+      }
+
+      if (pairData.token0.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+        pairData.token0.name = 'Astar (Wrapped)'
+        pairData.token0.symbol = 'ASTR'
+      }
+
+      if (pairData.token1.id === '0xaeaaf0e2c81af264101b9129c00f4440ccf0f720') {
+        pairData.token1.name = 'Astar (Wrapped)'
+        pairData.token1.symbol = 'ASTR'
       }
 
       if (pairData.token1.id === '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8') {
