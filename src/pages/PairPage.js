@@ -164,6 +164,8 @@ function PairPage({pairAddress, history}) {
       liquidity = trackedReserveUSD;
     }
 
+    // console.log(reserveUSD, trackedReserveUSD);
+
     if ((!liquidity || liquidity === "0") && token0 && token1 && ethPrice) {
       const token0USD = getLiquidityFromToken(token0, reserve0, ethPrice);
       const token1USD = getLiquidityFromToken(token1, reserve1, ethPrice);

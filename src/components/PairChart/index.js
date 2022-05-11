@@ -66,9 +66,28 @@ const PairChart = ({ address, color }) => {
     },
     'dataMax'
   ];
+
   const rangeData = (chartData && utcStartTime)
-    ? chartData.filter(item => item.date > utcStartTime)
+    ? chartData
+      .filter(item => item.date > utcStartTime)
+      .map((item) => {
+        if (address === '0xf6a7d96cc0278d60cdc00d82d87acd38064d9176') {
+          return {
+            ...item,
+            reserveUSD: item.reserveUSD / 22.88,
+          };
+        }
+        if (address === '0x214ce506b042e55999dac132416bfbc952c5388c') {
+          return {
+            ...item,
+            reserveUSD: item.reserveUSD / 1.45,
+          };
+        }
+        return item;
+      })
     : [];
+
+  // console.log(rangeData);
 
   if (rangeData && rangeData.length === 0) {
     return (

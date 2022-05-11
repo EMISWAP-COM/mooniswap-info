@@ -368,6 +368,8 @@ const getPairData = async (address, ethPrice) => {
 
     const liquidityChangeUSD = getPercentChange(data.reserveUSD, oneDayData?.reserveUSD)
 
+    // console.log(data);
+
     let extraFee0Now = data.lpExtraFeeInToken0 * data.token0.derivedETH * ethPrice || 0
     let extraFee0DayAgo = oneDayData.lpExtraFeeInToken0 * data.token0.derivedETH * ethPrice || 0
     let extraFee0TwoDaysAgo = twoDayData.lpExtraFeeInToken0 * data.token0.derivedETH * ethPrice || 0

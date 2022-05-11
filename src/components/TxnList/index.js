@@ -180,7 +180,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
       if (token0Data) {
         // console.log(token0Data.derivedETH, token1Data.derivedETH);
         // console.log(token0Data.symbol, token0Data.priceUSD, token1Data.symbol, token1Data.priceUSD);
-        console.log(transaction, txn);
+        // console.log(transaction, txn);
 
         if (txn.token0Symbol === 'USDT' || txn.token0Symbol === 'USDC') {
           return txn.token0Amount * 2;
