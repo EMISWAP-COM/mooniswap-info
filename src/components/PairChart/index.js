@@ -80,7 +80,7 @@ const PairChart = ({ address, color }) => {
         if (address === '0x214ce506b042e55999dac132416bfbc952c5388c') {
           return {
             ...item,
-            reserveUSD: item.reserveUSD / 1.45,
+            // reserveUSD: item.reserveUSD / 1.45,
           };
         }
         return item;
