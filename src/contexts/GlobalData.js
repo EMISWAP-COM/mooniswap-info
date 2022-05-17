@@ -518,13 +518,56 @@ export function useGlobalChartData() {
   return [chartDataDaily, chartDataWeekly]
 }
 
+const {alias} = useNetworkData();
+
+const getUSDTokenPrice = async (id) => {
+  let networkId = ''
+  switch (alias) {
+    case 'MAINNET':
+      networkId = 'add'
+      break;
+    case 'KUCOIN':
+      networkId = 'kucoin-community-chain'
+      break;
+    case 'POLYGON':
+      networkId = 'polygon-pos'
+      break;
+    case 'AURORA':
+      networkId = 'aurora'
+      break;
+    case 'AVALANCHE':
+      networkId = 'avalanche'
+      break;
+    case 'ASTAR':
+      networkId = 'add'
+      break;
+    default:
+      networkId = 'add'
+  }
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/${networkId}?contract_addresses=${id}&vs_currencies=usd`)
+    const data = await response.json()
+    return data[`${id}`]['usd']
+  } catch(e) {
+    console.log('Error: ', e)
+  }
+}
+
 export function useGlobalTransactions() {
   const [state, {updateTransactions}] = useGlobalDataContext()
   const transactions = state?.transactions
   useEffect(() => {
     async function fetchData() {
       if (!transactions) {
-        let txns = await getGlobalTransactions()
+        const txns = await getGlobalTransactions()
+        txns.swaps.forEach(async (item) => {
+          item.token0USDPrice = await getUSDTokenPrice(item.pair.token0.id)
+          item.token1USDPrice = await getUSDTokenPrice(item.pair.token1.id)
+          if (item.token0USDPrice && item.token1USDPrice) {
+            item.sumUSD = ((item.srcAmount * item.token0USDPrice) + (item.destAmount * item.token1USDPrice))
+            return item
+          }
+        })
         updateTransactions(txns)
       }
     }
