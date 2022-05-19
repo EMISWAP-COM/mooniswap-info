@@ -518,7 +518,7 @@ export function useGlobalChartData() {
   return [chartDataDaily, chartDataWeekly]
 }
 
-onst {alias} = useNetworkData();
+const {alias} = useNetworkData();
 
 const getUSDTokenPrice = async (id) => {
   let networkId = ''
