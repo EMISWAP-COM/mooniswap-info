@@ -560,11 +560,27 @@ export function useGlobalTransactions() {
     async function fetchData() {
       if (!transactions) {
         const txns = await getGlobalTransactions()
+        txns.mints.forEach(async (item) => {
+          item.token0USDPrice = await getUSDTokenPrice(item.pair.token0.id)
+          item.token1USDPrice = await getUSDTokenPrice(item.pair.token1.id)
+          if (item.token0USDPrice && item.token1USDPrice) {
+            item.sumUSD = ((item.amount0 * item.token0USDPrice) + (item.amount1 * item.token1USDPrice))
+            return item
+          }
+        })
         txns.swaps.forEach(async (item) => {
           item.token0USDPrice = await getUSDTokenPrice(item.pair.token0.id)
           item.token1USDPrice = await getUSDTokenPrice(item.pair.token1.id)
           if (item.token0USDPrice && item.token1USDPrice) {
             item.sumUSD = ((item.srcAmount * item.token0USDPrice) + (item.destAmount * item.token1USDPrice))
+            return item
+          }
+        })
+        txns.burns.forEach(async (item) => {
+          item.token0USDPrice = await getUSDTokenPrice(item.pair.token0.id)
+          item.token1USDPrice = await getUSDTokenPrice(item.pair.token1.id)
+          if (item.token0USDPrice && item.token1USDPrice) {
+            item.sumUSD = ((item.amount0 * item.token0USDPrice) + (item.amount1 * item.token1USDPrice))
             return item
           }
         })

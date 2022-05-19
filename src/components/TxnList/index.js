@@ -228,7 +228,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           newTxn.account = mint.sender
           newTxn.token0Symbol = mint.pair.token0.symbol
           newTxn.token1Symbol = mint.pair.token1.symbol
-            newTxn.amountUSD = getAmountUSD(mint.amountUSD, mint, newTxn)
+          newTxn.amountUSD = getAmountUSD(mint.amountUSD, mint, newTxn)
           return newTxns.push(newTxn)
         })
       }
@@ -249,7 +249,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           newTxn.account = burn.sender
           newTxn.token0Symbol = burn.pair.token0.symbol
           newTxn.token1Symbol = burn.pair.token1.symbol
-            newTxn.amountUSD = getAmountUSD(burn.amountUSD, burn, newTxn)
+          newTxn.amountUSD = burn.sumUSD || getAmountUSD(burn.amountUSD, burn, newTxn)
           return newTxns.push(newTxn)
         })
       }
