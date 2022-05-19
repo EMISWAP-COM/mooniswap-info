@@ -176,9 +176,6 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
       const token1Data = allTokens[transaction.pair.token1.id];
 
       if (token0Data) {
-        // console.log(token0Data.derivedETH, token1Data.derivedETH);
-        // console.log(token0Data.symbol, token0Data.priceUSD, token1Data.symbol, token1Data.priceUSD);
-        // console.log(transaction, txn);
 
         if (txn.token0Symbol === 'USDT' || txn.token0Symbol === 'USDC') {
           return txn.token0Amount * 2;
@@ -188,9 +185,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           return txn.token1Amount * 2;
         }
       }
-
       if ((amountUSD === "0") && ethPrice && token0Data && token1Data) {
-        console.log(token0Data.priceUSD, txn.token0Amount, token1Data.priceUSD, txn.token1Amount);
         return (token0Data.priceUSD * txn.token0Amount) + (token1Data.priceUSD * txn.token1Amount);
       }
     }
