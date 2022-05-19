@@ -159,7 +159,6 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
   const [ethPrice] = useEthPrice();
 
   const allTokens = useAllTokenData();
-  const {alias} = useNetworkData();
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
