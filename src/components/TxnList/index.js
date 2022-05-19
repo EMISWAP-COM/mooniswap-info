@@ -159,7 +159,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
   const [ethPrice] = useEthPrice();
 
   const allTokens = useAllTokenData();
-
+  const {alias} = useNetworkData();
   // page state
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -168,9 +168,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.TIMESTAMP)
   const [filteredItems, setFilteredItems] = useState()
-  const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
-
-  // console.log(tokens);
+  const [txFilter, setTxFilter] = useState()
 
   const getAmountUSD = useCallback((amountUSD, transaction, txn) => {
     if (amountUSD && transaction && txn) {
@@ -178,9 +176,6 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
       const token1Data = allTokens[transaction.pair.token1.id];
 
       if (token0Data) {
-        // console.log(token0Data.derivedETH, token1Data.derivedETH);
-        // console.log(token0Data.symbol, token0Data.priceUSD, token1Data.symbol, token1Data.priceUSD);
-        console.log(transaction, txn);
 
         if (txn.token0Symbol === 'USDT' || txn.token0Symbol === 'USDC') {
           return txn.token0Amount * 2;
@@ -190,9 +185,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           return txn.token1Amount * 2;
         }
       }
-
       if ((amountUSD === "0") && ethPrice && token0Data && token1Data) {
-        console.log(token0Data.priceUSD, txn.token0Amount, token1Data.priceUSD, txn.token1Amount);
         return (token0Data.priceUSD * txn.token0Amount) + (token1Data.priceUSD * txn.token1Amount);
       }
     }
@@ -230,7 +223,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           newTxn.account = mint.sender
           newTxn.token0Symbol = mint.pair.token0.symbol
           newTxn.token1Symbol = mint.pair.token1.symbol
-          newTxn.amountUSD = getAmountUSD(mint.amountUSD, mint, newTxn)
+          newTxn.amountUSD = mint.sumUSD || getAmountUSD(mint.amountUSD, mint, newTxn)
           return newTxns.push(newTxn)
         })
       }
@@ -251,7 +244,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           newTxn.account = burn.sender
           newTxn.token0Symbol = burn.pair.token0.symbol
           newTxn.token1Symbol = burn.pair.token1.symbol
-          newTxn.amountUSD = getAmountUSD(burn.amountUSD, burn, newTxn)
+          newTxn.amountUSD = burn.sumUSD || getAmountUSD(burn.amountUSD, burn, newTxn)
           return newTxns.push(newTxn)
         })
       }
@@ -282,10 +275,8 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
           newTxn.hash = swap.transaction.id
           newTxn.timestamp = swap.transaction.timestamp
           newTxn.type = TXN_TYPE.SWAP
-
-          newTxn.amountUSD = getAmountUSD(swap.amountUSD, swap, newTxn)
           newTxn.account = swap.sender
-
+          newTxn.amountUSD = swap.sumUSD || getAmountUSD(swap.amountUSD, swap, newTxn)
           return newTxns.push(newTxn)
         })
       }
@@ -307,11 +298,17 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
         setMaxPage(Math.floor(filtered.length / ITEMS_PER_PAGE) + extraPages)
       }
     }
-  }, [transactions, txFilter, getAmountUSD])
+  }, [transactions, txFilter])
 
   useEffect(() => {
     setPage(1)
   }, [txFilter])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTxFilter(TXN_TYPE.ALL)
+    }, 2000);
+  }, [])
 
   const filteredList =
     filteredItems &&
@@ -327,8 +324,6 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
   const below780 = useMedia('(max-width: 780px)')
 
   const ListItem = ({item}) => {
-    // console.log(item);
-
     return (
       <DashGrid style={{height: '60px'}}>
         <DataText area="txn" fontWeight="500">
