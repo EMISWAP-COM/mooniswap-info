@@ -168,7 +168,7 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
   const [sortDirection, setSortDirection] = useState(true)
   const [sortedColumn, setSortedColumn] = useState(SORT_FIELD.TIMESTAMP)
   const [filteredItems, setFilteredItems] = useState()
-  const [txFilter, setTxFilter] = useState(TXN_TYPE.ALL)
+  const [txFilter, setTxFilter] = useState()
 
   const getAmountUSD = useCallback((amountUSD, transaction, txn) => {
     if (amountUSD && transaction && txn) {
@@ -308,6 +308,12 @@ function TxnList({transactions, symbol0Override, symbol1Override, color}) {
   useEffect(() => {
     setPage(1)
   }, [txFilter])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTxFilter(TXN_TYPE.ALL)
+    }, 2000);
+  }, [])
 
   const filteredList =
     filteredItems &&
