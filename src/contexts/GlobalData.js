@@ -524,7 +524,7 @@ const getUSDTokenPrice = async (id) => {
   let networkId = ''
   switch (alias) {
     case 'MAINNET':
-      networkId = 'add'
+      networkId = 'ethereum'
       break;
     case 'KUCOIN':
       networkId = 'kucoin-community-chain'
@@ -532,24 +532,21 @@ const getUSDTokenPrice = async (id) => {
     case 'POLYGON':
       networkId = 'polygon-pos'
       break;
+    case 'SHIDEN':
+      networkId = 'shiden%20network'
+      break;
     case 'AURORA':
       networkId = 'aurora'
       break;
-    case 'AVALANCHE':
-      networkId = 'avalanche'
-      break;
-    case 'ASTAR':
-      networkId = 'add'
-      break;
     default:
-      networkId = 'add'
+      networkId = 'ethereum'
   }
   try {
     const response = await fetch(`https://api.coingecko.com/api/v3/simple/token_price/${networkId}?contract_addresses=${id}&vs_currencies=usd`)
     const data = await response.json()
     return data[`${id}`]['usd']
-  } catch(e) {
-    console.log('Error: ', e)
+  } catch(error) {
+    console.log('Failed fatching token price by api', error)
   }
 }
 
