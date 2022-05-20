@@ -159,9 +159,9 @@ function PairPage({pairAddress, history}) {
     let liquidity = null;
 
     if (reserveUSD) {
-      liquidity = reserveUSD;
+      // liquidity = reserveUSD;
     } else if (trackedReserveUSD) {
-      liquidity = trackedReserveUSD;
+      // liquidity = trackedReserveUSD;
     }
 
     // console.log(reserveUSD, trackedReserveUSD);
