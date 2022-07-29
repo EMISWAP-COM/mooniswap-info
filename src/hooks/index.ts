@@ -250,8 +250,11 @@ export function useAllTimeDate(value: number = 1, unit: OpUnitType = 'year') {
   const utcEndTime = dayjs.utc();
   let utcStartTime = utcEndTime.subtract(value, unit);
 
+  const ms5Month = 1000 * 60 * 60 * 24 * 30 * 5; // 5 месяцев в миллисекундах
+
   if (isPolygonNetwork) {
-    utcStartTime = dayjs.utc(Date.parse('2021-10-15T01:00:00'));
+    utcStartTime = dayjs.utc(Date.now() - ms5Month);
+    // utcStartTime = dayjs.utc(Date.parse('2021-10-15T01:00:00'));
   }
 
   return utcStartTime;
